@@ -65,7 +65,7 @@ body {
 }
 
 .search-container .form-container .search-box .search-text {
-	padding: 20px;
+	padding-left: 25px;
 	font-size: 18px;
 	outline: none;
 	opacity: 0.5;
@@ -97,10 +97,17 @@ body {
 .search-container .result-chart .result {
 	display: block;
 	text-decoration: none;
+	align-self: center;
 	color: #4834d4;
-	margin: 15px 50px;
+	position: relative;
+	padding-left: 72px;
 	font-size: 18px;
-	border-bottom: 1px solid rgb(235, 232, 232);
+}
+
+.line-break {
+	width: 85%;
+	align-self: center;
+	border-top: 0.5px solid #ccc;
 }
 
 /* loader style */

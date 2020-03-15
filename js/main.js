@@ -23,12 +23,15 @@ async function searching() {
 
 	for (let i = 0; i < data.length; i++) {
 		let newResult = document.createElement("a");
+		let lineBreak = document.createElement("hr");
 		let name = data[i].name;
 		let symbol = data[i].symbol;
 		newResult.classList.add("result");
+		lineBreak.classList.add("line-break");
 		newResult.innerHTML = `${name} (${symbol})`;
 		newResult.href = "/company.html?symbol=" + symbol;
 		resultChart.appendChild(newResult);
+		resultChart.appendChild(lineBreak);
 	}
 	loader.classList.replace("show", "hide");
 }
