@@ -15,7 +15,7 @@
 			<div class="search-container">
 				<div class="form-container flexible">
 					<form class="search-box">
-						<i class="search-icon fa fa-search"></i>
+						<i class="search-icon fa fa-search fa-lg"></i>
 						<input
 							id="searchText"
 							class="search-text"
@@ -23,6 +23,11 @@
 							placeholder="Search..."
 						/>
 					</form>
+					<div id="loader" class="loader hide">
+						<span class="loader-bar"></span>
+						<span class="loader-bar"></span>
+						<span class="loader-bar"></span>
+					</div>
 					<input
 						id="searchButton"
 						class="search-button"
@@ -30,7 +35,7 @@
 						value="Search"
 					/>
 				</div>
-				<div id="resultChart" class="flexible col"></div>
+				<div id="resultChart" class="result-chart" class="flexible col"></div>
 			</div>
 		</div>
 		<script src="js/main.js"></script>
