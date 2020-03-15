@@ -68,7 +68,7 @@ body {
 	padding-left: 25px;
 	font-size: 18px;
 	outline: none;
-	opacity: 0.5;
+	color: black;
 }
 
 .search-container .form-container .search-box .search-icon {
@@ -108,6 +108,11 @@ body {
 	width: 85%;
 	align-self: center;
 	border-top: 0.5px solid #ccc;
+}
+
+::placeholder {
+	color: darkgray;
+	opacity: 0.75;
 }
 
 /* loader style */
