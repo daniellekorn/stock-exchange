@@ -2,6 +2,8 @@ const searchButton = document.getElementById("searchButton");
 const resultChart = document.getElementById("resultChart");
 const searchText = document.getElementById("searchText");
 const loader = document.getElementById("loader");
+const title = document.getElementById("title");
+const results = document.getElementsByClassName("result");
 
 function clearHistory() {
 	let child = resultChart.lastElementChild;
@@ -15,9 +17,7 @@ async function searching() {
 	clearHistory();
 
 	let response = await fetch(
-		"https://financialmodelingprep.com/api/v3/search?query=" +
-			userInput +
-			"&limit=10&exchange=NASDAQ"
+		`https://financialmodelingprep.com/api/v3/search?query=${userInput}&limit=10&exchange=NASDAQ`
 	);
 	let data = await response.json();
 
@@ -36,8 +36,20 @@ async function searching() {
 	loader.classList.replace("show", "hide");
 }
 
+async function getSymbol() {
+	const myArray = Array.from(results);
+	for (var i = 0; i < myArray.length; i++) {
+		elements[i].addEventListener("click", () => console.log(element[i]));
+	}
+	/* let symbol = 
+	/* idea is to iterate over string of href until = 
+	Or splice from between ()
+	title.innerHTML =  */
+}
+
 searchButton.addEventListener("click", () => {
 	loader.classList.replace("hide", "show");
 	userInput = searchText.value;
 	searching();
+	getSymbol();
 });
