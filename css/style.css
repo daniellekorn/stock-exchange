@@ -7,6 +7,7 @@ body {
 
 * {
 	box-sizing: border-box;
+	font-size: 18px;
 }
 
 .flexible {
@@ -33,9 +34,9 @@ body {
 }
 
 .search-container {
-	width: 50%;
-	min-height: 65%;
-	min-width: 500px;
+	width: 60%;
+	min-height: 75%;
+	min-width: 700px;
 	background-color: white;
 	-moz-box-shadow: 0 0 10px #ccc;
 	-webkit-box-shadow: 0 0 10px #ccc;
@@ -66,7 +67,6 @@ body {
 
 .search-container .form-container .search-box .search-text {
 	padding-left: 25px;
-	font-size: 18px;
 	outline: none;
 	color: black;
 }
@@ -76,16 +76,16 @@ body {
 	padding-left: 25px;
 }
 
+.search-container .form-container .search-box {
+	width: 85%;
+}
+
 .search-container .form-container .search-button {
 	width: 15%;
 	background: #4834d4;
 	color: white;
 	border-radius: 0;
-	font-size: 14px;
-}
-
-.search-container .form-container .search-box {
-	width: 90%;
+	font-size: 12px;
 }
 
 .search-container .result-chart {
@@ -101,7 +101,6 @@ body {
 	color: #4834d4;
 	position: relative;
 	padding-left: 72px;
-	font-size: 18px;
 }
 
 .line-break {
@@ -163,5 +162,29 @@ body {
 		-ms-transform: scaleY(1.8);
 		-o-transform: scaleY(1.8);
 		transform: scaleY(1.8);
+	}
+}
+
+/* Responsivity for mobile 
+WORK ON THIS*/
+@media screen and (max-width: 700px) {
+	* {
+		font-size: 14px;
+	}
+	.search-container {
+		margin: 0;
+		height: 100%;
+		min-width: 100%;
+	}
+	.search-container .form-container .search-box {
+		width: 80%;
+	}
+	.search-container .form-container .search-button {
+		width: 20%;
+	}
+	.search-text,
+	.serach-icon,
+	.search-button {
+		padding: 0rem;
 	}
 }
