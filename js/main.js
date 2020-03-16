@@ -1,8 +1,8 @@
-const searchButton = document.getElementById("searchButton");
-const resultChart = document.getElementById("resultChart");
-const searchText = document.getElementById("searchText");
-const loader = document.getElementById("loader");
-const title = document.getElementById("title");
+const searchButton = document.querySelector("#searchButton");
+const resultChart = document.querySelector("#resultChart");
+const searchText = document.querySelector("#searchText");
+const loader = document.querySelector("#loader");
+const title = document.querySelector("#title");
 const links = document.querySelectorAll(".result");
 
 function clearHistory() {
@@ -35,6 +35,13 @@ async function searching() {
 	}
 	loader.classList.replace("show", "hide");
 }
+
+/* Ask Jon why not working
+searchText.addEventListener("keyup", event => {
+	if (event.keyCode === 13) {
+		searchButton.click();
+	}
+});*/
 
 searchButton.addEventListener("click", () => {
 	loader.classList.replace("hide", "show");
