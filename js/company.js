@@ -1,7 +1,7 @@
 const heading = document.querySelector("#heading");
 const price = document.querySelector("#price");
 const description = document.querySelector("#description");
-const profilePage = document.querySelector("#profile");
+const profilePage = document.querySelector("#profilePage");
 const pageLoader = document.querySelector("#pageLoader");
 
 async function companyProfile() {
@@ -60,50 +60,36 @@ async function stockHistory(symbol) {
 			if (i % 10 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		} else if (length > 100 && length <= 1000) {
 			if (i % 25 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		} else if (length > 1000 && length <= 2000) {
 			if (i % 50 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		} else if (length > 2000 && length <= 6000) {
 			if (i % 100 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		} else if (length > 6000) {
 			if (i % 200 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		} else if (length > 6000 && length <= 10000) {
 			if (i % 300 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		} else if (length > 10000) {
 			if (i % 500 === 0) {
 				dates.push(data.historical[i].date);
 				priceOnDate.push(data.historical[i].close);
-			} else {
-				continue;
 			}
 		}
 	}
