@@ -1,6 +1,8 @@
 const heading = document.querySelector("#heading");
 const price = document.querySelector("#price");
 const description = document.querySelector("#description");
+const profilePage = document.querySelector("#profile");
+const pageLoader = document.querySelector("#pageLoader");
 
 async function companyProfile() {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -13,6 +15,8 @@ async function companyProfile() {
 	let details = await profile.json();
 	createPage(symbol, details);
 	stockHistory(symbol);
+	pageLoader.classList.replace("show", "hide");
+	profilePage.classList.replace("hide", "show");
 }
 
 function createPage(symbol, obj) {
@@ -36,6 +40,7 @@ function createPage(symbol, obj) {
 		percentChange.classList.add("negative");
 	}
 	price.appendChild(percentChange);
+	price.classList.replace("hide", "show");
 
 	const coDescription = document.createElement("div");
 	coDescription.innerText = obj.profile.description;
@@ -86,36 +91,44 @@ async function stockHistory(symbol) {
 			} else {
 				continue;
 			}
+		} else if (length > 6000 && length <= 10000) {
+			if (i % 300 === 0) {
+				dates.push(data.historical[i].date);
+				priceOnDate.push(data.historical[i].close);
+			} else {
+				continue;
+			}
+		} else if (length > 10000) {
+			if (i % 500 === 0) {
+				dates.push(data.historical[i].date);
+				priceOnDate.push(data.historical[i].close);
+			} else {
+				continue;
+			}
 		}
 	}
 	generateChart(dates, priceOnDate);
 }
 
-function generateChart(array1, array2) {
+function generateChart(arrayOne, arrayTwo) {
 	const coChart = document.getElementById("coChart").getContext("2d");
 	new Chart(coChart, {
 		type: "line",
 		data: {
-			labels: array1,
+			labels: arrayOne,
 			datasets: [
 				{
 					label: "Price on Close",
 					backgroundColor: "#4834d4",
 					borderColor: "#4834d4",
-					data: array2
+					data: arrayTwo
 				}
 			]
 		}
 	});
 }
 
-/*
-function addToArray(array1, array2) {
-	array1.push(data.historical[i].date);
-	array2.push(data.historical[i].close);
-}
-*/
-
 window.onload = () => {
+	pageLoader.classList.replace("hide", "show");
 	companyProfile();
 };
