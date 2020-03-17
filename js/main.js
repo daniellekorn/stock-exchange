@@ -2,7 +2,6 @@ const searchButton = document.querySelector("#searchButton");
 const resultChart = document.querySelector("#resultChart");
 const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
-const title = document.querySelector("#title");
 const links = document.querySelectorAll(".result");
 
 function clearHistory() {
@@ -58,6 +57,7 @@ async function getData(coSymbol) {
 	lineBreak.classList.add("line-break");
 	logo.classList.add("uniform-size", "vertical-align");
 	logo.src = `${company.image}`;
+
 	newResult.appendChild(logo);
 	newResult.appendChild(
 		document.createTextNode(`${company.companyName} (${coSymbol})`)

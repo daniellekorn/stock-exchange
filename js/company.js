@@ -23,10 +23,12 @@ async function companyProfile() {
 function createPage(symbol, obj) {
 	const logo = document.createElement("img");
 	logo.src = obj.profile.image;
+	logo.classList.add("responsive-img");
 	heading.appendChild(logo);
 
 	const name = document.createElement("div");
 	name.innerText = `${symbol} (${obj.profile.companyName})`;
+	name.classList.add("responsive-header");
 	heading.appendChild(name);
 
 	const sharePrice = document.createElement("div");

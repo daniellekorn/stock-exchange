@@ -234,9 +234,6 @@ body {
 /* Responsivity for mobile 
 WORK ON THIS*/
 @media screen and (max-width: 700px) {
-	* {
-		font-size: 10px;
-	}
 	.search-container {
 		margin: 0;
 		height: 100%;
@@ -258,6 +255,7 @@ WORK ON THIS*/
 	}
 	.search-container .result-chart .result {
 		padding-left: 10px;
+		font-size: 11px;
 	}
 	.line-break {
 		width: 95%;
