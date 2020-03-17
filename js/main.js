@@ -14,10 +14,10 @@ function clearHistory() {
 
 async function searching() {
 	clearHistory();
-	let response = await fetch(
+	const response = await fetch(
 		`https://financialmodelingprep.com/api/v3/search?query=${userInput}&limit=10&exchange=NASDAQ`
 	);
-	let data = await response.json();
+	const data = await response.json();
 
 	/*notice for user if no results*/
 	if (data.length === 0) {
@@ -32,7 +32,7 @@ async function searching() {
 			let symbol = data[i].symbol;
 			searchSymbols.push(symbol);
 		}
-		let currentList = searchSymbols;
+		const currentList = searchSymbols;
 		currentList.map(getData);
 	}
 	loader.classList.add("hide");

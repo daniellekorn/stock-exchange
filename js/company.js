@@ -27,14 +27,14 @@ function createPage(symbol, obj) {
 	logo.classList.add("responsive-img");
 	heading.appendChild(logo);
 	const name = document.createElement("div");
-	name.innerText = `${symbol} (${company.companyName})`;
+	name.textContent = `${symbol} (${company.companyName})`;
 	name.classList.add("responsive-header");
 	heading.appendChild(name);
 	const sharePrice = document.createElement("div");
-	sharePrice.innerText = company.price;
+	sharePrice.textContent = company.price;
 	price.appendChild(sharePrice);
 	const percentChange = document.createElement("div");
-	percentChange.innerText = company.changesPercentage;
+	percentChange.textContent = company.changesPercentage;
 	if (percentChange.innerText.includes("+")) {
 		percentChange.classList.add("positive");
 	} else {
@@ -42,7 +42,7 @@ function createPage(symbol, obj) {
 	}
 	price.appendChild(percentChange);
 	const coDescription = document.createElement("div");
-	coDescription.innerText = company.description;
+	coDescription.textContent = company.description;
 	description.appendChild(coDescription);
 }
 
