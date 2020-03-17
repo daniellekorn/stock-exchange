@@ -22,11 +22,7 @@ async function searching() {
 	/*notice for user if no results*/
 	if (data.length === 0) {
 		const error = document.createElement("div");
-		error.appendChild(
-			document.createTextNode(
-				`We did not find any results that match <strong>"${userInput}"</strong>`
-			)
-		);
+		error.innerHTML = `We did not find any results that match <strong>"${userInput}"</strong>`;
 		error.classList.add("error-style");
 		resultChart.append(error);
 		/*create symbol list of 10 companies then get profiles w/ second fetch in map*/

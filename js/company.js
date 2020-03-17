@@ -21,32 +21,28 @@ async function companyProfile() {
 }
 
 function createPage(symbol, obj) {
+	const company = obj.profile;
 	const logo = document.createElement("img");
-	logo.src = obj.profile.image;
+	logo.src = company.image;
 	logo.classList.add("responsive-img");
 	heading.appendChild(logo);
-
 	const name = document.createElement("div");
-	name.innerText = `${symbol} (${obj.profile.companyName})`;
+	name.innerText = `${symbol} (${company.companyName})`;
 	name.classList.add("responsive-header");
 	heading.appendChild(name);
-
 	const sharePrice = document.createElement("div");
-	sharePrice.innerText = obj.profile.price;
+	sharePrice.innerText = company.price;
 	price.appendChild(sharePrice);
-
 	const percentChange = document.createElement("div");
-	percentChange.innerText = obj.profile.changesPercentage;
+	percentChange.innerText = company.changesPercentage;
 	if (percentChange.innerText.includes("+")) {
 		percentChange.classList.add("positive");
 	} else {
 		percentChange.classList.add("negative");
 	}
 	price.appendChild(percentChange);
-	price.classList.remove("hide");
-
 	const coDescription = document.createElement("div");
-	coDescription.innerText = obj.profile.description;
+	coDescription.innerText = company.description;
 	description.appendChild(coDescription);
 }
 
@@ -108,8 +104,8 @@ function generateChart(arrayOne, arrayTwo) {
 			datasets: [
 				{
 					label: "Price on Close",
-					backgroundColor: "#4834d4",
-					borderColor: "#4834d4",
+					backgroundColor: "#0053ee",
+					borderColor: "#0053ee",
 					data: arrayTwo
 				}
 			]
