@@ -15,8 +15,8 @@ async function companyProfile() {
 	let details = await profile.json();
 	createPage(symbol, details);
 	stockHistory(symbol);
-	pageLoader.classList.replace("show", "hide");
-	profilePage.classList.replace("hide", "show");
+	pageLoader.classList.add("hide");
+	profilePage.classList.remove("hide");
 }
 
 function createPage(symbol, obj) {
@@ -40,7 +40,7 @@ function createPage(symbol, obj) {
 		percentChange.classList.add("negative");
 	}
 	price.appendChild(percentChange);
-	price.classList.replace("hide", "show");
+	price.classList.remove("hide");
 
 	const coDescription = document.createElement("div");
 	coDescription.innerText = obj.profile.description;
@@ -115,6 +115,6 @@ function generateChart(arrayOne, arrayTwo) {
 }
 
 window.onload = () => {
-	pageLoader.classList.replace("hide", "show");
+	pageLoader.classList.remove("hide");
 	companyProfile();
 };

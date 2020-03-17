@@ -18,11 +18,7 @@ body {
 }
 
 .hide {
-	visibility: hidden;
-}
-
-.show {
-	visibility: visible;
+	display: none;
 }
 
 .company-container,
@@ -56,7 +52,6 @@ body {
 }
 
 .search-text,
-.serach-icon,
 .search-button {
 	height: 50px;
 	padding: 0.5rem;
@@ -69,6 +64,7 @@ body {
 }
 
 .search-container .form-container .search-box .search-text {
+	width: 100%;
 	padding-left: 25px;
 	outline: none;
 	color: black;
@@ -78,6 +74,9 @@ body {
 .search-container .form-container .search-box .search-icon {
 	z-index: 2;
 	padding-left: 25px;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .search-container .form-container .search-box {
@@ -108,6 +107,11 @@ body {
 	font-size: 18px;
 }
 
+.error-style {
+	padding-left: 72px;
+	color: red;
+}
+
 .line-break {
 	width: 85%;
 	align-self: center;
@@ -117,6 +121,12 @@ body {
 ::placeholder {
 	color: darkgray;
 	opacity: 0.75;
+}
+
+.autocomplete {
+	width: 100%;
+	flex-basis: 100%;
+	display: inline-block;
 }
 
 /* loader style */
@@ -186,6 +196,9 @@ WORK ON THIS*/
 	}
 	.search-container .form-container .search-button {
 		width: 20%;
+	}
+	.loader {
+		width: 25px;
 	}
 	.search-text,
 	.serach-icon,

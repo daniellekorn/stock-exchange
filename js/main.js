@@ -4,7 +4,6 @@ const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
 const title = document.querySelector("#title");
 const links = document.querySelectorAll(".result");
-
 function clearHistory() {
 	let child = resultChart.lastElementChild;
 	while (child) {
@@ -21,30 +20,43 @@ async function searching() {
 	);
 	let data = await response.json();
 
-	for (let i = 0; i < data.length; i++) {
-		let newResult = document.createElement("a");
-		let lineBreak = document.createElement("hr");
-		let name = data[i].name;
-		let symbol = data[i].symbol;
-		newResult.classList.add("result");
-		lineBreak.classList.add("line-break");
-		newResult.innerHTML = `${name} (${symbol})`;
-		newResult.href = `company.html?symbol=${symbol}`;
-		resultChart.appendChild(newResult);
-		resultChart.appendChild(lineBreak);
+	/*notice for user if no results*/
+	if (data.length === 0) {
+		const error = document.createElement("div");
+		error.appendChild(
+			document.createTextNode(
+				`We did not find any results that match <strong>"${userInput}"</strong>`
+			)
+		);
+		error.classList.add("error-style");
+		resultChart.append(error);
+	} else {
+		for (let i = 0; i < data.length; i++) {
+			const newResult = document.createElement("a");
+			const lineBreak = document.createElement("hr");
+			let name = data[i].name;
+			let symbol = data[i].symbol;
+			newResult.classList.add("result");
+			lineBreak.classList.add("line-break");
+			newResult.appendChild(document.createTextNode(`${name} (${symbol})`));
+			newResult.href = `company.html?symbol=${symbol}`;
+			resultChart.appendChild(newResult);
+			resultChart.appendChild(lineBreak);
+		}
 	}
-	loader.classList.replace("show", "hide");
+	loader.classList.add("hide");
 }
 
-/* Ask Jon why not working
-searchText.addEventListener("keyup", event => {
+searchButton.addEventListener("click", () => {
+	loader.classList.remove("hide");
+	userInput = searchText.value;
+	searching();
+});
+
+/* Why not working?
+searchText.addEventListener("keyup", function(event) {
+	event.preventDefault();
 	if (event.keyCode === 13) {
 		searchButton.click();
 	}
 });*/
-
-searchButton.addEventListener("click", () => {
-	loader.classList.replace("hide", "show");
-	userInput = searchText.value;
-	searching();
-});
