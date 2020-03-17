@@ -13,6 +13,7 @@ async function companyProfile() {
 		`https://financialmodelingprep.com/api/v3/company/profile/${symbol}`
 	);
 	let details = await profile.json();
+	console.log(details);
 	createPage(symbol, details);
 	stockHistory(symbol);
 	pageLoader.classList.add("hide");

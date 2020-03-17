@@ -22,15 +22,7 @@
 	font-size: 24px;
 }
 
-.positive {
-	color: rgb(0, 202, 0);
-}
-
-.negative {
-	color: red;
-}
-
-#pageLoader {
+.flex-child.chart-container #pageLoader {
 	position: absolute;
 	top: 50%;
 	left: 50%;

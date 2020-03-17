@@ -4,6 +4,7 @@ const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
 const title = document.querySelector("#title");
 const links = document.querySelectorAll(".result");
+
 function clearHistory() {
 	let child = resultChart.lastElementChild;
 	while (child) {
@@ -14,7 +15,6 @@ function clearHistory() {
 
 async function searching() {
 	clearHistory();
-
 	let response = await fetch(
 		`https://financialmodelingprep.com/api/v3/search?query=${userInput}&limit=10&exchange=NASDAQ`
 	);
@@ -30,21 +30,50 @@ async function searching() {
 		);
 		error.classList.add("error-style");
 		resultChart.append(error);
+		/*create symbol list of 10 companies then get profiles w/ second fetch in map*/
 	} else {
+		const searchSymbols = [];
 		for (let i = 0; i < data.length; i++) {
-			const newResult = document.createElement("a");
-			const lineBreak = document.createElement("hr");
-			let name = data[i].name;
 			let symbol = data[i].symbol;
-			newResult.classList.add("result");
-			lineBreak.classList.add("line-break");
-			newResult.appendChild(document.createTextNode(`${name} (${symbol})`));
-			newResult.href = `company.html?symbol=${symbol}`;
-			resultChart.appendChild(newResult);
-			resultChart.appendChild(lineBreak);
+			searchSymbols.push(symbol);
 		}
+		let currentList = searchSymbols;
+		currentList.map(getData);
 	}
 	loader.classList.add("hide");
+}
+
+async function getData(coSymbol) {
+	const response = await fetch(
+		`https://financialmodelingprep.com/api/v3/company/profile/${coSymbol}`
+	);
+	const data = await response.json();
+	let company = data.profile;
+
+	const newResult = document.createElement("a");
+	const logo = document.createElement("img");
+	const percentChange = document.createElement("span");
+	const lineBreak = document.createElement("hr");
+	newResult.classList.add("result");
+	lineBreak.classList.add("line-break");
+	logo.classList.add("uniform-size", "vertical-align");
+	logo.src = `${company.image}`;
+	newResult.appendChild(logo);
+	newResult.appendChild(
+		document.createTextNode(`${company.companyName} (${coSymbol})`)
+	);
+	if (company.changesPercentage.includes("+")) {
+		percentChange.classList.add("positive");
+	} else {
+		percentChange.classList.add("negative");
+	}
+	percentChange.appendChild(
+		document.createTextNode(`${company.changesPercentage}`)
+	);
+	newResult.appendChild(percentChange);
+	newResult.href = `company.html?symbol=${coSymbol}`;
+	resultChart.appendChild(newResult);
+	resultChart.appendChild(lineBreak);
 }
 
 searchButton.addEventListener("click", () => {
