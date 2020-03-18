@@ -12,9 +12,8 @@ async function companyProfile() {
 	let profile = await fetch(
 		`https://financialmodelingprep.com/api/v3/company/profile/${symbol}`
 	);
-	let details = await profile.json();
-	console.log(details);
-	createPage(symbol, details);
+	let detailsArray = await profile.json();
+	createPage(symbol, detailsArray);
 	stockHistory(symbol);
 	pageLoader.classList.add("hide");
 	profilePage.classList.remove("hide");
@@ -22,27 +21,31 @@ async function companyProfile() {
 
 function createPage(symbol, obj) {
 	const company = obj.profile;
+	/* creation of html page elements*/
 	const logo = document.createElement("img");
-	logo.src = company.image;
-	logo.classList.add("responsive-img");
-	heading.appendChild(logo);
 	const name = document.createElement("div");
-	name.textContent = `${symbol} (${company.companyName})`;
-	name.classList.add("responsive-header");
-	heading.appendChild(name);
 	const sharePrice = document.createElement("div");
-	sharePrice.textContent = company.price;
-	price.appendChild(sharePrice);
 	const percentChange = document.createElement("div");
-	percentChange.textContent = company.changesPercentage;
+	const coDescription = document.createElement("div");
+	/*css styling*/
+	logo.classList.add("responsive-img");
+	name.classList.add("responsive-header");
 	if (percentChange.innerText.includes("+")) {
 		percentChange.classList.add("positive");
 	} else {
 		percentChange.classList.add("negative");
 	}
-	price.appendChild(percentChange);
-	const coDescription = document.createElement("div");
+	/*assigning content from array to HTML*/
+	logo.src = company.image;
+	name.textContent = `${symbol} (${company.companyName})`;
+	sharePrice.textContent = company.price;
 	coDescription.textContent = company.description;
+	percentChange.textContent = company.changesPercentage;
+	/*append all to DOM*/
+	heading.appendChild(logo);
+	heading.appendChild(name);
+	price.appendChild(sharePrice);
+	price.appendChild(percentChange);
 	description.appendChild(coDescription);
 }
 

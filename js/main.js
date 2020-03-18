@@ -22,7 +22,10 @@ async function searching() {
 	/*notice for user if no results*/
 	if (data.length === 0) {
 		const error = document.createElement("div");
-		error.innerHTML = `We did not find any results that match <strong>"${userInput}"</strong>`;
+		error.insertAdjacentHTML(
+			"afterbegin",
+			`We did not find any results that match <strong>"${userInput}"</strong>`
+		);
 		error.classList.add("error-style");
 		resultChart.append(error);
 		/*create symbol list of 10 companies then get profiles w/ second fetch in map*/
@@ -33,41 +36,41 @@ async function searching() {
 			searchSymbols.push(symbol);
 		}
 		const currentList = searchSymbols;
-		currentList.map(getData);
+		currentList.map(getProfile);
 	}
 	loader.classList.add("hide");
 }
 
-async function getData(coSymbol) {
+async function getProfile(coSymbol) {
 	const response = await fetch(
 		`https://financialmodelingprep.com/api/v3/company/profile/${coSymbol}`
 	);
 	const data = await response.json();
-	let company = data.profile;
-
+	const company = data.profile;
+	/*creation of elements w/style*/
 	const newResult = document.createElement("a");
-	const logo = document.createElement("img");
-	const percentChange = document.createElement("span");
-	const lineBreak = document.createElement("hr");
 	newResult.classList.add("result");
-	lineBreak.classList.add("line-break");
+	const logo = document.createElement("img");
 	logo.classList.add("uniform-size", "vertical-align");
-	logo.src = `${company.image}`;
-
-	newResult.appendChild(logo);
-	newResult.appendChild(
-		document.createTextNode(`${company.companyName} (${coSymbol})`)
-	);
+	const percentChange = document.createElement("span");
 	if (company.changesPercentage.includes("+")) {
 		percentChange.classList.add("positive");
 	} else {
 		percentChange.classList.add("negative");
 	}
-	percentChange.appendChild(
-		document.createTextNode(`${company.changesPercentage}`)
+	const lineBreak = document.createElement("hr");
+	lineBreak.classList.add("line-break");
+	/*assigning specific details to HTML li item 'new result'*/
+	logo.src = `${company.image}`;
+	percentChange.textContent = `${company.changesPercentage}`;
+	newResult.appendChild(logo);
+	newResult.insertAdjacentHTML(
+		"beforeend",
+		`${company.companyName} (${coSymbol})`
 	);
 	newResult.appendChild(percentChange);
 	newResult.href = `company.html?symbol=${coSymbol}`;
+	/*append complete result to DOM*/
 	resultChart.appendChild(newResult);
 	resultChart.appendChild(lineBreak);
 }
