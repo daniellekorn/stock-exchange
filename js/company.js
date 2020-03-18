@@ -3,6 +3,7 @@ const price = document.querySelector("#price");
 const description = document.querySelector("#description");
 const profilePage = document.querySelector("#profilePage");
 const pageLoader = document.querySelector("#pageLoader");
+const title = document.querySelector("#companyTitle");
 
 async function companyProfile() {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -19,8 +20,21 @@ async function companyProfile() {
 	profilePage.classList.remove("hide");
 }
 
+function dynamicFavicon(company) {
+	let link =
+		document.querySelector("link[rel*='icon']") ||
+		document.createElement("link");
+	link.type = "image/x-icon";
+	link.rel = "shortcut icon";
+	link.href = `${company.image}`;
+	document.getElementsByTagName("head")[0].appendChild(link);
+}
+
 function createPage(symbol, obj) {
 	const company = obj.profile;
+	/*Add company img/title to title area*/
+	dynamicFavicon(company);
+	title.textContent = company.companyName;
 	/* creation of html page elements*/
 	const logo = document.createElement("img");
 	const name = document.createElement("div");
@@ -121,4 +135,5 @@ function generateChart(arrayOne, arrayTwo) {
 window.onload = () => {
 	pageLoader.classList.remove("hide");
 	companyProfile();
+	console.log(title);
 };
