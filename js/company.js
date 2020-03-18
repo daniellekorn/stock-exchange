@@ -35,7 +35,7 @@ function createPage(symbol, obj) {
 	} else {
 		percentChange.classList.add("negative");
 	}
-	/*assigning content from array to HTML*/
+	/*assigning content from data array to HTML*/
 	logo.src = company.image;
 	name.textContent = `${symbol} (${company.companyName})`;
 	sharePrice.textContent = company.price;

@@ -28,32 +28,80 @@ async function searching() {
 		);
 		error.classList.add("error-style");
 		resultChart.append(error);
-		/*create symbol list of 10 companies then get profiles w/ second fetch in map*/
 	} else {
 		const searchSymbols = [];
 		for (let i = 0; i < data.length; i++) {
 			let symbol = data[i].symbol;
 			searchSymbols.push(symbol);
 		}
-		const currentList = searchSymbols;
-		currentList.map(getProfile);
+		const triplets = createTriplets(searchSymbols);
+		const tripletStrings = triplets.map(triple => {
+			return triple.join();
+		});
+		getProfileData(tripletStrings);
 	}
 	loader.classList.add("hide");
 }
 
-async function getProfile(coSymbol) {
-	const response = await fetch(
-		`https://financialmodelingprep.com/api/v3/company/profile/${coSymbol}`
-	);
-	const data = await response.json();
-	const company = data.profile;
+function createTriplets(array) {
+	var j = 0;
+	triplets = [];
+	triplets.push([]);
+	for (i = 1; i <= array.length; i++) {
+		// always updating the final array
+		triplets[j].push(array[i - 1]);
+
+		if (i % 3 == 0) {
+			triplets.push([]);
+			j++;
+		}
+	}
+	if (triplets[0].length === 0) {
+		// if the data you received was epmty
+		console.log("Error: empty array");
+	}
+	return triplets;
+}
+
+const getProfileData = async array => {
+	let allTogether = [];
+	let merged = [];
+	try {
+		let data = await Promise.all(
+			array.map(item =>
+				fetch(
+					`https://financialmodelingprep.com/api/v3/company/profile/${item}`
+				)
+					.then(r => r.json())
+					.catch(error => ({ error, url }))
+			)
+		);
+		for (let i = 0; i < data.length; i++) {
+			if (i < data.length - 1) {
+				allTogether.push(data[i].companyProfiles);
+			} else {
+				allTogether.push(data[i]);
+			}
+		}
+		merged = [].concat.apply([], allTogether);
+		merged.map(company => {
+			createListItem(company);
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+function createListItem(company) {
+	const symbol = company.symbol;
+	const profile = company.profile;
 	/*creation of elements w/style*/
 	const newResult = document.createElement("a");
 	newResult.classList.add("result");
 	const logo = document.createElement("img");
 	logo.classList.add("uniform-size", "vertical-align");
 	const percentChange = document.createElement("span");
-	if (company.changesPercentage.includes("+")) {
+	if (profile.changesPercentage.includes("+")) {
 		percentChange.classList.add("positive");
 	} else {
 		percentChange.classList.add("negative");
@@ -61,15 +109,15 @@ async function getProfile(coSymbol) {
 	const lineBreak = document.createElement("hr");
 	lineBreak.classList.add("line-break");
 	/*assigning specific details to HTML li item 'new result'*/
-	logo.src = `${company.image}`;
-	percentChange.textContent = `${company.changesPercentage}`;
+	logo.src = `${profile.image}`;
+	percentChange.textContent = `${profile.changesPercentage}`;
 	newResult.appendChild(logo);
 	newResult.insertAdjacentHTML(
 		"beforeend",
-		`${company.companyName} (${coSymbol})`
+		`${profile.companyName} (${symbol})`
 	);
 	newResult.appendChild(percentChange);
-	newResult.href = `company.html?symbol=${coSymbol}`;
+	newResult.href = `company.html?symbol=${symbol}`;
 	/*append complete result to DOM*/
 	resultChart.appendChild(newResult);
 	resultChart.appendChild(lineBreak);
@@ -80,11 +128,3 @@ searchButton.addEventListener("click", () => {
 	userInput = searchText.value;
 	searching();
 });
-
-/* Why not working?
-searchText.addEventListener("keyup", function(event) {
-	event.preventDefault();
-	if (event.keyCode === 13) {
-		searchButton.click();
-	}
-});*/
