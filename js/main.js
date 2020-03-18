@@ -102,11 +102,12 @@ function createListItem(company) {
 	const logo = document.createElement("img");
 	logo.classList.add("uniform-size", "vertical-align");
 	const percentChange = document.createElement("span");
-	if (profile.changesPercentage.includes("+")) {
-		percentChange.classList.add("positive");
-	} else {
-		percentChange.classList.add("negative");
+	function getColor(isPositive) {
+		return isPositive
+			? percentChange.classList.add("positive")
+			: percentChange.classList.add("negative");
 	}
+	getColor(profile.changesPercentage.includes("+"));
 	const lineBreak = document.createElement("hr");
 	lineBreak.classList.add("line-break");
 	/*assigning specific details to HTML li item 'new result'*/
