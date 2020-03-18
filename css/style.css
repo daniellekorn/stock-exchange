@@ -55,6 +55,7 @@ body {
 	-webkit-box-shadow: 0 0 10px #ccc;
 	box-shadow: 0 0 10px #ccc;
 	align-self: center;
+	justify-self: center;
 }
 
 .search-container .form-container {
@@ -130,7 +131,8 @@ body {
 /*marquee style*/
 .marquee {
 	width: 100%;
-	height: 15%;
+	height: 10%;
+	margin-bottom: 25px;
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -139,10 +141,10 @@ body {
 	list-style: none;
 	height: 100%;
 	width: 95%;
-	font-size: 10px;
-	justify-content: center;
+	font-size: 14px;
+	justify-content: space-evenly;
 	align-items: center;
-	animation: scrolling 45s linear infinite;
+	animation: scrolling 120s linear infinite;
 }
 
 @keyframes scrolling {
@@ -156,24 +158,17 @@ body {
 
 .marquee-content .marquee-list {
 	align-items: center;
-	width: 8%;
 	flex-shrink: 0;
 	white-space: nowrap;
+	margin: 0px 8px;
 }
 
-.marquee span:hover {
+.marquee-content .marquee-list span {
+	width: fit-content;
+}
+
+.marquee .marquee-content:hover {
 	animation-play-state: paused;
-}
-
-/* Make it move */
-
-@keyframes marquee {
-	0% {
-		transform: translate(0, 0);
-	}
-	100% {
-		transform: translate(-100%, 0);
-	}
 }
 
 .line-break {
@@ -270,5 +265,8 @@ WORK ON THIS*/
 	}
 	.line-break {
 		width: 95%;
+	}
+	.marquee-content {
+		animation: scrolling 40s linear infinite;
 	}
 }

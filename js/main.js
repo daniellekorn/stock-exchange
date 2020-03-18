@@ -130,8 +130,26 @@ window.onload = async () => {
 	);
 	let data = await response.json();
 	stocks = data.stockList;
+
+	/*I wanted to make some red and some green, but the server cannot handle so many requests at once
+	in order for me to get the profile and find whether it is in the pos or neg, suggestions?*/
+	// try {
+	// 	let data = await Promise.all(
+	// 		stocks.map(item =>
+	// 			fetch(
+	// 				`https://financialmodelingprep.com/api/v3/company/profile/${item.symbol}`
+	// 			)
+	// 				.then(response => response.json())
+	// 				.catch(error => ({ error, url }))
+	// 		)
+	// 	);
+	// 	console.log(data);
+	// } catch (err) {
+	// 	console.log(err);
+	// }
+
 	const allListings = stocks.map(item => {
-		return `<li class="marquee-list">${item.symbol} ${item.price}</li>`;
+		return `<li class="marquee-list"><span>${item.symbol}</span> <span class="positive">$${item.price}</span></li>`;
 	});
 	console.log(allListings);
 	marquee.innerHTML = allListings.join("");
