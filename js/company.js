@@ -57,6 +57,7 @@ async function stockHistory(symbol) {
 	let length = data.historical.length;
 	const dates = [];
 	const priceOnDate = [];
+	/*Limit chart dates*/
 	for (let i = 0; i < length; i++) {
 		if (length <= 100) {
 			if (i % 10 === 0) {
