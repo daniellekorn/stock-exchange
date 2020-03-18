@@ -3,6 +3,7 @@ const resultChart = document.querySelector("#resultChart");
 const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
 const links = document.querySelectorAll(".result");
+const marquee = document.querySelector("#marquee");
 
 function clearHistory() {
 	let child = resultChart.lastElementChild;
@@ -122,6 +123,19 @@ function createListItem(company) {
 	resultChart.appendChild(newResult);
 	resultChart.appendChild(lineBreak);
 }
+
+window.onload = async () => {
+	let response = await fetch(
+		"https://financialmodelingprep.com/api/v3/stock/real-time-price"
+	);
+	let data = await response.json();
+	stocks = data.stockList;
+	const allListings = stocks.map(item => {
+		return `<li class="marquee-list">${item.symbol} ${item.price}</li>`;
+	});
+	console.log(allListings);
+	marquee.innerHTML = allListings.join("");
+};
 
 searchButton.addEventListener("click", () => {
 	loader.classList.remove("hide");
