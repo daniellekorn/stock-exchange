@@ -129,19 +129,6 @@ function createListItem(company) {
 	resultChart.appendChild(lineBreak);
 }
 
-let mostImpCurrency = ["EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF"];
-let mostImpCrypto = ["BTC", "ETH", "LTC", "DASH", "XRP"];
-let mostImpIndexes = [".DJI", ".IXIC", ".INX", "%5EFCHI", "%5EXAU", "%5EXAX"];
-function findRelevant(mainArray, impArray) {
-	let newArray = [];
-	mainArray.forEach(item => {
-		if (impArray.includes(item.ticker) || impArray.includes(item.name)) {
-			newArray.push(item);
-		}
-	});
-	return newArray;
-}
-
 function createSideBar(item) {
 	const box = document.createElement("div");
 	const ticker = document.createElement("div");
@@ -162,7 +149,7 @@ function createSideBar(item) {
 	if (this.half) {
 		box.classList.add("flexible", "w-wrap");
 		box.appendChild(ticker);
-		price.classList.add("space");
+		change.classList.add("space");
 	} else {
 		name.textContent = item.indexName;
 		box.appendChild(name);
@@ -172,6 +159,19 @@ function createSideBar(item) {
 	box.appendChild(price);
 	box.classList.add("side-bar-item");
 	this.domItem.appendChild(box);
+}
+
+let mostImpCurrency = ["EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF"];
+let mostImpCrypto = ["BTC", "ETH", "LTC", "DASH", "XRP"];
+let mostImpIndexes = [".DJI", ".IXIC", ".INX", "%5EFCHI", "%5EXAU", "%5EXAX"];
+function findRelevant(mainArray, impArray) {
+	let newArray = [];
+	mainArray.forEach(item => {
+		if (impArray.includes(item.ticker) || impArray.includes(item.name)) {
+			newArray.push(item);
+		}
+	});
+	return newArray;
 }
 
 window.onload = async () => {
@@ -186,7 +186,7 @@ window.onload = async () => {
 	});
 	marquee.innerHTML = allListings.join("");
 
-	/*use Promise.all to do these*/
+	/*use Promise.all to do these 3 fetches?*/
 	/*Major Indexes side bar info*/
 	let indexesResponse = await fetch(
 		"https://financialmodelingprep.com/api/v3/majors-indexes"
@@ -194,7 +194,6 @@ window.onload = async () => {
 	let indexesData = await indexesResponse.json();
 	let majorData = indexesData.majorIndexesList;
 	let condensedIndexes = findRelevant(majorData, mostImpIndexes);
-	console.log(condensedIndexes);
 	condensedIndexes.map(createSideBar, {
 		domItem: majorIndexes
 	});
@@ -206,7 +205,6 @@ window.onload = async () => {
 	let currencyData = await currencyResponse.json();
 	let currencyIndexes = currencyData.forexList;
 	let condensedCurrency = findRelevant(currencyIndexes, mostImpCurrency);
-	console.log(condensedCurrency);
 	condensedCurrency.map(createSideBar, {
 		domItem: currencies,
 		half: true

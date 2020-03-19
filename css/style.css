@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	height: 100vh;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Open Sans", sans-serif;
 }
 
 * {
@@ -45,8 +45,6 @@ body {
 }
 
 .site-container .flexible.col {
-	justify-content: center;
-	align-items: center;
 	flex-wrap: wrap;
 }
 
@@ -76,8 +74,8 @@ body {
 }
 
 .side-bar h1 {
-	font-size: 24px;
-	font-weight: 600;
+	font-size: 20px;
+	font-weight: 900;
 	text-transform: uppercase;
 	text-align: center;
 	margin: 0;
@@ -160,21 +158,20 @@ body {
 	font-size: 12px;
 }
 
-.search-container .result-chart {
+.search-container .result-chart.flexible.col {
+	height: 92.5%;
 	text-decoration: none;
+	justify-content: stretch;
 }
 
 .search-container .result-chart .result {
 	display: block;
 	text-decoration: none;
-	align-self: center;
 	color: black;
-	position: relative;
-	padding: 0 72px;
 	font-size: 16px;
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding: 0 72px;
 }
 
 .error-style {

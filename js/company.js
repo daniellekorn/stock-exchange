@@ -30,6 +30,12 @@ function dynamicFavicon(company) {
 	document.getElementsByTagName("head")[0].appendChild(link);
 }
 
+function getColor(isPositive, element) {
+	return isPositive
+		? element.classList.add("positive")
+		: element.classList.add("negative");
+}
+
 function createPage(symbol, obj) {
 	const company = obj.profile;
 	/*Add company img/title to title area*/
@@ -44,7 +50,7 @@ function createPage(symbol, obj) {
 	/*css styling*/
 	logo.classList.add("responsive-img");
 	name.classList.add("responsive-header");
-	getColor(company.changesPercentage.includes("+") percentChange);
+	getColor(company.changesPercentage.includes("+"), percentChange);
 	/*assigning content from data array to HTML*/
 	logo.src = company.image;
 	name.textContent = `${symbol} (${company.companyName})`;
@@ -130,5 +136,4 @@ function generateChart(arrayOne, arrayTwo) {
 window.onload = () => {
 	pageLoader.classList.remove("hide");
 	companyProfile();
-	console.log(title);
 };
