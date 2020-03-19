@@ -8,34 +8,6 @@ const cryptoCurrency = document.querySelector("#cryptoCurrency");
 const currencies = document.querySelector("#currencies");
 const searchForm = document.querySelector("#searchForm");
 
-function clearHistory() {
-	let child = resultChart.lastElementChild;
-	while (child) {
-		resultChart.removeChild(child);
-		child = resultChart.lastElementChild;
-	}
-}
-
-function createTriplets(array) {
-	var j = 0;
-	triplets = [];
-	triplets.push([]);
-	for (i = 1; i <= array.length; i++) {
-		// always updating the final array
-		triplets[j].push(array[i - 1]);
-
-		if (i % 3 == 0) {
-			triplets.push([]);
-			j++;
-		}
-	}
-	if (triplets[0].length === 0) {
-		// if the data you received was epmty
-		console.log("Error: empty array");
-	}
-	return triplets;
-}
-
 async function searching() {
 	clearHistory();
 	let response = await fetch(
@@ -161,61 +133,63 @@ function createSideBar(item) {
 	this.domItem.appendChild(box);
 }
 
-let mostImpCurrency = ["EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF"];
-let mostImpCrypto = ["BTC", "ETH", "LTC", "DASH", "XRP"];
-let mostImpIndexes = [".DJI", ".IXIC", ".INX", "%5EFCHI", "%5EXAU", "%5EXAX"];
-function findRelevant(mainArray, impArray) {
-	let newArray = [];
-	mainArray.forEach(item => {
-		if (impArray.includes(item.ticker) || impArray.includes(item.name)) {
-			newArray.push(item);
-		}
-	});
-	return newArray;
-}
+// let mostImpCurrency = ["EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF"];
+// let mostImpCrypto = ["BTC", "ETH", "LTC", "DASH", "XRP"];
+// let mostImpIndexes = [".DJI", ".IXIC", ".INX", "%5EFCHI", "%5EXAU", "%5EXAX"];
+// function findRelevant(mainArray, impArray) {
+// 	let newArray = [];
+// 	mainArray.forEach(item => {
+// 		if (impArray.includes(item.ticker) || impArray.includes(item.name)) {
+// 			newArray.push(item);
+// 		}
+// 	});
+// 	return newArray;
+// }
 
-window.onload = async () => {
-	/*use Promise.all to do these 3 fetches?*/
-	/*Major Indexes side bar info*/
-	let indexesResponse = await fetch(
-		"https://financialmodelingprep.com/api/v3/majors-indexes"
-	);
-	let indexesData = await indexesResponse.json();
-	let majorData = indexesData.majorIndexesList;
-	let condensedIndexes = findRelevant(majorData, mostImpIndexes);
-	condensedIndexes.map(createSideBar, {
-		domItem: majorIndexes
-	});
+// window.onload = async () => {
+// 	/*use Promise.all to do these 3 fetches?*/
+// 	/*Major Indexes side bar info*/
+// 	let indexesResponse = await fetch(
+// 		"https://financialmodelingprep.com/api/v3/majors-indexes"
+// 	);
+// 	let indexesData = await indexesResponse.json();
+// 	let majorData = indexesData.majorIndexesList;
+// 	let condensedIndexes = findRelevant(majorData, mostImpIndexes);
+// 	condensedIndexes.map(createSideBar, {
+// 		domItem: majorIndexes
+// 	});
 
-	/*Currencies side bar info*/
-	let currencyResponse = await fetch(
-		"https://financialmodelingprep.com/api/v3/forex"
-	);
-	let currencyData = await currencyResponse.json();
-	let currencyIndexes = currencyData.forexList;
-	let condensedCurrency = findRelevant(currencyIndexes, mostImpCurrency);
-	condensedCurrency.map(createSideBar, {
-		domItem: currencies,
-		half: true
-	});
+// 	/*Currencies side bar info*/
+// 	let currencyResponse = await fetch(
+// 		"https://financialmodelingprep.com/api/v3/forex"
+// 	);
+// 	let currencyData = await currencyResponse.json();
+// 	let currencyIndexes = currencyData.forexList;
+// 	let condensedCurrency = findRelevant(currencyIndexes, mostImpCurrency);
+// 	condensedCurrency.map(createSideBar, {
+// 		domItem: currencies,
+// 		half: true
+// 	});
 
-	/*Cryptocurrency side bar info*/
-	let cryptoResponse = await fetch(
-		"https://financialmodelingprep.com/api/v3/cryptocurrencies"
-	);
-	let cryptoData = await cryptoResponse.json();
-	let cryptoIndexes = cryptoData.cryptocurrenciesList;
-	let condensedCrypto = findRelevant(cryptoIndexes, mostImpCrypto);
-	condensedCrypto.map(createSideBar, {
-		domItem: cryptoCurrency,
-		half: true
-	});
-};
+// 	/*Cryptocurrency side bar info*/
+// 	let cryptoResponse = await fetch(
+// 		"https://financialmodelingprep.com/api/v3/cryptocurrencies"
+// 	);
+// 	let cryptoData = await cryptoResponse.json();
+// 	let cryptoIndexes = cryptoData.cryptocurrenciesList;
+// 	let condensedCrypto = findRelevant(cryptoIndexes, mostImpCrypto);
+// 	condensedCrypto.map(createSideBar, {
+// 		domItem: cryptoCurrency,
+// 		half: true
+// 	});
+// };
 
 searchButton.addEventListener("click", () => {
 	loader.classList.remove("hide");
-	userInput = searchText.value;
-	searching();
+	const searchResults = new resultList(resultChart);
+	searchResults.clearHistory();
+	const search = new Search(resultChart, searchText.value);
+	search.runSearch();
 });
 
 searchForm.addEventListener(
