@@ -240,6 +240,12 @@ body {
 	transform: translateY(0);
 }
 
+.autocomplete {
+	width: 100%;
+	flex-basis: 100%;
+	display: inline-block;
+}
+
 /* loader style */
 .loader {
 	width: 50px;

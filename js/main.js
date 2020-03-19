@@ -3,10 +3,10 @@ const resultChart = document.querySelector("#resultChart");
 const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
 const links = document.querySelectorAll(".result");
-const marquee = document.querySelector("#marquee");
 const majorIndexes = document.querySelector("#majorIndexes");
 const cryptoCurrency = document.querySelector("#cryptoCurrency");
 const currencies = document.querySelector("#currencies");
+const searchForm = document.querySelector("#searchForm");
 
 function clearHistory() {
 	let child = resultChart.lastElementChild;
@@ -175,17 +175,6 @@ function findRelevant(mainArray, impArray) {
 }
 
 window.onload = async () => {
-	/*Upper marquee*/
-	let marqueeResponse = await fetch(
-		"https://financialmodelingprep.com/api/v3/stock/real-time-price"
-	);
-	let marqueeData = await marqueeResponse.json();
-	let stocks = marqueeData.stockList;
-	const allListings = stocks.map(item => {
-		return `<li class="marquee-list"><span>${item.symbol}</span> <span class="neutral">$${item.price}</span></li>`;
-	});
-	marquee.innerHTML = allListings.join("");
-
 	/*use Promise.all to do these 3 fetches?*/
 	/*Major Indexes side bar info*/
 	let indexesResponse = await fetch(
@@ -227,4 +216,18 @@ searchButton.addEventListener("click", () => {
 	loader.classList.remove("hide");
 	userInput = searchText.value;
 	searching();
+});
+
+searchForm.addEventListener(
+	"submit",
+	function(e) {
+		e.preventDefault();
+	},
+	false
+);
+
+searchText.addEventListener("keyup", function(event) {
+	if (event.keyCode === 13) {
+		searchButton.click();
+	}
 });
