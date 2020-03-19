@@ -34,6 +34,10 @@ body {
 	color: red;
 }
 
+.neutral {
+	color: #0053ee;
+}
+
 .company-container,
 .site-container {
 	height: 100%;
@@ -46,16 +50,68 @@ body {
 	flex-wrap: wrap;
 }
 
+.main-body.flexible {
+	min-height: 85%;
+	justify-content: center;
+}
+
 .search-container {
-	width: 60%;
-	min-height: 75%;
-	min-width: 700px;
+	min-height: 95%;
+}
+
+.side-bar {
+	margin: 0 10px;
+}
+
+.side-bar.flexible.col.indexes {
+	justify-content: space-between;
+}
+
+.side-bar.flexible.col.currencies {
+	width: 20%;
+	min-width: 200px;
+	list-style: none;
+	justify-self: center;
+	justify-content: space-around;
+}
+
+.side-bar h1 {
+	font-size: 24px;
+	font-weight: 600;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0;
+}
+
+.side-bar-item {
+	height: 15%;
+	padding: 10px;
+}
+
+.w-wrap {
+	width: 95%;
+	flex-wrap: wrap;
+}
+
+.side-by-side {
+	width: 20%;
+}
+
+.space {
+	padding: 0px 8px;
+}
+
+.even-out {
+	text-align: center;
+}
+
+.search-container {
+	width: 50%;
+	min-width: 500px;
 	background-color: white;
 	-moz-box-shadow: 0 0 10px #ccc;
 	-webkit-box-shadow: 0 0 10px #ccc;
 	box-shadow: 0 0 10px #ccc;
-	align-self: center;
-	justify-self: center;
 }
 
 .search-container .form-container {
@@ -105,8 +161,6 @@ body {
 }
 
 .search-container .result-chart {
-	padding: 15px 0px;
-	height: 100%;
 	text-decoration: none;
 }
 
@@ -135,6 +189,7 @@ body {
 	margin-bottom: 25px;
 	white-space: nowrap;
 	overflow: hidden;
+	margin: 0;
 }
 .marquee-content {
 	display: flex;
@@ -145,6 +200,7 @@ body {
 	justify-content: space-evenly;
 	align-items: center;
 	animation: scrolling 120s linear infinite;
+	margin: 0;
 }
 
 @keyframes scrolling {

@@ -44,12 +44,7 @@ function createPage(symbol, obj) {
 	/*css styling*/
 	logo.classList.add("responsive-img");
 	name.classList.add("responsive-header");
-	function getColor(isPositive) {
-		return isPositive
-			? percentChange.classList.add("positive")
-			: percentChange.classList.add("negative");
-	}
-	getColor(company.changesPercentage.includes("+"));
+	getColor(company.changesPercentage.includes("+") percentChange);
 	/*assigning content from data array to HTML*/
 	logo.src = company.image;
 	name.textContent = `${symbol} (${company.companyName})`;

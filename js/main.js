@@ -4,6 +4,9 @@ const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
 const links = document.querySelectorAll(".result");
 const marquee = document.querySelector("#marquee");
+const majorIndexes = document.querySelector("#majorIndexes");
+const cryptoCurrency = document.querySelector("#cryptoCurrency");
+const currencies = document.querySelector("#currencies");
 
 function clearHistory() {
 	let child = resultChart.lastElementChild;
@@ -11,6 +14,26 @@ function clearHistory() {
 		resultChart.removeChild(child);
 		child = resultChart.lastElementChild;
 	}
+}
+
+function createTriplets(array) {
+	var j = 0;
+	triplets = [];
+	triplets.push([]);
+	for (i = 1; i <= array.length; i++) {
+		// always updating the final array
+		triplets[j].push(array[i - 1]);
+
+		if (i % 3 == 0) {
+			triplets.push([]);
+			j++;
+		}
+	}
+	if (triplets[0].length === 0) {
+		// if the data you received was epmty
+		console.log("Error: empty array");
+	}
+	return triplets;
 }
 
 async function searching() {
@@ -44,26 +67,6 @@ async function searching() {
 	loader.classList.add("hide");
 }
 
-function createTriplets(array) {
-	var j = 0;
-	triplets = [];
-	triplets.push([]);
-	for (i = 1; i <= array.length; i++) {
-		// always updating the final array
-		triplets[j].push(array[i - 1]);
-
-		if (i % 3 == 0) {
-			triplets.push([]);
-			j++;
-		}
-	}
-	if (triplets[0].length === 0) {
-		// if the data you received was epmty
-		console.log("Error: empty array");
-	}
-	return triplets;
-}
-
 const getProfileData = async array => {
 	let allTogether = [];
 	let merged = [];
@@ -93,6 +96,12 @@ const getProfileData = async array => {
 	}
 };
 
+function getColor(isPositive, element) {
+	return isPositive
+		? element.classList.add("positive")
+		: element.classList.add("negative");
+}
+
 function createListItem(company) {
 	const symbol = company.symbol;
 	const profile = company.profile;
@@ -102,12 +111,7 @@ function createListItem(company) {
 	const logo = document.createElement("img");
 	logo.classList.add("uniform-size", "vertical-align");
 	const percentChange = document.createElement("span");
-	function getColor(isPositive) {
-		return isPositive
-			? percentChange.classList.add("positive")
-			: percentChange.classList.add("negative");
-	}
-	getColor(profile.changesPercentage.includes("+"));
+	getColor(profile.changesPercentage.includes("+"), percentChange);
 	const lineBreak = document.createElement("hr");
 	lineBreak.classList.add("line-break");
 	/*assigning specific details to HTML li item 'new result'*/
@@ -125,35 +129,100 @@ function createListItem(company) {
 	resultChart.appendChild(lineBreak);
 }
 
+let mostImpCurrency = ["EUR/USD", "USD/JPY", "GBP/USD", "EUR/GBP", "USD/CHF"];
+let mostImpCrypto = ["BTC", "ETH", "LTC", "DASH", "XRP"];
+let mostImpIndexes = [".DJI", ".IXIC", ".INX", "%5EFCHI", "%5EXAU", "%5EXAX"];
+function findRelevant(mainArray, impArray) {
+	let newArray = [];
+	mainArray.forEach(item => {
+		if (impArray.includes(item.ticker) || impArray.includes(item.name)) {
+			newArray.push(item);
+		}
+	});
+	return newArray;
+}
+
+function createSideBar(item) {
+	const box = document.createElement("div");
+	const ticker = document.createElement("div");
+	const name = document.createElement("div");
+	const price = document.createElement("div");
+	const change = document.createElement("div");
+	getColor(!item.changes.toString().includes("-"), change);
+	ticker.textContent = item.ticker;
+	let percentage = Math.round(item.changes * 100) / 100;
+	change.textContent = `(${percentage}%)`;
+
+	if (item.price) {
+		price.textContent = `$${item.price}`;
+	} else {
+		price.textContent = `$${item.ask}`;
+	}
+
+	if (this.half) {
+		box.classList.add("flexible", "w-wrap");
+		box.appendChild(ticker);
+		price.classList.add("space");
+	} else {
+		name.textContent = item.indexName;
+		box.appendChild(name);
+		box.classList.add("even-out");
+	}
+	box.appendChild(change);
+	box.appendChild(price);
+	box.classList.add("side-bar-item");
+	this.domItem.appendChild(box);
+}
+
 window.onload = async () => {
-	let response = await fetch(
+	/*Upper marquee*/
+	let marqueeResponse = await fetch(
 		"https://financialmodelingprep.com/api/v3/stock/real-time-price"
 	);
-	let data = await response.json();
-	stocks = data.stockList;
-
-	/*I wanted to make some red and some green, but the server cannot handle so many requests at once
-	in order for me to get the profile and find whether it is in the pos or neg, suggestions?*/
-	// try {
-	// 	let data = await Promise.all(
-	// 		stocks.map(item =>
-	// 			fetch(
-	// 				`https://financialmodelingprep.com/api/v3/company/profile/${item.symbol}`
-	// 			)
-	// 				.then(response => response.json())
-	// 				.catch(error => ({ error, url }))
-	// 		)
-	// 	);
-	// 	console.log(data);
-	// } catch (err) {
-	// 	console.log(err);
-	// }
-
+	let marqueeData = await marqueeResponse.json();
+	let stocks = marqueeData.stockList;
 	const allListings = stocks.map(item => {
-		return `<li class="marquee-list"><span>${item.symbol}</span> <span class="positive">$${item.price}</span></li>`;
+		return `<li class="marquee-list"><span>${item.symbol}</span> <span class="neutral">$${item.price}</span></li>`;
 	});
-	console.log(allListings);
 	marquee.innerHTML = allListings.join("");
+
+	/*use Promise.all to do these*/
+	/*Major Indexes side bar info*/
+	let indexesResponse = await fetch(
+		"https://financialmodelingprep.com/api/v3/majors-indexes"
+	);
+	let indexesData = await indexesResponse.json();
+	let majorData = indexesData.majorIndexesList;
+	let condensedIndexes = findRelevant(majorData, mostImpIndexes);
+	console.log(condensedIndexes);
+	condensedIndexes.map(createSideBar, {
+		domItem: majorIndexes
+	});
+
+	/*Currencies side bar info*/
+	let currencyResponse = await fetch(
+		"https://financialmodelingprep.com/api/v3/forex"
+	);
+	let currencyData = await currencyResponse.json();
+	let currencyIndexes = currencyData.forexList;
+	let condensedCurrency = findRelevant(currencyIndexes, mostImpCurrency);
+	console.log(condensedCurrency);
+	condensedCurrency.map(createSideBar, {
+		domItem: currencies,
+		half: true
+	});
+
+	/*Cryptocurrency side bar info*/
+	let cryptoResponse = await fetch(
+		"https://financialmodelingprep.com/api/v3/cryptocurrencies"
+	);
+	let cryptoData = await cryptoResponse.json();
+	let cryptoIndexes = cryptoData.cryptocurrenciesList;
+	let condensedCrypto = findRelevant(cryptoIndexes, mostImpCrypto);
+	condensedCrypto.map(createSideBar, {
+		domItem: cryptoCurrency,
+		half: true
+	});
 };
 
 searchButton.addEventListener("click", () => {

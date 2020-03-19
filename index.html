@@ -22,34 +22,53 @@
 			<div class="marquee">
 				<ul id="marquee" class="marquee-content flexible"></ul>
 			</div>
-			<div class="search-container">
-				<div class="form-container flexible">
-					<form autocomplete="off" class="flexible search-box">
-						<div>
-							<i class="search-icon vertical-align fa fa-search fa-lg"></i>
-						</div>
-						<div class="autocomplete">
-							<input
-								id="searchText"
-								class="autocomplete search-text"
-								type="text"
-								placeholder="Search..."
-							/>
-						</div>
-					</form>
-					<div id="loader" class="loader hide">
-						<span class="loader-bar"></span>
-						<span class="loader-bar"></span>
-						<span class="loader-bar"></span>
+			<div class="main-body flexible">
+				<div id="majorIndexes" class="side-bar flexible col indexes">
+					<div>
+						<h1>Major Indexes</h1>
 					</div>
-					<input
-						id="searchButton"
-						class="search-button"
-						type="submit"
-						value="Search"
-					/>
 				</div>
-				<div id="resultChart" class="result-chart" class="flexible col"></div>
+				<div class="search-container">
+					<div class="form-container flexible">
+						<form autocomplete="off" class="flexible search-box">
+							<div>
+								<i class="search-icon vertical-align fa fa-search fa-lg"></i>
+							</div>
+							<div class="autocomplete">
+								<input
+									id="searchText"
+									class="autocomplete search-text"
+									type="text"
+									placeholder="Search..."
+								/>
+							</div>
+						</form>
+						<div id="loader" class="loader hide">
+							<span class="loader-bar"></span>
+							<span class="loader-bar"></span>
+							<span class="loader-bar"></span>
+						</div>
+						<input
+							id="searchButton"
+							class="search-button"
+							type="submit"
+							value="Search"
+						/>
+					</div>
+					<div id="resultChart" class="result-chart" class="flexible col"></div>
+				</div>
+				<div class="side-bar flexible col currencies">
+					<div id="currencies" class="money-info half flexible col">
+						<div>
+							<h1>Currencies</h1>
+						</div>
+					</div>
+					<div id="cryptoCurrency" class="money-info half flexible col">
+						<div>
+							<h1>Cryptocurrency</h1>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="js/main.js"></script>
