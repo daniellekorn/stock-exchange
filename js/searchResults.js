@@ -12,6 +12,16 @@ class resultList {
 		}
 	}
 
+	noMatches() {
+		const error = document.createElement("div");
+		error.insertAdjacentHTML(
+			"afterbegin",
+			`We did not find any results that match <strong>"${this.userInput}"</strong>`
+		);
+		error.classList.add("error-style");
+		resultChart.append(error);
+	}
+
 	createListItems(company) {
 		const symbol = company.symbol;
 		const profile = company.profile;
