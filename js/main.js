@@ -14,19 +14,21 @@ function getColor(isPositive, element) {
 		: element.classList.add("negative");
 }
 
-/*Need to work on appending to page*/
 window.onload = () => {
 	let majorIndexesResults = new sidebarItem(
+		majorIndexes,
 		majorIndexesUrl,
 		wantedIndexes,
 		"majorIndexesList"
 	);
 	let currenciesResults = new sidebarItem(
+		currencies,
 		currenciesUrl,
 		wantedCurrencies,
 		"forexList"
 	);
 	let cryptoCurrencyResults = new sidebarItem(
+		cryptoCurrency,
 		cryptoUrl,
 		wantedCrypto,
 		"cryptocurrenciesList"

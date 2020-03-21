@@ -1,5 +1,6 @@
 class sidebarItem {
-	constructor(apiLink, wantedArray, referenceName) {
+	constructor(element, apiLink, wantedArray, referenceName) {
+		this.element = element;
 		this.apiLink = apiLink;
 		this.wantedArray = wantedArray;
 		this.referenceName = referenceName;
@@ -11,7 +12,9 @@ class sidebarItem {
 		let jsonArray = data[this.referenceName];
 		console.log(jsonArray);
 		let condensedIndexes = this.findRelevant(jsonArray, this.wantedArray);
-		condensedIndexes.map(this.createSideBar);
+		condensedIndexes.map(this.createSideBar, {
+			domItem: this.element
+		});
 	}
 
 	createSideBar(item) {
@@ -43,7 +46,7 @@ class sidebarItem {
 		box.appendChild(change);
 		box.appendChild(price);
 		box.classList.add("side-bar-item");
-		// element.appendChild(box);
+		this.domItem.appendChild(box);
 	}
 
 	findRelevant(mainArray, impArray) {
