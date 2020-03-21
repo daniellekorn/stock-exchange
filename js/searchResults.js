@@ -37,7 +37,7 @@ class resultList {
 		const newResult = document.createElement("a");
 		newResult.classList.add("result");
 		const logo = document.createElement("img");
-		logo.classList.add("uniform-size", "vertical-align");
+		logo.classList.add("uniform-size");
 		const percentChange = document.createElement("span");
 		getColor(profile.changesPercentage.includes("+"), percentChange);
 		const lineBreak = document.createElement("hr");

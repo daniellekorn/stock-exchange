@@ -38,6 +38,91 @@ window.onload = () => {
 	cryptoCurrencyResults.apiSearch();
 };
 
+// function debounce(func, wait, immediate) {
+// 	let timeout;
+// 	return function() {
+// 		let context = this,
+// 			args = arguments;
+// 		let later = function() {
+// 			timeout = null;
+// 			if (!immediate) func.apply(context, args);
+// 		};
+// 		let callNow = immediate && !timeout;
+// 		clearTimeout(timeout);
+// 		timeout = setTimeout(later, wait);
+// 		if (callNow) func.apply(context, args);
+// 	};
+// }
+
+// function autocomplete(inp, arr) {
+// 	console.log("entered autocomplete");
+// 	let currentFocus;
+// 	searchText.addEventListener("input", function(e) {
+// 		let a,
+// 			b,
+// 			i,
+// 			val = this.value;
+// 		closeAllLists();
+// 		if (!val) {
+// 			return false;
+// 		}
+// 		currentFocus = -1;
+// 		a.document.createElement("div");
+// 		a.setAttribute("id", this.id + "autocomplete-list");
+// 		a.setAttribute("class", "autocomplete-items");
+// 		this.parentNode.appendChild(a);
+// 		for (i = 0; i < arr.length; i++) {
+// 			if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+// 				b = document.createElement("div");
+// 				b.textContent = arr[i].substr(0, val.length);
+// 				b.insertAdjacentHTML(
+// 					"beforeend",
+// 					`<input type='hidden' value='${arr[i]}'></input>`
+// 				);
+// 				b.addEventListener("click", function(e) {
+// 					inp.value = this.getElementsByTagName("input")[0].value;
+// 					closeAllLists();
+// 				});
+// 				a.appendChild(b);
+// 			}
+// 		}
+// 	});
+// }
+
+// const countries = [
+// 	"Albania",
+// 	"Algeria",
+// 	"Andorra",
+// 	"Angola",
+// 	"Anguilla",
+// 	"Antigua & Barbuda",
+// 	"Argentina",
+// 	"Armenia",
+// 	"Aruba",
+// 	"Australia",
+// 	"Austria",
+// 	"Azerbaijan",
+// 	"Bahamas",
+// 	"Bahrain",
+// 	"Bangladesh"
+// ];
+// const autofillDebounce = debounce(autocomplete(searchText, countries), 250);
+
+// searchText.addEventListener("keyup", autofillDebounce);
+
+// function closeAllLists(elmnt) {
+// 	var x = document.getElementsByClassName("autocomplete-items");
+// 	for (var i = 0; i < x.length; i++) {
+// 		if (elmnt != x[i] && elmnt != inp) {
+// 			x[i].parentNode.removeChild(x[i]);
+// 		}
+// 	}
+// }
+
+// document.addEventListener("click", function(e) {
+// 	closeAllLists(e.target);
+// });
+
 searchText.addEventListener("keyup", function(event) {
 	if (event.keyCode === 13) {
 		searchButton.click();

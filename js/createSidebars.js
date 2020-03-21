@@ -41,7 +41,7 @@ class sidebarItem {
 		} else {
 			box.classList.add("flexible", "w-wrap");
 			box.appendChild(ticker);
-			change.classList.add("space");
+			box.classList.add("right-boxes");
 		}
 		box.appendChild(change);
 		box.appendChild(price);

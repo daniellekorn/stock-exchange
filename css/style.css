@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	height: 100vh;
-	font-family: "Open Sans", sans-serif;
+	font-family: "lato", sans-serif;
 }
 
 * {
@@ -50,57 +50,12 @@ body {
 
 .main-body.flexible {
 	min-height: 85%;
+	flex-shrink: 0;
 	justify-content: center;
 }
 
 .search-container {
 	min-height: 95%;
-}
-
-.side-bar {
-	margin: 0 10px;
-}
-
-.side-bar.flexible.col.indexes {
-	justify-content: space-between;
-}
-
-.side-bar.flexible.col.currencies {
-	width: 20%;
-	min-width: 200px;
-	list-style: none;
-	justify-self: center;
-	justify-content: space-around;
-}
-
-.side-bar h1 {
-	font-size: 20px;
-	font-weight: 900;
-	text-transform: uppercase;
-	text-align: center;
-	margin: 0;
-}
-
-.side-bar-item {
-	height: 15%;
-	padding: 10px;
-}
-
-.w-wrap {
-	width: 95%;
-	flex-wrap: wrap;
-}
-
-.side-by-side {
-	width: 20%;
-}
-
-.space {
-	padding: 0px 8px;
-}
-
-.even-out {
-	text-align: center;
 }
 
 .search-container {
@@ -177,6 +132,82 @@ body {
 .error-style {
 	padding-left: 72px;
 	color: red;
+}
+
+/*side-items (need to add these classes for style)*/
+.side-bar {
+	margin: 0 10px;
+}
+
+.side-bar.flexible.col.indexes {
+	justify-content: space-between;
+}
+
+.side-bar.flexible.col.currencies {
+	width: 20%;
+	min-width: 200px;
+	list-style: none;
+	justify-self: center;
+	justify-content: space-around;
+}
+
+.side-bar h1 {
+	font-size: 20px;
+	font-weight: 900;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0;
+}
+
+.side-bar-item {
+	display: flex;
+	justify-content: space-between;
+	height: 15%;
+	-webkit-animation: show 0.5s;
+	animation: show 0.5s;
+	display: flex;
+	width: 100%;
+	font-weight: 700;
+	text-transform: uppercase;
+	align-items: center;
+	border-bottom: 1px solid #dedfe1;
+	background-color: #fff;
+	margin: 12px 0;
+	padding: 0 10px;
+	border-spacing: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+	transition: all 0.3s;
+}
+
+.right-boxes {
+	margin: 4px;
+	padding: 10px;
+}
+
+.w-wrap {
+	width: 95%;
+	flex-wrap: wrap;
+}
+
+.side-by-side {
+	width: 20%;
+}
+
+.even-out {
+	text-align: center;
+}
+
+.bubble .text-red {
+	background-color: #fff2f2;
+}
+
+.bubble .text-green,
+.bubble .text-red {
+	border-radius: 15px;
+	padding: 8px 10px;
+	font-weight: 700;
+	font-size: 13px;
 }
 
 /*marquee style*/
