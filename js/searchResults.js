@@ -40,16 +40,16 @@ class resultList {
 		logo.classList.add("uniform-size");
 		const percentChange = document.createElement("span");
 		getColor(profile.changesPercentage.includes("+"), percentChange);
+		const name = document.createElement("span");
 		const lineBreak = document.createElement("hr");
 		lineBreak.classList.add("line-break");
 		/*assigning specific details to HTML li item 'new result'*/
 		logo.src = `${profile.image}`;
 		percentChange.textContent = `${profile.changesPercentage}`;
+		name.textContent = `${profile.companyName} (${symbol})`;
+		name.classList.add("result-name");
 		newResult.appendChild(logo);
-		newResult.insertAdjacentHTML(
-			"beforeend",
-			`${profile.companyName} (${symbol})`
-		);
+		newResult.appendChild(name);
 		newResult.appendChild(percentChange);
 		newResult.href = `company.html?symbol=${symbol}`;
 		/*append complete result to DOM*/

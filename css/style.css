@@ -171,8 +171,6 @@ body {
 .side-bar-item {
 	display: flex;
 	justify-content: space-between;
-	height: 15%;
-	-webkit-animation: show 0.5s;
 	animation: show 0.5s;
 	display: flex;
 	width: 100%;
@@ -181,17 +179,28 @@ body {
 	align-items: center;
 	border-bottom: 1px solid #dedfe1;
 	background-color: #fff;
-	margin: 12px 0;
 	padding: 0 10px;
 	border-spacing: 10px;
 	border-radius: 5px;
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
 	transition: all 0.3s;
+	position: relative;
 }
 
-.right-boxes {
+.side-bar-item.left-boxes {
+	height: 14%;
+}
+
+.side-bar-item.right-boxes {
+	height: 15%;
 	margin: 4px;
 	padding: 10px;
+}
+
+.side-bar-item:hover {
+	bottom: 2px;
+	left: 5px;
+	cursor: pointer;
 }
 
 .w-wrap {
