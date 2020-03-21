@@ -126,7 +126,11 @@ body {
 	font-size: 16px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	padding: 0 72px;
+	padding: 5px 72px;
+}
+
+.result-name {
+	padding: 0 10px;
 }
 
 .error-style {
@@ -158,6 +162,10 @@ body {
 	text-transform: uppercase;
 	text-align: center;
 	margin: 0;
+}
+
+.keep-small {
+	max-width: 25%;
 }
 
 .side-bar-item {
@@ -338,6 +346,9 @@ WORK ON THIS*/
 	}
 	.search-container .form-container .search-box {
 		width: 80%;
+	}
+	.side-bar {
+		display: none;
 	}
 	.search-container .form-container .search-button {
 		width: 20%;
