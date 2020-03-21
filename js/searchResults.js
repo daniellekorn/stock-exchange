@@ -4,6 +4,14 @@ class resultList {
 		this.resultArray = resultArray;
 	}
 
+	toggleLoader() {
+		if (loader.classList.contains("hide")) {
+			loader.classList.remove("hide");
+		} else if (!loader.classList.contains("hide")) {
+			loader.classList.add("hide");
+		}
+	}
+
 	clearHistory() {
 		let child = this.element.lastElementChild;
 		while (child) {

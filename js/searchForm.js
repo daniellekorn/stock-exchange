@@ -5,6 +5,7 @@ class Search extends resultList {
 	}
 
 	async runSearch() {
+		this.toggleLoader();
 		let response = await fetch(
 			`https://financialmodelingprep.com/api/v3/search?query=${this.userInput}&limit=10&exchange=NASDAQ`
 		);
@@ -52,5 +53,6 @@ class Search extends resultList {
 				console.log(err);
 			}
 		}
+		this.toggleLoader();
 	}
 }
