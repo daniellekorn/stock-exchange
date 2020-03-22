@@ -30,7 +30,8 @@ class resultList {
 		resultChart.append(error);
 	}
 
-	createListItems(company) {
+	createListItems(company, text) {
+		text = text["text"];
 		const symbol = company.symbol;
 		const profile = company.profile;
 		/*creation of elements w/style*/
@@ -46,7 +47,34 @@ class resultList {
 		/*assigning specific details to HTML li item 'new result'*/
 		logo.src = `${profile.image}`;
 		percentChange.textContent = `${profile.changesPercentage}`;
-		name.textContent = `${profile.companyName} (${symbol})`;
+		// name.textContent = `${profile.companyName} (${symbol})`;
+		/*highlighting for autocomplete*/
+		let nameText = profile.companyName.normalize();
+		let symbolText = symbol;
+		let nameIndex = nameText.indexOf(text);
+		let symbolIndex = symbolText.indexOf(text);
+		if (nameIndex >= 0) {
+			let highlightNeeded =
+				nameText.substring(0, nameIndex) +
+				"<span class='highlight'>" +
+				nameText.substring(nameIndex, nameIndex + text.length) +
+				"</span>" +
+				nameText.substring(nameIndex + text.length);
+			name.insertAdjacentHTML("afterbegin", highlightNeeded);
+		} else {
+			name.insertAdjacentHTML("afterbegin", nameText);
+		}
+		if (symbolIndex >= 0) {
+			let highlightNeeded =
+				symbolText.substring(0, symbolIndex) +
+				"<span class='highlight'>" +
+				symbolText.substring(symbolIndex, symbolIndex + text.length) +
+				"</span>" +
+				symbolText.substring(symbolIndex + text.length);
+			name.insertAdjacentHTML("beforeend", highlightNeeded);
+		} else {
+			name.insertAdjacentHTML("beforeend", ` (${symbol})`);
+		}
 		name.classList.add("result-name");
 		newResult.appendChild(logo);
 		newResult.appendChild(name);
@@ -56,4 +84,39 @@ class resultList {
 		this.element.appendChild(newResult);
 		this.element.appendChild(lineBreak);
 	}
+
+	// highlight(text) {
+	// 	const results = document.getElementsByClassName("result-name");
+	// 	const resultArray = Array.from(results);
+	// 	let resultText = resultArray.map(item => {
+	// 		return item.textContent;
+	// 	});
+	// 	console.log(resultText);
+	// 	resultText.forEach(item => {
+	// 		let newDomArray = [];
+	// 		let index = item.indexOf(text);
+	// 		console.log(index);
+	// 		if (index >= 0) {
+	// 			let highlightNeeded =
+	// 				item.substring(0, index) +
+	// 				"<span class='highlight'>" +
+	// 				item.substring(index, index + text.length) +
+	// 				"</span>" +
+	// 				item.substring(index + text.length);
+	// 			newDomArray.push(highlightNeeded);
+	// 		}
+	// 		return newDomArray;
+	// 	});
+	// }
+
+	// replaceResults() {
+	// 	let newDomArray = this.highlight(this.userInput);
+	// 	const oldResults = document.getElementsByClassName("result-name");
+
+	// 	for (let i = 0; i < oldResults.length; i++) {
+	// 		let str = oldResults[i].innerHTML;
+	// 		console.log(str);
+	// 		str.replace(str, newDomArray[i].textContent);
+	// 	}
+	// }
 }

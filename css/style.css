@@ -39,6 +39,10 @@ body {
 	color: #0053ee;
 }
 
+.highlight {
+	background-color: yellow;
+}
+
 .company-container,
 .site-container {
 	height: 100%;

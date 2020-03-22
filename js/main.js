@@ -75,7 +75,7 @@ const autoSearch = debounce(function() {
 		searchResults.clearHistory();
 	} else {
 		searchResults.clearHistory();
-		search.runSearch();
+		search.runSearch(searchText.value);
 	}
 }, 1000);
 

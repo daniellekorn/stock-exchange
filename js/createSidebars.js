@@ -10,7 +10,6 @@ class sidebarItem {
 		let response = await fetch(this.apiLink);
 		let data = await response.json();
 		let jsonArray = data[this.referenceName];
-		console.log(jsonArray);
 		let condensedIndexes = this.findRelevant(jsonArray, this.wantedArray);
 		condensedIndexes.map(this.createSideBar, {
 			domItem: this.element

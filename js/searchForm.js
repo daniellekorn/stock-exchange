@@ -47,7 +47,9 @@ class Search extends resultList {
 				}
 				let merged = [].concat.apply([], allTogether);
 				merged.map(company => {
-					this.createListItems(company);
+					this.createListItems(company, {
+						text: this.userInput
+					});
 				});
 			} catch (err) {
 				console.log(err);
