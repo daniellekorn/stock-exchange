@@ -34,6 +34,7 @@ body {
 	color: red;
 }
 
+/*want to decide color for this or sort to g/r*/
 .neutral {
 	color: #0053ee;
 }
@@ -126,7 +127,7 @@ body {
 	font-size: 16px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	padding: 5px 72px;
+	padding: 5px 65px;
 }
 
 .result-name {
@@ -152,8 +153,7 @@ body {
 	width: 22.5%;
 	min-width: 200px;
 	list-style: none;
-	justify-self: center;
-	justify-content: space-around;
+	justify-content: space-between;
 }
 
 .side-bar h1 {
@@ -194,7 +194,7 @@ body {
 .side-bar-item.right-boxes {
 	height: 15%;
 	margin: 4px;
-	padding: 10px;
+	padding: 12px;
 }
 
 .side-bar-item:hover {
@@ -292,7 +292,6 @@ body {
 .autocomplete {
 	width: 100%;
 	flex-basis: 100%;
-	display: inline-block;
 }
 
 /* loader style */
