@@ -31,7 +31,6 @@ class resultList {
 	}
 
 	createListItems(company, text) {
-		text = text["text"];
 		const symbol = company.symbol;
 		const profile = company.profile;
 		/*creation of elements w/style*/
@@ -39,43 +38,43 @@ class resultList {
 		newResult.classList.add("result");
 		const logo = document.createElement("img");
 		logo.classList.add("uniform-size");
+		logo.src = `${profile.image}`;
 		const percentChange = document.createElement("span");
 		getColor(profile.changesPercentage.includes("+"), percentChange);
+		percentChange.textContent = `${profile.changesPercentage}`;
 		const name = document.createElement("span");
 		const lineBreak = document.createElement("hr");
 		lineBreak.classList.add("line-break");
-		/*assigning specific details to HTML li item 'new result'*/
-		logo.src = `${profile.image}`;
-		percentChange.textContent = `${profile.changesPercentage}`;
-		// name.textContent = `${profile.companyName} (${symbol})`;
+
 		/*highlighting for autocomplete*/
-		let nameText = profile.companyName.normalize();
-		let symbolText = symbol;
-		let nameIndex = nameText.indexOf(text);
-		let symbolIndex = symbolText.indexOf(text);
+		text = text["text"].toLowerCase();
+		let nameIndex = profile.companyName.toLowerCase().indexOf(text);
+		let symbolIndex = symbol.toLowerCase().indexOf(text);
 		if (nameIndex >= 0) {
 			let highlightNeeded =
-				nameText.substring(0, nameIndex) +
+				profile.companyName.substring(0, nameIndex) +
 				"<span class='highlight'>" +
-				nameText.substring(nameIndex, nameIndex + text.length) +
+				profile.companyName.substring(nameIndex, nameIndex + text.length) +
 				"</span>" +
-				nameText.substring(nameIndex + text.length);
+				profile.companyName.substring(nameIndex + text.length);
 			name.insertAdjacentHTML("afterbegin", highlightNeeded);
 		} else {
-			name.insertAdjacentHTML("afterbegin", nameText);
+			name.insertAdjacentHTML("afterbegin", profile.companyName);
 		}
 		if (symbolIndex >= 0) {
 			let highlightNeeded =
-				symbolText.substring(0, symbolIndex) +
+				symbol.substring(0, symbolIndex) +
 				"<span class='highlight'>" +
-				symbolText.substring(symbolIndex, symbolIndex + text.length) +
+				symbol.substring(symbolIndex, symbolIndex + text.length) +
 				"</span>" +
-				symbolText.substring(symbolIndex + text.length);
+				symbol.substring(symbolIndex + text.length);
 			name.insertAdjacentHTML("beforeend", highlightNeeded);
 		} else {
 			name.insertAdjacentHTML("beforeend", ` (${symbol})`);
 		}
 		name.classList.add("result-name");
+
+		/*append all elements to result div*/
 		newResult.appendChild(logo);
 		newResult.appendChild(name);
 		newResult.appendChild(percentChange);
