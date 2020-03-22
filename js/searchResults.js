@@ -31,9 +31,12 @@ class resultList {
 	}
 
 	createListItems(company, text) {
+		const currentCompany = company;
 		const symbol = company.symbol;
 		const profile = company.profile;
 		/*creation of elements w/style*/
+		const contianer = document.createElement("div");
+		contianer.classList.add("flexible", "result-container");
 		const newResult = document.createElement("a");
 		newResult.classList.add("result");
 		const logo = document.createElement("img");
@@ -45,6 +48,12 @@ class resultList {
 		const name = document.createElement("span");
 		const lineBreak = document.createElement("hr");
 		lineBreak.classList.add("line-break");
+		const compare = document.createElement("div");
+
+		/*milestone 8 compare btn functionality*/
+		compare.addEventListener("click", () => {
+			console.log(company);
+		});
 
 		/*highlighting for autocomplete*/
 		text = text["text"].toLowerCase();
@@ -79,43 +88,14 @@ class resultList {
 		newResult.appendChild(name);
 		newResult.appendChild(percentChange);
 		newResult.href = `company.html?symbol=${symbol}`;
+		compare.insertAdjacentHTML(
+			"beforeend",
+			'<button class="compare-btn btn">Compare</button>'
+		);
+		contianer.appendChild(newResult);
+		contianer.appendChild(compare);
 		/*append complete result to DOM*/
-		this.element.appendChild(newResult);
+		this.element.appendChild(contianer);
 		this.element.appendChild(lineBreak);
 	}
-
-	// highlight(text) {
-	// 	const results = document.getElementsByClassName("result-name");
-	// 	const resultArray = Array.from(results);
-	// 	let resultText = resultArray.map(item => {
-	// 		return item.textContent;
-	// 	});
-	// 	console.log(resultText);
-	// 	resultText.forEach(item => {
-	// 		let newDomArray = [];
-	// 		let index = item.indexOf(text);
-	// 		console.log(index);
-	// 		if (index >= 0) {
-	// 			let highlightNeeded =
-	// 				item.substring(0, index) +
-	// 				"<span class='highlight'>" +
-	// 				item.substring(index, index + text.length) +
-	// 				"</span>" +
-	// 				item.substring(index + text.length);
-	// 			newDomArray.push(highlightNeeded);
-	// 		}
-	// 		return newDomArray;
-	// 	});
-	// }
-
-	// replaceResults() {
-	// 	let newDomArray = this.highlight(this.userInput);
-	// 	const oldResults = document.getElementsByClassName("result-name");
-
-	// 	for (let i = 0; i < oldResults.length; i++) {
-	// 		let str = oldResults[i].innerHTML;
-	// 		console.log(str);
-	// 		str.replace(str, newDomArray[i].textContent);
-	// 	}
-	// }
 }

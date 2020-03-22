@@ -89,8 +89,19 @@ body {
 	margin: 0;
 }
 
-.search-button {
+.btn {
 	cursor: pointer;
+}
+
+.compare-btn {
+	height: 32px;
+	padding: 8px;
+	margin-right: 40px;
+	color: white;
+	border: none;
+	background-color: #0053ee;
+	opacity: 0.8;
+	float: right;
 }
 
 .search-container .form-container .search-box .search-text {
@@ -118,7 +129,12 @@ body {
 	font-size: 12px;
 }
 
+.flexible.result-container {
+	justify-content: space-between;
+}
+
 .search-container .result-chart.flexible.col {
+	margin-top: 20px;
 	height: 92.5%;
 	text-decoration: none;
 	justify-content: stretch;
@@ -128,10 +144,10 @@ body {
 	display: block;
 	text-decoration: none;
 	color: black;
-	font-size: 16px;
+	font-size: 15px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	padding: 5px 65px;
+	padding: 2px 40px;
 }
 
 .result-name {
@@ -278,7 +294,7 @@ body {
 }
 
 .line-break {
-	width: 85%;
+	width: 95%;
 	align-self: center;
 	border-top: 0.5px solid #ccc;
 }
