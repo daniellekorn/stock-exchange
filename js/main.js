@@ -80,6 +80,17 @@ const autoSearch = debounce(function() {
 }, 1000);
 
 searchText.addEventListener("input", autoSearch);
+searchText.addEventListener("input", () => {
+	if (history.pushState) {
+		let newurl =
+			window.location.protocol +
+			"//" +
+			window.location.host +
+			window.location.pathname +
+			`?query=${searchText.value}`;
+		window.history.pushState({ path: newurl }, "", newurl);
+	}
+});
 
 searchButton.addEventListener("click", () => {
 	const searchResults = new resultList(resultChart);
