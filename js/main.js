@@ -10,12 +10,6 @@ const searchForm = document.querySelector("#searchForm");
 const compare = document.getElementsByClassName(".compare-btn");
 const compareBar = document.getElementById("compareBar");
 
-function getColor(isPositive, element) {
-	return isPositive
-		? element.classList.add("positive")
-		: element.classList.add("negative");
-}
-
 window.onload = () => {
 	let majorIndexesResults = new sidebarItem(
 		majorIndexes,
@@ -74,16 +68,31 @@ searchForm.addEventListener(
 );
 
 searchButton.addEventListener("click", () => {
-	autoSearch.cancel();
+	clearTimeout(autoSearch);
 	const searchResults = new resultList(resultChart);
 	searchResults.clearHistory();
 	const search = new Search(resultChart, searchText.value);
 	search.runSearch().then(items => {
 		items.map(item => {
-			search.createListItems(item, {
+			let compareBtn = search.createListItems(item, {
 				text: search.userInput
 			});
+			let counter = 0;
+			compareBtn.addEventListener("click", () => {
+				if (counter < 1) {
+					counter += 1;
+					console.log(counter);
+					const compBtn = new companyCompare(item, compareBar);
+					const quitBtn = compBtn.addButton(item);
+					quitBtn.addEventListener("click", () => {
+						compBtn.removeButton();
+						counter = 0;
+					});
+				}
+				console.log(counter);
+			});
 		});
+		searchResults.toggleLoader();
 	});
 });
 

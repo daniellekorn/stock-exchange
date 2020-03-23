@@ -9,7 +9,7 @@ class companyCompare {
 		compBtn.textContent = "Compare companies";
 		compBtn.classList.add("run-compare", "btn");
 		compBtn.href = "/compare.html";
-		this.element.appendChild(compBtn);
+		this.element.insertAdjacentElement("beforeend", compBtn);
 
 		compBtn.addEventListener("click", () => {
 			console.log("Button active!");
@@ -24,7 +24,7 @@ class companyCompare {
 		quitBtn.classList.add("quit-btn", "btn");
 		quitBtn.textContent = "X";
 		newBtn.appendChild(quitBtn);
-		this.element.appendChild(newBtn);
+		this.element.insertAdjacentElement("afterbegin", newBtn);
 		this.quitBtn = quitBtn;
 		this.newBtn = newBtn;
 		return this.quitBtn;

@@ -1,3 +1,9 @@
+function getColor(isPositive, element) {
+	return isPositive
+		? element.classList.add("positive")
+		: element.classList.add("negative");
+}
+
 class resultList {
 	constructor(element, resultArray) {
 		this.element = element;
