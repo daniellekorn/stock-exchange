@@ -46,15 +46,10 @@ class Search extends resultList {
 					}
 				}
 				let merged = [].concat.apply([], allTogether);
-				merged.map(company => {
-					this.createListItems(company, {
-						text: this.userInput
-					});
-				});
+				return merged;
 			} catch (err) {
 				console.log(err);
 			}
 		}
-		this.toggleLoader();
 	}
 }

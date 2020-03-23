@@ -7,6 +7,8 @@ const majorIndexes = document.querySelector("#majorIndexes");
 const cryptoCurrency = document.querySelector("#cryptoCurrency");
 const currencies = document.querySelector("#currencies");
 const searchForm = document.querySelector("#searchForm");
+const compare = document.getElementsByClassName(".compare-btn");
+const compareBar = document.getElementById("compareBar");
 
 function getColor(isPositive, element) {
 	return isPositive
@@ -36,6 +38,9 @@ window.onload = () => {
 	majorIndexesResults.apiSearch();
 	currenciesResults.apiSearch();
 	cryptoCurrencyResults.apiSearch();
+
+	let compareBtn = new companyCompare("hi", compareBar);
+	compareBtn.runCompareButton();
 };
 
 function debounce(func, wait, immediate) {
@@ -68,6 +73,20 @@ searchForm.addEventListener(
 	false
 );
 
+searchButton.addEventListener("click", () => {
+	autoSearch.cancel();
+	const searchResults = new resultList(resultChart);
+	searchResults.clearHistory();
+	const search = new Search(resultChart, searchText.value);
+	search.runSearch().then(items => {
+		items.map(item => {
+			search.createListItems(item, {
+				text: search.userInput
+			});
+		});
+	});
+});
+
 const autoSearch = debounce(function() {
 	const search = new Search(resultChart, searchText.value);
 	const searchResults = new resultList(resultChart);
@@ -75,7 +94,28 @@ const autoSearch = debounce(function() {
 		searchResults.clearHistory();
 	} else {
 		searchResults.clearHistory();
-		search.runSearch(searchText.value);
+		search.runSearch(searchText.value).then(items => {
+			items.map(item => {
+				let compareBtn = search.createListItems(item, {
+					text: search.userInput
+				});
+				let counter = 0;
+				compareBtn.addEventListener("click", () => {
+					if (counter < 1) {
+						counter += 1;
+						console.log(counter);
+						const compBtn = new companyCompare(item, compareBar);
+						const quitBtn = compBtn.addButton(item);
+						quitBtn.addEventListener("click", () => {
+							compBtn.removeButton();
+							counter = 0;
+						});
+					}
+					console.log(counter);
+				});
+			});
+			searchResults.toggleLoader();
+		});
 	}
 }, 1000);
 
@@ -90,11 +130,4 @@ searchText.addEventListener("input", () => {
 			`?query=${searchText.value}`;
 		window.history.pushState({ path: newurl }, "", newurl);
 	}
-});
-
-searchButton.addEventListener("click", () => {
-	const searchResults = new resultList(resultChart);
-	searchResults.clearHistory();
-	const search = new Search(resultChart, searchText.value);
-	search.runSearch();
 });

@@ -59,7 +59,7 @@ body {
 	justify-content: center;
 }
 
-.body-container {
+.center-area {
 	width: 60%;
 	justify-content: stretch;
 }
@@ -76,9 +76,15 @@ body {
 	background-color: white;
 }
 
+.run-compare {
+	position: absolute;
+	left: 60%;
+	top: 8%;
+}
+
 .company-compare-btn {
 	height: 90%;
-	width: 10%;
+	width: 8%;
 	background-color: #0053ee;
 	color: white;
 	font-size: 12px;
@@ -170,7 +176,6 @@ body {
 
 .search-container .result-chart.flexible.col {
 	margin-top: 20px;
-	height: 92.5%;
 	text-decoration: none;
 	justify-content: stretch;
 }

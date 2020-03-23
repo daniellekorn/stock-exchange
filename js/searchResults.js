@@ -49,16 +49,6 @@ class resultList {
 		lineBreak.classList.add("line-break");
 		const compare = document.createElement("div");
 
-		/*milestones 8/10 compare btn functionality*/
-		let counter = 0;
-		compare.addEventListener("click", () => {
-			console.log(company);
-			if (counter < 1) {
-				this.addCompareButton(company);
-				counter += 1;
-			}
-		});
-
 		/*highlighting for autocomplete*/
 		text = text["text"].toLowerCase();
 		let nameIndex = profile.companyName.toLowerCase().indexOf(text);
@@ -101,20 +91,6 @@ class resultList {
 		/*append complete result to DOM*/
 		this.element.appendChild(contianer);
 		this.element.appendChild(lineBreak);
-	}
-
-	addCompareButton(company) {
-		const compareBar = document.getElementById("compareBar");
-		const newBtn = document.createElement("button");
-		newBtn.classList.add("company-compare-btn", "btn");
-		newBtn.textContent = company.symbol;
-		const quitBtn = document.createElement("button");
-		quitBtn.classList.add("quit-btn", "btn");
-		quitBtn.textContent = "X";
-		newBtn.appendChild(quitBtn);
-		compareBar.appendChild(newBtn);
-		quitBtn.addEventListener("click", () => {
-			compareBar.removeChild(newBtn);
-		});
+		return compare;
 	}
 }
