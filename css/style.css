@@ -36,7 +36,7 @@ body {
 
 /*want to decide color for this or sort to g/r*/
 .neutral {
-	color: #0053ee;
+	color: rgb(102, 102, 102);
 }
 
 .highlight {
@@ -100,10 +100,10 @@ body {
 .compare-btn {
 	height: 32px;
 	padding: 8px;
-	margin-right: 40px;
-	color: white;
-	border: none;
-	background-color: #0053ee;
+	margin-right: 25%;
+	color: #0053ee;
+	border: 1px solid #0053ee;
+	background-color: white;
 	opacity: 0.8;
 	float: right;
 }
