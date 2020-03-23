@@ -60,11 +60,34 @@ body {
 }
 
 .body-container {
-	width: 65%;
+	width: 60%;
+	justify-content: stretch;
 }
 
 .search-container {
-	min-height: 85%;
+	min-height: 80%;
+	flex-grow: 1;
+}
+
+.compare-bar {
+	display: flex;
+	height: 10%;
+	width: 100%;
+	background-color: white;
+}
+
+.company-compare-btn {
+	height: 90%;
+	width: 10%;
+	background-color: #0053ee;
+	color: white;
+	font-size: 12px;
+}
+
+.quit-btn {
+	background-color: #0053ee;
+	color: white;
+	border: none;
 }
 
 .search-container {
@@ -156,7 +179,7 @@ body {
 	display: block;
 	text-decoration: none;
 	color: black;
-	font-size: 15px;
+	font-size: 16px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: 2px 40px;
@@ -167,6 +190,7 @@ body {
 }
 
 .main-title {
+	margin: 10px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	font-weight: 900;
@@ -308,6 +332,7 @@ body {
 
 .line-break {
 	width: 95%;
+	margin: 2px;
 	align-self: center;
 	border-top: 0.15px solid #0053ee;
 	opacity: 0.5;
