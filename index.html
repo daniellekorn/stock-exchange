@@ -32,39 +32,42 @@
 						<h1>Major Indexes</h1>
 					</div>
 				</div>
-				<div class="search-container">
-					<div class="form-container flexible">
-						<form
-							id="searchForm"
-							autocomplete="off"
-							class="flexible search-box"
-						>
-							<div>
-								<i class="search-icon vertical-align fa fa-search fa-lg"></i>
+				<div class="body-container flexible col">
+					<h1 class="center main-title">Search Nasdaq Stocks</h1>
+					<div class="search-container">
+						<div class="form-container flexible">
+							<form
+								id="searchForm"
+								autocomplete="off"
+								class="flexible search-box"
+							>
+								<div>
+									<i class="search-icon vertical-align fa fa-search fa-lg"></i>
+								</div>
+								<div class="autocomplete">
+									<input
+										id="searchText"
+										class="autocomplete search-text"
+										type="text"
+										placeholder="Search..."
+									/>
+								</div>
+							</form>
+							<div id="loader" class="loader hide">
+								<span class="loader-bar"></span>
+								<span class="loader-bar"></span>
+								<span class="loader-bar"></span>
 							</div>
-							<div class="autocomplete">
-								<input
-									id="searchText"
-									class="autocomplete search-text"
-									type="text"
-									placeholder="Search..."
-								/>
-							</div>
-						</form>
-						<div id="loader" class="loader hide">
-							<span class="loader-bar"></span>
-							<span class="loader-bar"></span>
-							<span class="loader-bar"></span>
+							<input
+								id="searchButton"
+								class="search-button btn"
+								type="submit"
+								value="Search"
+							/>
 						</div>
-						<input
-							id="searchButton"
-							class="search-button btn"
-							type="submit"
-							value="Search"
-						/>
+						<div id="matches" class="autocomplete-container"></div>
+						<div id="resultChart" class="result-chart flexible col"></div>
 					</div>
-					<div id="matches" class="autocomplete-container"></div>
-					<div id="resultChart" class="result-chart flexible col"></div>
 				</div>
 				<div class="side-bar flexible col currencies">
 					<div id="currencies" class="money-info half flexible col">
