@@ -104,8 +104,12 @@ body {
 	color: #0053ee;
 	border: 1px solid #0053ee;
 	background-color: white;
-	opacity: 0.8;
 	float: right;
+}
+
+.compare-btn:hover {
+	background-color: #0053ee;
+	color: white;
 }
 
 .center {
@@ -191,7 +195,7 @@ body {
 }
 
 .side-bar h1 {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 900;
 	text-transform: uppercase;
 	text-align: center;
@@ -212,11 +216,9 @@ body {
 	font-weight: 700;
 	text-transform: uppercase;
 	align-items: center;
-	border-bottom: 1px solid #dedfe1;
 	background-color: #fff;
 	padding: 0 10px;
 	border-spacing: 10px;
-	border-radius: 5px;
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
 	transition: all 0.3s;
 	position: relative;
@@ -273,10 +275,10 @@ body {
 	list-style: none;
 	height: 100%;
 	width: 95%;
-	font-size: 14px;
+	font-size: 12.5px;
 	justify-content: space-evenly;
 	align-items: center;
-	animation: scrolling 120s linear infinite;
+	animation: scrolling 160s linear infinite;
 	margin: 0;
 }
 
@@ -307,7 +309,8 @@ body {
 .line-break {
 	width: 95%;
 	align-self: center;
-	border-top: 0.5px solid #ccc;
+	border-top: 0.15px solid #0053ee;
+	opacity: 0.5;
 }
 
 ::placeholder {

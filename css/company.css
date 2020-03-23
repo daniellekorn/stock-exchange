@@ -1,7 +1,12 @@
 .heading {
-	font-size: 28px;
+	font-size: 40px;
+	font-weight: 900;
 	color: #0053ee;
 	align-items: center;
+}
+
+.heading .logo {
+	margin-right: 50px;
 }
 
 .description {
@@ -20,6 +25,10 @@
 
 .price {
 	font-size: 24px;
+}
+
+.percent {
+	margin-left: 25px;
 }
 
 .flex-child.chart-container #pageLoader {

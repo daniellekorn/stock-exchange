@@ -37,7 +37,7 @@ class sidebarItem {
 			name.textContent = item.indexName;
 			name.classList.add("keep-small");
 			box.appendChild(name);
-			box.classList.add("even-out");
+			box.classList.add("center");
 			box.classList.add("left-boxes");
 		} else {
 			box.classList.add("flexible", "w-wrap");
