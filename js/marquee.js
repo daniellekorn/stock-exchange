@@ -1,22 +1,39 @@
-const marquee = document.querySelector("#marquee");
-
 class Marquee {
-	constructor(element) {
-		this.element = element;
+	constructor(parent, id) {
+		this.parent = parent;
+		this.id = id;
 	}
 
-	async createMarquee() {
+	createMarquee() {
+		const marqueeBody = document.createElement("div");
+		marqueeBody.classList.add("marquee");
+		marqueeBody.id = this.id;
+		this.getData().then(items => {
+			const allListings = items.map(item => {
+				if (item.changes.toString().includes("-")) {
+					return `<li class="marquee-list"><span>${item.indexName}</span> <span class="negative">$${item.price}</span></li>`;
+				} else {
+					return `<li class="marquee-list"><span>${item.indexName}</span> <span class="positive">$${item.price}</span></li>`;
+				}
+			});
+			const ul = document.createElement("ul");
+			ul.classList.add("marquee-content", "flexible");
+			ul.innerHTML = allListings.join("");
+			marqueeBody.appendChild(ul);
+			this.parent.insertAdjacentElement("afterbegin", marqueeBody);
+		});
+	}
+
+	async getData() {
 		let marqueeResponse = await fetch(
-			"https://financialmodelingprep.com/api/v3/stock/real-time-price"
+			"https://financialmodelingprep.com/api/v3/majors-indexes"
 		);
 		let marqueeData = await marqueeResponse.json();
-		let stocks = marqueeData.stockList;
-		const allListings = stocks.map(item => {
-			return `<li class="marquee-list"><span>${item.symbol}</span> <span class="neutral">$${item.price}</span></li>`;
-		});
-		this.element.innerHTML = allListings.join("");
+		let stocks = marqueeData.majorIndexesList;
+		return stocks;
 	}
 }
 
-const topMarquee = new Marquee(marquee);
+const parent = document.getElementById("fullSite");
+const topMarquee = new Marquee(parent, "marquee");
 topMarquee.createMarquee();

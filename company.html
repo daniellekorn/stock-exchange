@@ -12,16 +12,23 @@
 		<link rel="stylesheet" href="css/company.css" />
 	</head>
 	<body>
-		<div id="profilePage" class="hide company-container flexible col"></div>
+		<div class="flexible">
+			<div id="profilePage" class="hide company-container flexible col"></div>
+		</div>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 		<script src="js/companyInfo.js"></script>
 		<script>
 			(async function() {
 				const urlParams = new URLSearchParams(window.location.search);
 				const symbol = urlParams.get("symbol");
-				const compInfo = new companyInfo(
+				if (symbol.toString().length > 5) {
+					compareSymbols = symbol.split(",");
+				} else {
+					compareSymbols = symbol;
+				}
+				const compInfo = new Profile(
 					document.getElementById("profilePage"),
-					symbol
+					compareSymbols
 				);
 				await compInfo.load();
 			})();

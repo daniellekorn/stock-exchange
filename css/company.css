@@ -10,9 +10,13 @@
 }
 
 .description {
-	width: 50%;
+	width: 80%;
 	line-height: 2rem;
 	font-size: 18px;
+}
+
+.comparison-item {
+	width: 30%;
 }
 
 .flex-child {

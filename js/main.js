@@ -10,33 +10,6 @@ const searchForm = document.querySelector("#searchForm");
 const compare = document.getElementsByClassName(".compare-btn");
 const compareBar = document.getElementById("compareBar");
 
-window.onload = () => {
-	let majorIndexesResults = new sidebarItem(
-		majorIndexes,
-		majorIndexesUrl,
-		wantedIndexes,
-		"majorIndexesList"
-	);
-	let currenciesResults = new sidebarItem(
-		currencies,
-		currenciesUrl,
-		wantedCurrencies,
-		"forexList"
-	);
-	let cryptoCurrencyResults = new sidebarItem(
-		cryptoCurrency,
-		cryptoUrl,
-		wantedCrypto,
-		"cryptocurrenciesList"
-	);
-	majorIndexesResults.apiSearch();
-	currenciesResults.apiSearch();
-	cryptoCurrencyResults.apiSearch();
-
-	let compareBtn = new companyCompare("hi", compareBar);
-	compareBtn.runCompareButton();
-};
-
 function debounce(func, wait, immediate) {
 	let timeout;
 	return function() {
@@ -67,6 +40,10 @@ searchForm.addEventListener(
 	false
 );
 
+let symbolArray = [];
+let companyCompareBtn = new companyCompare("placing bar", compareBar);
+let activeButton = companyCompareBtn.createCompareButton();
+
 searchButton.addEventListener("click", () => {
 	clearTimeout(autoSearch);
 	const searchResults = new resultList(resultChart);
@@ -81,7 +58,6 @@ searchButton.addEventListener("click", () => {
 			compareBtn.addEventListener("click", () => {
 				if (counter < 1) {
 					counter += 1;
-					console.log(counter);
 					const compBtn = new companyCompare(item, compareBar);
 					const quitBtn = compBtn.addButton(item);
 					quitBtn.addEventListener("click", () => {
@@ -89,7 +65,6 @@ searchButton.addEventListener("click", () => {
 						counter = 0;
 					});
 				}
-				console.log(counter);
 			});
 		});
 		searchResults.toggleLoader();
@@ -110,9 +85,10 @@ const autoSearch = debounce(function() {
 				});
 				let counter = 0;
 				compareBtn.addEventListener("click", () => {
+					console.log(item);
 					if (counter < 1) {
 						counter += 1;
-						console.log(counter);
+						symbolArray.push(item);
 						const compBtn = new companyCompare(item, compareBar);
 						const quitBtn = compBtn.addButton(item);
 						quitBtn.addEventListener("click", () => {
@@ -120,13 +96,25 @@ const autoSearch = debounce(function() {
 							counter = 0;
 						});
 					}
-					console.log(counter);
 				});
 			});
 			searchResults.toggleLoader();
 		});
 	}
 }, 1000);
+
+activeButton.addEventListener("click", () => {
+	let searchString = "";
+	for (let i = 0; i < symbolArray.length; i++) {
+		if (i == symbolArray.length - 1) {
+			searchString += `${symbolArray[i].symbol}`;
+		} else {
+			searchString += `${symbolArray[i].symbol},`;
+		}
+	}
+	console.log(searchString);
+	activeButton.href = `company.html?symbol=${searchString}`;
+});
 
 searchText.addEventListener("input", autoSearch);
 searchText.addEventListener("input", () => {

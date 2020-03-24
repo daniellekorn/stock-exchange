@@ -4,16 +4,12 @@ class companyCompare {
 		this.element = element;
 	}
 
-	runCompareButton() {
+	createCompareButton() {
 		const compBtn = document.createElement("a");
 		compBtn.textContent = "Compare companies";
 		compBtn.classList.add("run-compare", "btn");
-		compBtn.href = "/compare.html";
 		this.element.insertAdjacentElement("beforeend", compBtn);
-
-		compBtn.addEventListener("click", () => {
-			console.log("Button active!");
-		});
+		return compBtn;
 	}
 
 	addButton() {

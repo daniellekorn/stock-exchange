@@ -1,29 +1,32 @@
-class companyInfo {
-	constructor(element, symbol) {
-		this.element = element;
+class Profile {
+	constructor(parent, symbol) {
+		this.parent = parent;
 		this.symbol = symbol;
 	}
 
-	async load() {
-		let profile = await fetch(
-			`https://financialmodelingprep.com/api/v3/company/profile/${this.symbol}`
-		);
-		let detailsArray = await profile.json();
-		this.createPage(this.symbol, detailsArray);
-		this.addChart();
-		pageLoader.classList.add("hide");
+	load() {
+		this.symbol.forEach(async symbol => {
+			let profile = await fetch(
+				`https://financialmodelingprep.com/api/v3/company/profile/${symbol}`
+			);
+			let detailsArray = await profile.json();
+			console.log(detailsArray);
+			this.createPage(symbol, detailsArray);
+			this.addChart();
+		});
+		// pageLoader.classList.add("hide");
 		profilePage.classList.remove("hide");
 	}
 
-	dynamicFavicon(company) {
-		let link =
-			document.querySelector("link[rel*='icon']") ||
-			document.createElement("link");
-		link.type = "image/x-icon";
-		link.rel = "shortcut icon";
-		link.href = `${company.image}`;
-		document.getElementsByTagName("head")[0].appendChild(link);
-	}
+	// dynamicFavicon(company) {
+	// 	let link =
+	// 		document.querySelector("link[rel*='icon']") ||
+	// 		document.createElement("link");
+	// 	link.type = "image/x-icon";
+	// 	link.rel = "shortcut icon";
+	// 	link.href = `${company.image}`;
+	// 	document.getElementsByTagName("head")[0].appendChild(link);
+	// }
 
 	getColor(isPositive, element) {
 		return isPositive
@@ -33,7 +36,7 @@ class companyInfo {
 
 	createPage(symbol, obj) {
 		const company = obj.profile;
-
+		const newCompany = document.createElement("div");
 		const heading = document.createElement("div");
 		heading.setAttribute("id", "heading");
 		heading.classList.add("heading", "flexible", "flex-child");
@@ -66,7 +69,7 @@ class companyInfo {
 			`<canvas id="coChart" class="chart" width="20%" height="10%"></canvas>`
 		);
 		/*Add company img/title to title area*/
-		this.dynamicFavicon(company);
+		// this.dynamicFavicon(company);
 		title.textContent = company.companyName;
 		/* creation of html page elements*/
 		const logo = document.createElement("img");
@@ -91,10 +94,18 @@ class companyInfo {
 		price.appendChild(sharePrice);
 		price.appendChild(percentChange);
 		description.appendChild(coDescription);
-		this.element.appendChild(heading);
-		this.element.appendChild(price);
-		this.element.appendChild(description);
-		this.element.appendChild(chartContainer);
+		newCompany.appendChild(heading);
+		newCompany.appendChild(price);
+		newCompany.appendChild(description);
+		newCompany.appendChild(chartContainer);
+		console.log(this.symbol.length);
+
+		/*account for comparison card style*/
+		if (this.symbol.length > 1) {
+			newCompany.classList.add("comparison-item");
+			this.parent.classList.remove("col");
+		}
+		this.parent.appendChild(newCompany);
 	}
 
 	async addChart() {
@@ -118,7 +129,7 @@ class companyInfo {
 			`https://financialmodelingprep.com/api/v3/historical-price-full/${this.symbol}?serietype=line`
 		);
 		let data = await history.json();
-
+		console.log(data);
 		let yearLength = data.historical.length / 365;
 		let yearDecimal = 2020 - yearLength;
 		let year = Math.round(yearDecimal);
