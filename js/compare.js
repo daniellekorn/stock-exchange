@@ -1,4 +1,4 @@
-class companyCompare {
+class CompanyCompare {
 	constructor(company, element) {
 		this.company = company;
 		this.element = element;
@@ -9,7 +9,15 @@ class companyCompare {
 		compBtn.textContent = "Compare companies";
 		compBtn.classList.add("run-compare", "btn");
 		this.element.insertAdjacentElement("beforeend", compBtn);
+		this.compBtn = compBtn;
 		return compBtn;
+	}
+
+	showError() {
+		const error = document.createElement("div");
+		error.textContent = "MAX 3";
+		error.classList.add("warning");
+		this.element.insertAdjacentElement("beforeend", error);
 	}
 
 	addButton() {

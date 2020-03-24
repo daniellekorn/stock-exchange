@@ -9,6 +9,7 @@ const currencies = document.querySelector("#currencies");
 const searchForm = document.querySelector("#searchForm");
 const compare = document.getElementsByClassName(".compare-btn");
 const compareBar = document.getElementById("compareBar");
+let displayError;
 
 function debounce(func, wait, immediate) {
 	let timeout;
@@ -41,7 +42,7 @@ searchForm.addEventListener(
 );
 
 let symbolArray = [];
-let companyCompareBtn = new companyCompare("placing bar", compareBar);
+let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
 let activeButton = companyCompareBtn.createCompareButton();
 
 searchButton.addEventListener("click", () => {
@@ -56,14 +57,34 @@ searchButton.addEventListener("click", () => {
 			});
 			let counter = 0;
 			compareBtn.addEventListener("click", () => {
-				if (counter < 1) {
-					counter += 1;
-					const compBtn = new companyCompare(item, compareBar);
-					const quitBtn = compBtn.addButton(item);
-					quitBtn.addEventListener("click", () => {
-						compBtn.removeButton();
-						counter = 0;
-					});
+				console.log(item);
+				/*query selector to check for buttons*/
+				let numOfButtons = document.querySelectorAll(".company-compare-btn")
+					.length;
+				if (numOfButtons > 2) {
+					if (compareBar.contains(displayError)) {
+						console.log("Max 3");
+					} else {
+						companyCompareBtn.showError();
+						displayError = document.querySelector(".warning");
+					}
+				} else {
+					if (counter < 1) {
+						counter += 1;
+						symbolArray.push(item);
+						const compBtn = new CompanyCompare(item, compareBar);
+						const quitBtn = compBtn.addButton(item);
+						quitBtn.addEventListener("click", () => {
+							if (symbolArray.includes(item)) {
+								let index = symbolArray.indexOf(item);
+								symbolArray.splice(index, 1);
+								console.log(symbolArray);
+							}
+							compBtn.removeButton();
+							numOfButtons -= 1;
+							counter = 0;
+						});
+					}
 				}
 			});
 		});
@@ -86,15 +107,33 @@ const autoSearch = debounce(function() {
 				let counter = 0;
 				compareBtn.addEventListener("click", () => {
 					console.log(item);
-					if (counter < 1) {
-						counter += 1;
-						symbolArray.push(item);
-						const compBtn = new companyCompare(item, compareBar);
-						const quitBtn = compBtn.addButton(item);
-						quitBtn.addEventListener("click", () => {
-							compBtn.removeButton();
-							counter = 0;
-						});
+					/*query selector to check for buttons*/
+					let numOfButtons = document.querySelectorAll(".company-compare-btn")
+						.length;
+					if (numOfButtons > 2) {
+						if (compareBar.contains(displayError)) {
+							console.log("Max 3");
+						} else {
+							companyCompareBtn.showError();
+							displayError = document.querySelector(".warning");
+						}
+					} else {
+						if (counter < 1) {
+							counter += 1;
+							symbolArray.push(item);
+							const compBtn = new CompanyCompare(item, compareBar);
+							const quitBtn = compBtn.addButton(item);
+							quitBtn.addEventListener("click", () => {
+								if (symbolArray.includes(item)) {
+									let index = symbolArray.indexOf(item);
+									symbolArray.splice(index, 1);
+									console.log(symbolArray);
+								}
+								compBtn.removeButton();
+								numOfButtons -= 1;
+								counter = 0;
+							});
+						}
 					}
 				});
 			});

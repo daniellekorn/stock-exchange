@@ -12,7 +12,7 @@ class Profile {
 			let detailsArray = await profile.json();
 			console.log(detailsArray);
 			this.createPage(symbol, detailsArray);
-			this.addChart();
+			this.addChart(symbol);
 		});
 		// pageLoader.classList.add("hide");
 		profilePage.classList.remove("hide");
@@ -66,7 +66,7 @@ class Profile {
 		chartContainer.appendChild(pageLoader);
 		chartContainer.insertAdjacentHTML(
 			"beforeend",
-			`<canvas id="coChart" class="chart" width="20%" height="10%"></canvas>`
+			`<canvas id="coChart${symbol}" class="chart" width="80%" height="80%"></canvas>`
 		);
 		/*Add company img/title to title area*/
 		// this.dynamicFavicon(company);
@@ -102,14 +102,17 @@ class Profile {
 
 		/*account for comparison card style*/
 		if (this.symbol.length > 1) {
+			newCompany.classList.add("compare-card");
 			newCompany.classList.add("comparison-item");
 			this.parent.classList.remove("col");
 		}
 		this.parent.appendChild(newCompany);
 	}
 
-	async addChart() {
-		const myChart = document.getElementById("coChart").getContext("2d");
+	async addChart(symbol) {
+		const myChart = document
+			.getElementById(`coChart${symbol}`)
+			.getContext("2d");
 		const companyChart = new Chart(myChart, {
 			type: "line",
 			data: {
@@ -126,7 +129,7 @@ class Profile {
 		});
 
 		let history = await fetch(
-			`https://financialmodelingprep.com/api/v3/historical-price-full/${this.symbol}?serietype=line`
+			`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?serietype=line`
 		);
 		let data = await history.json();
 		console.log(data);

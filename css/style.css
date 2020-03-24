@@ -76,6 +76,14 @@ body {
 	background-color: white;
 }
 
+.warning {
+	color: red;
+	margin-left: 8px;
+	position: relative;
+	top: 10px;
+	right: 5px;
+}
+
 .run-compare {
 	margin-left: auto;
 	text-decoration: none;
