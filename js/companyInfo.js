@@ -14,19 +14,18 @@ class Profile {
 			this.createPage(symbol, detailsArray);
 			this.addChart(symbol);
 		});
-		// pageLoader.classList.add("hide");
 		profilePage.classList.remove("hide");
 	}
 
-	// dynamicFavicon(company) {
-	// 	let link =
-	// 		document.querySelector("link[rel*='icon']") ||
-	// 		document.createElement("link");
-	// 	link.type = "image/x-icon";
-	// 	link.rel = "shortcut icon";
-	// 	link.href = `${company.image}`;
-	// 	document.getElementsByTagName("head")[0].appendChild(link);
-	// }
+	dynamicFavicon(company) {
+		let link =
+			document.querySelector("link[rel*='icon']") ||
+			document.createElement("link");
+		link.type = "image/x-icon";
+		link.rel = "shortcut icon";
+		link.href = `${company.image}`;
+		document.getElementsByTagName("head")[0].appendChild(link);
+	}
 
 	getColor(isPositive, element) {
 		return isPositive
@@ -69,7 +68,6 @@ class Profile {
 			`<canvas id="coChart${symbol}" class="chart" width="80%" height="80%"></canvas>`
 		);
 		/*Add company img/title to title area*/
-		// this.dynamicFavicon(company);
 		title.textContent = company.companyName;
 		/* creation of html page elements*/
 		const logo = document.createElement("img");
@@ -102,9 +100,12 @@ class Profile {
 
 		/*account for comparison card style*/
 		if (this.symbol.length > 1) {
-			newCompany.classList.add("compare-card");
+			const mainHeading = document.getElementById("mainHeading");
+			mainHeading.classList.remove("hide");
 			newCompany.classList.add("comparison-item");
 			this.parent.classList.remove("col");
+		} else {
+			this.dynamicFavicon(company);
 		}
 		this.parent.appendChild(newCompany);
 	}

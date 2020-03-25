@@ -15,16 +15,24 @@ class Search extends resultList {
 		} else {
 			let promiseArrayTriplets = [];
 			for (let i = 0; i < data.length; i += 3) {
-				if (i < data.length - 1) {
-					promiseArrayTriplets.push(
-						`https://financialmodelingprep.com/api/v3/company/profile/${
-							data[i].symbol
-						},${data[i + 1].symbol},${data[i + 2].symbol}`
-					);
-				} else {
-					promiseArrayTriplets.push(
-						`https://financialmodelingprep.com/api/v3/company/profile/${data[i].symbol}`
-					);
+				if (i < data.length) {
+					if (data.length === 3) {
+						promiseArrayTriplets.push(
+							`https://financialmodelingprep.com/api/v3/company/profile/${
+								data[i].symbol
+							},${data[i + 1].symbol},${data[i + 2].symbol}`
+						);
+					} else if (data.length === 2) {
+						promiseArrayTriplets.push(
+							`https://financialmodelingprep.com/api/v3/company/profile/${
+								data[i].symbol
+							},${data[i + 1].symbol}}`
+						);
+					} else {
+						promiseArrayTriplets.push(
+							`https://financialmodelingprep.com/api/v3/company/profile/${data[i].symbol}`
+						);
+					}
 				}
 			}
 			try {
@@ -39,7 +47,7 @@ class Search extends resultList {
 				let allTogether = [];
 				for (let i = 0; i < profileData.length; i++) {
 					/*mult. req at once vs. single req*/
-					if (i < profileData.length - 1) {
+					if (profileData[i].companyProfiles) {
 						allTogether.push(profileData[i].companyProfiles);
 					} else {
 						allTogether.push(profileData[i]);

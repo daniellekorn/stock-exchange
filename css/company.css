@@ -6,7 +6,7 @@
 }
 
 .heading .logo {
-	margin-right: 50px;
+	margin: 25px;
 }
 
 .description {
@@ -16,6 +16,9 @@
 }
 
 .comparison-item {
+	-moz-box-shadow: 0 0 10px #ccc;
+	-webkit-box-shadow: 0 0 10px #ccc;
+	box-shadow: 0 0 10px #ccc;
 	width: 33%;
 }
 
@@ -44,12 +47,6 @@
 	margin-right: 75px;
 }
 
-.compare-card {
-	-moz-box-shadow: 0 0 10px #ccc;
-	-webkit-box-shadow: 0 0 10px #ccc;
-	box-shadow: 0 0 10px #ccc;
-}
-
 .price {
 	font-size: 24px;
 }
@@ -64,13 +61,6 @@
 	left: 50%;
 	width: 75px;
 	height: 75px;
-}
-
-.warning {
-	color: red;
-	position: relative;
-	top: 10px;
-	right: 5px;
 }
 
 #pageLoader .loader-bar {
