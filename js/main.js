@@ -1,4 +1,4 @@
-const searchButton = document.querySelector("#searchButton");
+const clearButton = document.querySelector("#clearButton");
 const resultChart = document.querySelector("#resultChart");
 const searchText = document.querySelector("#searchText");
 const loader = document.querySelector("#loader");
@@ -44,53 +44,6 @@ searchForm.addEventListener(
 let symbolArray = [];
 let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
 let activeButton = companyCompareBtn.createCompareButton();
-
-searchButton.addEventListener("click", () => {
-	clearTimeout(autoSearch);
-	const searchResults = new resultList(resultChart);
-	searchResults.clearHistory();
-	const search = new Search(resultChart, searchText.value);
-	search.runSearch().then(items => {
-		items.map(item => {
-			let compareBtn = search.createListItems(item, {
-				text: search.userInput
-			});
-			let counter = 0;
-			compareBtn.addEventListener("click", () => {
-				console.log(item);
-				/*query selector to check for buttons*/
-				let numOfButtons = document.querySelectorAll(".company-compare-btn")
-					.length;
-				if (numOfButtons > 2) {
-					if (compareBar.contains(displayError)) {
-						console.log("Max 3");
-					} else {
-						companyCompareBtn.showError();
-						displayError = document.querySelector(".warning");
-					}
-				} else {
-					if (counter < 1) {
-						counter += 1;
-						symbolArray.push(item);
-						const compBtn = new CompanyCompare(item, compareBar);
-						const quitBtn = compBtn.addButton(item);
-						quitBtn.addEventListener("click", () => {
-							if (symbolArray.includes(item)) {
-								let index = symbolArray.indexOf(item);
-								symbolArray.splice(index, 1);
-								console.log(symbolArray);
-							}
-							compBtn.removeButton();
-							numOfButtons -= 1;
-							counter = 0;
-						});
-					}
-				}
-			});
-		});
-		searchResults.toggleLoader();
-	});
-});
 
 const autoSearch = debounce(function() {
 	const search = new Search(resultChart, searchText.value);
@@ -166,4 +119,8 @@ searchText.addEventListener("input", () => {
 			`?query=${searchText.value}`;
 		window.history.pushState({ path: newurl }, "", newurl);
 	}
+});
+
+clearButton.addEventListener("click", () => {
+	console.log("clear");
 });

@@ -5,40 +5,36 @@ class Search extends resultList {
 	}
 
 	async runSearch() {
-		this.toggleLoader();
 		let response = await fetch(
 			`https://financialmodelingprep.com/api/v3/search?query=${this.userInput}&limit=10&exchange=NASDAQ`
 		);
 		let data = await response.json();
+		console.log(data);
 		if (data.length === 0) {
 			this.noMatches();
 		} else {
-			let promiseArrayTriplets = [];
-			for (let i = 0; i < data.length; i += 3) {
-				if (i < data.length) {
-					if (data.length === 3) {
-						promiseArrayTriplets.push(
-							`https://financialmodelingprep.com/api/v3/company/profile/${
-								data[i].symbol
-							},${data[i + 1].symbol},${data[i + 2].symbol}`
-						);
-					} else if (data.length === 2) {
-						promiseArrayTriplets.push(
-							`https://financialmodelingprep.com/api/v3/company/profile/${
-								data[i].symbol
-							},${data[i + 1].symbol}}`
-						);
-					} else {
-						promiseArrayTriplets.push(
-							`https://financialmodelingprep.com/api/v3/company/profile/${data[i].symbol}`
-						);
-					}
+			let j = 0;
+			let triplets = [];
+			triplets.push([]);
+			for (let i = 1; i <= data.length; i++) {
+				triplets[j].push(data[i - 1].symbol);
+
+				if (i % 3 == 0) {
+					triplets.push([]);
+					j++;
 				}
 			}
+			console.log(triplets);
+			const tripletStrings = triplets.map(triple => {
+				return triple.join();
+			});
+
 			try {
 				let profileData = await Promise.all(
-					promiseArrayTriplets.map(item =>
-						fetch(item)
+					tripletStrings.map(item =>
+						fetch(
+							`https://financialmodelingprep.com/api/v3/company/profile/${item}`
+						)
 							.then(r => r.json())
 							.catch(error => ({ error, url }))
 					)
@@ -47,13 +43,14 @@ class Search extends resultList {
 				let allTogether = [];
 				for (let i = 0; i < profileData.length; i++) {
 					/*mult. req at once vs. single req*/
-					if (profileData[i].companyProfiles) {
+					if (i < profileData.length - 1) {
 						allTogether.push(profileData[i].companyProfiles);
 					} else {
 						allTogether.push(profileData[i]);
 					}
 				}
 				let merged = [].concat.apply([], allTogether);
+				console.log(merged);
 				return merged;
 			} catch (err) {
 				console.log(err);

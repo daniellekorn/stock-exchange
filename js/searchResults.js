@@ -57,8 +57,20 @@ class resultList {
 
 		/*highlighting for autocomplete*/
 		text = text["text"].toLowerCase();
-		let nameIndex = profile.companyName.toLowerCase().indexOf(text);
-		let symbolIndex = symbol.toLowerCase().indexOf(text);
+		let nameIndex;
+		let symbolIndex;
+		if (profile.companyName) {
+			nameIndex = profile.companyName.toLowerCase().indexOf(text);
+		} else {
+			nameIndex = -1;
+		}
+
+		if (symbol) {
+			symbolIndex = symbol.toLowerCase().indexOf(text);
+		} else {
+			symbolIndex = -1;
+		}
+
 		if (nameIndex >= 0) {
 			let highlightNeeded =
 				profile.companyName.substring(0, nameIndex) +
