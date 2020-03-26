@@ -27,12 +27,6 @@ function debounce(func, wait, immediate) {
 	};
 }
 
-searchText.addEventListener("keyup", function(event) {
-	if (event.keyCode === 13) {
-		searchButton.click();
-	}
-});
-
 searchForm.addEventListener(
 	"submit",
 	function(e) {
@@ -45,9 +39,9 @@ let symbolArray = [];
 let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
 let activeButton = companyCompareBtn.createCompareButton();
 
+const searchResults = new resultList(resultChart);
 const autoSearch = debounce(function() {
 	const search = new Search(resultChart, searchText.value);
-	const searchResults = new resultList(resultChart);
 	if (searchText.value === "") {
 		searchResults.clearHistory();
 	} else {
@@ -90,8 +84,8 @@ const autoSearch = debounce(function() {
 					}
 				});
 			});
-			searchResults.toggleLoader();
 		});
+		// searchResults.toggleLoader();
 	}
 }, 1000);
 
@@ -122,5 +116,7 @@ searchText.addEventListener("input", () => {
 });
 
 clearButton.addEventListener("click", () => {
-	console.log("clear");
+	const removeBarItems = new CompanyCompare("deleting", compareBar);
+	searchResults.clearHistory();
+	removeBarItems.clearPage();
 });

@@ -13,16 +13,24 @@ class CompanyCompare {
 		return compBtn;
 	}
 
+	clearPage() {
+		const elements = compareBar.getElementsByClassName("deleteme");
+
+		while (elements[0]) {
+			elements[0].parentNode.removeChild(elements[0]);
+		}
+	}
+
 	showError() {
 		const error = document.createElement("div");
 		error.textContent = "MAX 3";
-		error.classList.add("warning");
+		error.classList.add("warning", "deleteme");
 		this.element.insertAdjacentElement("beforeend", error);
 	}
 
 	addButton() {
 		const newBtn = document.createElement("button");
-		newBtn.classList.add("company-compare-btn", "btn");
+		newBtn.classList.add("company-compare-btn", "deleteme", "btn");
 		newBtn.textContent = this.company.symbol;
 		const quitBtn = document.createElement("button");
 		quitBtn.classList.add("quit-btn", "btn");
