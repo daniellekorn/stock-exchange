@@ -18,7 +18,7 @@ class Marquee {
 			});
 			const ul = document.createElement("ul");
 			ul.classList.add("marquee-content", "flexible");
-			ul.innerHTML = allListings.join("");
+			ul.insertAdjacentHTML("beforeend", allListings.join(""));
 			marqueeBody.appendChild(ul);
 			this.parent.insertAdjacentElement("afterbegin", marqueeBody);
 		});

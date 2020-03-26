@@ -5,6 +5,11 @@ class Profile {
 	}
 
 	load() {
+		/*this conditional allows for the next forEach fetch (neeeded incase of comparison)*/
+		if (typeof this.symbol === "string") {
+			this.symbol = [this.symbol];
+		}
+
 		this.symbol.forEach(async symbol => {
 			let profile = await fetch(
 				`https://financialmodelingprep.com/api/v3/company/profile/${symbol}`
@@ -96,7 +101,6 @@ class Profile {
 		newCompany.appendChild(price);
 		newCompany.appendChild(description);
 		newCompany.appendChild(chartContainer);
-		console.log(this.symbol.length);
 
 		/*account for comparison card style*/
 		if (this.symbol.length > 1) {
@@ -133,7 +137,6 @@ class Profile {
 			`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?serietype=line`
 		);
 		let data = await history.json();
-		console.log(data);
 		let yearLength = data.historical.length / 365;
 		let yearDecimal = 2020 - yearLength;
 		let year = Math.round(yearDecimal);

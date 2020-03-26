@@ -37,6 +37,11 @@ class resultList {
 	}
 
 	createListItems(company, text) {
+		for (let item in company.profile) {
+			if (company.profile[item] === null) {
+				company.profile[item] = "";
+			}
+		}
 		const symbol = company.symbol;
 		const profile = company.profile;
 		/*creation of elements w/style*/

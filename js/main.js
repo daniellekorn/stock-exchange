@@ -9,7 +9,12 @@ const currencies = document.querySelector("#currencies");
 const searchForm = document.querySelector("#searchForm");
 const compare = document.getElementsByClassName(".compare-btn");
 const compareBar = document.getElementById("compareBar");
+
 let displayError;
+let symbolArray = [];
+const companyCompareBtn = new CompanyCompare("placing bar", compareBar);
+const compareCall = companyCompareBtn.createCompareButton();
+const searchResults = new resultList(resultChart);
 
 function debounce(func, wait, immediate) {
 	let timeout;
@@ -27,25 +32,13 @@ function debounce(func, wait, immediate) {
 	};
 }
 
-searchForm.addEventListener(
-	"submit",
-	function(e) {
-		e.preventDefault();
-	},
-	false
-);
-
-let symbolArray = [];
-let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
-let activeButton = companyCompareBtn.createCompareButton();
-
-const searchResults = new resultList(resultChart);
-const autoSearch = debounce(function() {
+const autoSearch = debounce(() => {
 	const search = new Search(resultChart, searchText.value);
 	if (searchText.value === "") {
 		searchResults.clearHistory();
 	} else {
 		searchResults.clearHistory();
+		searchResults.toggleLoader();
 		search.runSearch(searchText.value).then(items => {
 			items.map(item => {
 				let compareBtn = search.createListItems(item, {
@@ -53,14 +46,11 @@ const autoSearch = debounce(function() {
 				});
 				let counter = 0;
 				compareBtn.addEventListener("click", () => {
-					console.log(item);
 					/*query selector to check for buttons*/
 					let numOfButtons = document.querySelectorAll(".company-compare-btn")
 						.length;
 					if (numOfButtons > 2) {
-						if (compareBar.contains(displayError)) {
-							console.log("Max 3");
-						} else {
+						if (!compareBar.contains(displayError)) {
 							companyCompareBtn.showError();
 							displayError = document.querySelector(".warning");
 						}
@@ -74,7 +64,6 @@ const autoSearch = debounce(function() {
 								if (symbolArray.includes(item)) {
 									let index = symbolArray.indexOf(item);
 									symbolArray.splice(index, 1);
-									console.log(symbolArray);
 								}
 								compBtn.removeButton();
 								numOfButtons -= 1;
@@ -84,26 +73,12 @@ const autoSearch = debounce(function() {
 					}
 				});
 			});
+			searchResults.toggleLoader();
 		});
-		// searchResults.toggleLoader();
 	}
 }, 1000);
 
-activeButton.addEventListener("click", () => {
-	let searchString = "";
-	for (let i = 0; i < symbolArray.length; i++) {
-		if (i == symbolArray.length - 1) {
-			searchString += `${symbolArray[i].symbol}`;
-		} else {
-			searchString += `${symbolArray[i].symbol},`;
-		}
-	}
-	console.log(searchString);
-	activeButton.href = `company.html?symbol=${searchString}`;
-});
-
-searchText.addEventListener("input", autoSearch);
-searchText.addEventListener("input", () => {
+const urlUpdate = () => {
 	if (history.pushState) {
 		let newurl =
 			window.location.protocol +
@@ -113,10 +88,36 @@ searchText.addEventListener("input", () => {
 			`?query=${searchText.value}`;
 		window.history.pushState({ path: newurl }, "", newurl);
 	}
-});
+};
 
-clearButton.addEventListener("click", () => {
+const buildCompareUrl = () => {
+	let searchString = "";
+	for (let i = 0; i < symbolArray.length; i++) {
+		if (i == symbolArray.length - 1) {
+			searchString += `${symbolArray[i].symbol}`;
+		} else {
+			searchString += `${symbolArray[i].symbol},`;
+		}
+	}
+	compareCall.href = `company.html?symbol=${searchString}`;
+};
+
+const clearPage = () => {
 	const removeBarItems = new CompanyCompare("deleting", compareBar);
 	searchResults.clearHistory();
 	removeBarItems.clearPage();
-});
+};
+
+searchText.addEventListener("input", autoSearch);
+searchText.addEventListener("input", urlUpdate);
+compareCall.addEventListener("click", buildCompareUrl);
+clearButton.addEventListener("click", clearPage);
+
+/* stops automatic reload of page on enter keypress*/
+searchForm.addEventListener(
+	"submit",
+	function(e) {
+		e.preventDefault();
+	},
+	false
+);

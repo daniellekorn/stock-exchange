@@ -9,7 +9,6 @@ class Search extends resultList {
 			`https://financialmodelingprep.com/api/v3/search?query=${this.userInput}&limit=10&exchange=NASDAQ`
 		);
 		let data = await response.json();
-		console.log(data);
 		if (data.length === 0) {
 			this.noMatches();
 		} else {
@@ -24,7 +23,6 @@ class Search extends resultList {
 					j++;
 				}
 			}
-			console.log(triplets);
 			const tripletStrings = triplets.map(triple => {
 				return triple.join();
 			});
@@ -50,7 +48,6 @@ class Search extends resultList {
 					}
 				}
 				let merged = [].concat.apply([], allTogether);
-				console.log(merged);
 				return merged;
 			} catch (err) {
 				console.log(err);

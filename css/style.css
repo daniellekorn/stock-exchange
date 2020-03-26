@@ -2,6 +2,12 @@ body {
 	margin: 0;
 	height: 100vh;
 	font-family: "lato", sans-serif;
+	background-image: url("/media/nyc.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	color: white;
+	opacity: 0.95;
 }
 
 * {
@@ -38,17 +44,25 @@ body {
 	background-color: rgb(255, 255, 82);
 }
 
+.container {
+	height: 85%;
+	width: 90%;
+	-moz-box-shadow: 0 0 2px #ccc;
+	-webkit-box-shadow: 0 0 2px #ccc;
+	box-shadow: 0 0 2px #ccc;
+	align-self: center;
+}
 .site-container.flexible.col {
 	height: 100%;
 	flex-shrink: 0;
+	justify-content: space-around;
 }
 
 .center-area {
-	min-height: 90%;
+	min-height: 85%;
 	flex-shrink: 0;
 	flex-wrap: nowrap;
 	width: 100%;
-	justify-content: stretch;
 	align-items: center;
 }
 
@@ -80,7 +94,7 @@ body {
 .run-compare {
 	margin-left: auto;
 	text-decoration: none;
-	color: #0053ee;
+	color: #2775ad;
 	position: relative;
 	top: 10px;
 	right: 5px;
@@ -90,14 +104,15 @@ body {
 .quit-btn {
 	display: inline-block;
 	background-color: white;
-	color: #0053ee;
+	color: #2775ad;
 	margin: 0;
+	opacity: 1;
 }
 
 .company-compare-btn {
 	height: 90%;
-	width: 9.5%;
-	border: 1px solid #0053ee;
+	width: 12%;
+	border: 1px solid #2775ad;
 	border-radius: 10px;
 	font-size: 11px;
 }
@@ -132,14 +147,14 @@ body {
 	height: 32px;
 	padding: 8px;
 	margin-right: 25%;
-	color: #0053ee;
-	border: 1px solid #0053ee;
+	color: #2775ad;
+	border: 1px solid #2775ad;
 	background-color: white;
 	float: right;
 }
 
 .compare-btn:hover {
-	background-color: #0053ee;
+	background-color: #2775ad;
 	color: white;
 }
 
@@ -159,6 +174,7 @@ body {
 .search-container .form-container .search-box .search-icon {
 	z-index: 2;
 	padding-left: 25px;
+	color: black;
 }
 
 .search-container .form-container .search-box {
@@ -167,7 +183,7 @@ body {
 
 .search-container .form-container .search-button {
 	width: 12%;
-	background: #0053ee;
+	background: #2775ad;
 	color: white;
 	border-radius: 0;
 	font-size: 12px;
@@ -200,6 +216,8 @@ body {
 
 .main-title {
 	margin: 15px;
+	font: 40px;
+	color: black;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	font-weight: 900;
@@ -214,7 +232,7 @@ body {
 	width: 95%;
 	margin: 2px;
 	align-self: center;
-	border-top: 0.15px solid #0053ee;
+	border-top: 0.15px solid #2775ad;
 	opacity: 0.5;
 }
 
@@ -231,6 +249,8 @@ body {
 	white-space: nowrap;
 	overflow: hidden;
 	margin: 0;
+	background-color: white;
+	color: black;
 }
 .marquee-content {
 	display: flex;
@@ -287,7 +307,7 @@ body {
 	display: inline-block;
 	width: 4px;
 	height: 12px;
-	background-color: #0053ee;
+	background-color: #2775ad;
 }
 
 .loader span:nth-child(1) {
