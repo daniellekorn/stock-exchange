@@ -19,7 +19,6 @@ async function runSearch(query) {
 		`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`
 	);
 	let data = await response.json();
-	console.log(data);
 	let j = 0;
 	let triplets = [];
 	triplets.push([]);
@@ -34,7 +33,6 @@ async function runSearch(query) {
 	const tripletStrings = triplets.map(triple => {
 		return triple.join();
 	});
-	console.log(tripletStrings);
 
 	try {
 		let profileData = await Promise.all(
@@ -150,6 +148,15 @@ class Search {
 			runSearch(inputBox.value).then(companies => {
 				debounce(this.callback(companies), 5000);
 			});
+			if (history.pushState) {
+				let newurl =
+					window.location.protocol +
+					"//" +
+					window.location.host +
+					window.location.pathname +
+					`?query=${searchText.value}`;
+				window.history.pushState({ path: newurl }, "", newurl);
+			}
 		});
 
 		formElement.addEventListener(

@@ -52,32 +52,28 @@ let symbolArray = [];
 function accessCompare(company, compareBtn) {
 	let counter = 0;
 	compareBtn.addEventListener("click", () => {
-		console.log(company);
 		/*query selector to check for buttons*/
 		let numOfButtons = document.querySelectorAll(".company-compare-btn").length;
 		if (numOfButtons > 2) {
-			if (compareBar.contains(displayError)) {
-				console.log("Max 3");
-			} else {
+			if (!compareBar.contains(displayError)) {
 				companyCompareBtn.showError();
 				displayError = document.querySelector(".warning");
-			}
-		} else {
-			if (counter < 1) {
-				counter += 1;
-				symbolArray.push(company);
-				const compBtn = new CompanyCompare(company, compareBar);
-				const quitBtn = compBtn.addButton(company);
-				quitBtn.addEventListener("click", () => {
-					if (symbolArray.includes(company)) {
-						let index = symbolArray.indexOf(company);
-						symbolArray.splice(index, 1);
-						console.log(symbolArray);
-					}
-					compBtn.removeButton();
-					numOfButtons -= 1;
-					counter = 0;
-				});
+			} else {
+				if (counter < 1) {
+					counter += 1;
+					symbolArray.push(company);
+					const compBtn = new CompanyCompare(company, compareBar);
+					const quitBtn = compBtn.addButton(company);
+					quitBtn.addEventListener("click", () => {
+						if (symbolArray.includes(company)) {
+							let index = symbolArray.indexOf(company);
+							symbolArray.splice(index, 1);
+						}
+						compBtn.removeButton();
+						numOfButtons -= 1;
+						counter = 0;
+					});
+				}
 			}
 		}
 	});

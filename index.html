@@ -38,11 +38,9 @@
 		<script src="js/compare.js"></script> -
 		<script src="js/searchForm.js"></script>
 		<script src="js/searchResults.js"></script>
-		<!-- <script src="js/main.js"></script> -->
 		<script>
 			const parent = document.getElementById("fullSite");
 			const resultChart = document.getElementById("resultChart");
-			const searchLoader = document.getElementById("loader");
 			const topMarquee = new Marquee(parent, "marquee");
 			topMarquee.createMarquee();
 			const form = new Search(document.getElementById("searchContainer"));
@@ -70,8 +68,7 @@
 							searchString += `${symbolArray[i].symbol},`;
 						}
 					}
-					console.log(searchString);
-					activeButton.href = `company.html?symbol=${searchString}`;
+				activeButton.href = `company.html?symbol=${searchString}`;
 			});
 		</script>
 	</body>
