@@ -143,14 +143,21 @@ class Search {
 		searchBarContainer.appendChild(clearBtn);
 		element.insertAdjacentElement("afterbegin", searchBarContainer);
 
-		inputBox.addEventListener(
-			"input",
-			/*this needs to be debounced*/ event => {
-				event.preventDefault();
-				runSearch(inputBox.value).then(companies => {
-					this.callback(companies);
-				});
-			}
+		const searchLoader = document.getElementById("loader");
+		inputBox.addEventListener("input", event => {
+			searchLoader.classList.remove("hide");
+			event.preventDefault();
+			runSearch(inputBox.value).then(companies => {
+				debounce(this.callback(companies), 5000);
+			});
+		});
+
+		formElement.addEventListener(
+			"submit",
+			function(e) {
+				e.preventDefault();
+			},
+			false
 		);
 	}
 

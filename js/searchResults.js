@@ -51,14 +51,6 @@ class ResultsList {
 		this.element = element;
 	}
 
-	toggleLoader() {
-		if (loader.classList.contains("hide")) {
-			loader.classList.remove("hide");
-		} else if (!loader.classList.contains("hide")) {
-			loader.classList.add("hide");
-		}
-	}
-
 	clearHistory() {
 		let child = this.element.lastElementChild;
 		while (child) {
@@ -116,5 +108,7 @@ class ResultsList {
 			/*compare button functionality*/
 			accessCompare(company, compare);
 		});
+		const searchLoader = document.getElementById("loader");
+		searchLoader.classList.add("hide");
 	}
 }
