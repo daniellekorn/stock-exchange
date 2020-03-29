@@ -19,60 +19,40 @@
 			href="https://fonts.googleapis.com/css?family=Lato&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/style(old).css" />
 	</head>
 	<body>
 		<div id="fullSite" class="site-container flexible col">
-				<div class="center-area flexible col">
-					<div
-						id="searchContainer"
-						class="flexible col search-container"
-					>
-					<h1 class="center main-title">Search Nasdaq Stocks</h1>
-					<div class="container">
-						<div class="form-container flexible">
-							<form
-								id="searchForm"
-								autocomplete="off"
-								class="flexible search-box"
-							>
-								<div>
-									<i class="search-icon vertical-align fa fa-search fa-lg"></i>
-								</div>
-								<div class="autocomplete">
-									<input
-										id="searchText"
-										class="autocomplete search-text"
-										type="text"
-										placeholder="Search..."
-									/>
-								</div>
-							</form>
-							<div id="loader" class="loader hide">
-								<span class="loader-bar"></span>
-								<span class="loader-bar"></span>
-								<span class="loader-bar"></span>
-							</div>
-							<input
-								id="clearButton"
-								class="search-button btn"
-								type="submit"
-								value="Clear"
-							/>
-						</div>
-						<div id="compareBar" class="compare-bar flexible"></div>
-						<div id="matches" class="autocomplete-container"></div>
-						<div id="resultChart" class="result-chart flexible col"></div>
-					</div>
-					</div>
+			<h2 class="center main-title">Search Nasdaq Stocks</h2>
+				<div
+					id="searchContainer"
+					class="flexible col search-container"
+				>
+					<div id="compareBar" class="compare-bar flexible"></div>
+					<div id="matches" class="autocomplete-container"></div>
+					<div id="resultChart" class="result-chart flexible col"></div>
 				</div>
-			</div>
 			</div>
 		</div>
 		<script src="js/marquee.js"></script>
-		<script src="js/compare.js"></script>
-		<script src="js/searchResults.js"></script>
+		<!-- <script src="js/compare.js"></script> --->
 		<script src="js/searchForm.js"></script>
-		<script src="js/main.js"></script>
+		<script src="js/searchResults.js"></script>
+		<!-- <script src="js/main.js"></script> -->
+		<script>
+			const parent = document.getElementById("fullSite");
+			const topMarquee = new Marquee(parent, "marquee");
+			topMarquee.createMarquee();
+			const form = new Search(document.getElementById("searchContainer"));
+			const results = new ResultsList(document.getElementById("resultChart"));
+			form.dataForResults(data => {
+				results.createListItems(data);
+			});
+			// const results = new Result(document.getElementById("results"));
+			// form.addResultEventListener(data => {
+			// 	console.log(data);
+			// 	results.showResults(data);
+			// });
+		</script>
 	</body>
 </html>

@@ -35,6 +35,10 @@
 	text-transform: uppercase;
 }
 
+/* .company-container {
+	background-color: white;
+} */
+
 .flex-child {
 	margin: 2rem 0 0 2rem;
 }

@@ -1,13 +1,54 @@
+function highlight(profileName, symbol) {
+	const name = document.createElement("span");
+	name.classList.add("result-name");
+	let text = document.getElementById("searchText").value;
+	text = text.toLowerCase();
+	let nameIndex;
+	let symbolIndex;
+	if (profileName) {
+		nameIndex = profileName.toLowerCase().indexOf(text);
+	} else {
+		nameIndex = -1;
+	}
+	if (symbol) {
+		symbolIndex = symbol.toLowerCase().indexOf(text);
+	} else {
+		symbolIndex = -1;
+	}
+	if (nameIndex >= 0) {
+		let highlightNeeded =
+			profileName.substring(0, nameIndex) +
+			"<span class='highlight'>" +
+			profileName.substring(nameIndex, nameIndex + text.length) +
+			"</span>" +
+			profileName.substring(nameIndex + text.length);
+		name.insertAdjacentHTML("afterbegin", highlightNeeded);
+	} else {
+		name.insertAdjacentHTML("afterbegin", profileName);
+	}
+	if (symbolIndex >= 0) {
+		let highlightNeeded =
+			symbol.substring(0, symbolIndex) +
+			"<span class='highlight'>" +
+			symbol.substring(symbolIndex, symbolIndex + text.length) +
+			"</span>" +
+			symbol.substring(symbolIndex + text.length);
+		name.insertAdjacentHTML("beforeend", highlightNeeded);
+	} else {
+		name.insertAdjacentHTML("beforeend", ` (${symbol})`);
+	}
+	return name;
+}
+
 function getColor(isPositive, element) {
 	return isPositive
 		? element.classList.add("positive")
 		: element.classList.add("negative");
 }
 
-class resultList {
-	constructor(element, resultArray) {
+class ResultsList {
+	constructor(element) {
 		this.element = element;
-		this.resultArray = resultArray;
 	}
 
 	toggleLoader() {
@@ -36,84 +77,42 @@ class resultList {
 		resultChart.append(error);
 	}
 
-	createListItems(company, text) {
-		for (let item in company.profile) {
-			if (company.profile[item] === null) {
-				company.profile[item] = "";
-			}
-		}
-		const symbol = company.symbol;
-		const profile = company.profile;
-		/*creation of elements w/style*/
-		const contianer = document.createElement("div");
-		contianer.classList.add("flexible", "result-container");
-		const newResult = document.createElement("a");
-		newResult.classList.add("result");
-		const logo = document.createElement("img");
-		logo.classList.add("uniform-size");
-		logo.src = `${profile.image}`;
-		const percentChange = document.createElement("span");
-		getColor(profile.changesPercentage.includes("+"), percentChange);
-		percentChange.textContent = `${profile.changesPercentage}`;
-		const name = document.createElement("span");
-		const lineBreak = document.createElement("hr");
-		lineBreak.classList.add("line-break");
-		const compare = document.createElement("div");
+	createListItems(companies) {
+		companies.map(company => {
+			const symbol = company.symbol;
+			const profile = company.profile;
+			/*creation of elements w/style*/
+			const contianer = document.createElement("div");
+			contianer.classList.add("flexible", "result-container");
+			const newResult = document.createElement("a");
+			newResult.classList.add("result");
+			const logo = document.createElement("img");
+			logo.classList.add("uniform-size");
+			logo.src = `${profile.image}`;
+			const percentChange = document.createElement("span");
+			getColor(profile.changesPercentage.includes("+"), percentChange);
+			percentChange.textContent = `${profile.changesPercentage}`;
+			const lineBreak = document.createElement("hr");
+			lineBreak.classList.add("line-break");
+			const compare = document.createElement("div");
 
-		/*highlighting for autocomplete*/
-		text = text["text"].toLowerCase();
-		let nameIndex;
-		let symbolIndex;
-		if (profile.companyName) {
-			nameIndex = profile.companyName.toLowerCase().indexOf(text);
-		} else {
-			nameIndex = -1;
-		}
+			const name = highlight(profile.companyName, symbol);
 
-		if (symbol) {
-			symbolIndex = symbol.toLowerCase().indexOf(text);
-		} else {
-			symbolIndex = -1;
-		}
-
-		if (nameIndex >= 0) {
-			let highlightNeeded =
-				profile.companyName.substring(0, nameIndex) +
-				"<span class='highlight'>" +
-				profile.companyName.substring(nameIndex, nameIndex + text.length) +
-				"</span>" +
-				profile.companyName.substring(nameIndex + text.length);
-			name.insertAdjacentHTML("afterbegin", highlightNeeded);
-		} else {
-			name.insertAdjacentHTML("afterbegin", profile.companyName);
-		}
-		if (symbolIndex >= 0) {
-			let highlightNeeded =
-				symbol.substring(0, symbolIndex) +
-				"<span class='highlight'>" +
-				symbol.substring(symbolIndex, symbolIndex + text.length) +
-				"</span>" +
-				symbol.substring(symbolIndex + text.length);
-			name.insertAdjacentHTML("beforeend", highlightNeeded);
-		} else {
-			name.insertAdjacentHTML("beforeend", ` (${symbol})`);
-		}
-		name.classList.add("result-name");
-
-		/*append all elements to result div*/
-		newResult.appendChild(logo);
-		newResult.appendChild(name);
-		newResult.appendChild(percentChange);
-		newResult.href = `company.html?symbol=${symbol}`;
-		compare.insertAdjacentHTML(
-			"beforeend",
-			'<button class="compare-btn btn">Compare</button>'
-		);
-		contianer.appendChild(newResult);
-		contianer.appendChild(compare);
-		/*append complete result to DOM*/
-		this.element.appendChild(contianer);
-		this.element.appendChild(lineBreak);
-		return compare;
+			/*append all elements to result div*/
+			newResult.appendChild(logo);
+			newResult.appendChild(name);
+			newResult.appendChild(percentChange);
+			newResult.href = `company.html?symbol=${symbol}`;
+			compare.insertAdjacentHTML(
+				"beforeend",
+				'<button class="compare-btn btn">Compare</button>'
+			);
+			contianer.appendChild(newResult);
+			contianer.appendChild(compare);
+			/*append complete result to DOM*/
+			this.element.appendChild(contianer);
+			this.element.appendChild(lineBreak);
+			return compare;
+		});
 	}
 }

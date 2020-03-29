@@ -33,7 +33,3 @@ class Marquee {
 		return stocks;
 	}
 }
-
-const parent = document.getElementById("fullSite");
-const topMarquee = new Marquee(parent, "marquee");
-topMarquee.createMarquee();
