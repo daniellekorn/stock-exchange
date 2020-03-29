@@ -35,19 +35,30 @@
 			</div>
 		</div>
 		<script src="js/marquee.js"></script>
-		<!-- <script src="js/compare.js"></script> --->
+		<script src="js/compare.js"></script> -
 		<script src="js/searchForm.js"></script>
 		<script src="js/searchResults.js"></script>
 		<!-- <script src="js/main.js"></script> -->
 		<script>
 			const parent = document.getElementById("fullSite");
+			const resultChart = document.getElementById("resultChart");
 			const topMarquee = new Marquee(parent, "marquee");
 			topMarquee.createMarquee();
 			const form = new Search(document.getElementById("searchContainer"));
 			const results = new ResultsList(document.getElementById("resultChart"));
+			const searchText = document.getElementById("searchText");
+			const compareBar = document.getElementById("compareBar");
+			let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
+			let activeButton = companyCompareBtn.createCompareButton();
 			form.dataForResults(data => {
-				results.createListItems(data);
+				results.clearHistory();
+				if (data === undefined) {
+					results.noMatches();
+				} else {
+					results.createListItems(data);
+				}
 			});
+
 			// const results = new Result(document.getElementById("results"));
 			// form.addResultEventListener(data => {
 			// 	console.log(data);

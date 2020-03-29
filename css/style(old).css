@@ -142,7 +142,7 @@ body {
 }
 
 .form-container {
-	position: absolute;
+	position: relative;
 	width: 60%;
 }
 

@@ -1,53 +1,65 @@
+function debounce(func, wait, immediate) {
+	let timeout;
+	return function() {
+		let context = this,
+			args = arguments;
+		let later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		let callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+}
+
 async function runSearch(query) {
 	let response = await fetch(
 		`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`
 	);
 	let data = await response.json();
 	console.log(data);
-	if (data.length === 0) {
-		console.log("NO MATCHES");
-	} else {
-		let j = 0;
-		let triplets = [];
-		triplets.push([]);
-		for (let i = 1; i <= data.length; i++) {
-			triplets[j].push(data[i - 1].symbol);
+	let j = 0;
+	let triplets = [];
+	triplets.push([]);
+	for (let i = 1; i <= data.length; i++) {
+		triplets[j].push(data[i - 1].symbol);
 
-			if (i % 3 == 0) {
-				triplets.push([]);
-				j++;
-			}
+		if (i % 3 == 0) {
+			triplets.push([]);
+			j++;
 		}
-		const tripletStrings = triplets.map(triple => {
-			return triple.join();
-		});
-		console.log(tripletStrings);
+	}
+	const tripletStrings = triplets.map(triple => {
+		return triple.join();
+	});
+	console.log(tripletStrings);
 
-		try {
-			let profileData = await Promise.all(
-				tripletStrings.map(item =>
-					fetch(
-						`https://financialmodelingprep.com/api/v3/company/profile/${item}`
-					)
-						.then(r => r.json())
-						.catch(error => ({ error, url }))
+	try {
+		let profileData = await Promise.all(
+			tripletStrings.map(item =>
+				fetch(
+					`https://financialmodelingprep.com/api/v3/company/profile/${item}`
 				)
-			);
-			/*account for differences in API index names*/
-			let allTogether = [];
-			for (let i = 0; i < profileData.length; i++) {
-				/*mult. req at once vs. single req*/
-				if (i < profileData.length - 1) {
-					allTogether.push(profileData[i].companyProfiles);
-				} else {
-					allTogether.push(profileData[i]);
-				}
+					.then(r => r.json())
+					.catch(error => ({ error, url }))
+			)
+		);
+		/*account for differences in API index names*/
+		let allTogether = [];
+		for (let i = 0; i < profileData.length; i++) {
+			/*mult. req at once vs. single req*/
+			if (i < profileData.length - 1) {
+				allTogether.push(profileData[i].companyProfiles);
+			} else {
+				allTogether.push(profileData[i]);
 			}
-			let merged = [].concat.apply([], allTogether);
-			return merged;
-		} catch (err) {
-			console.log(err);
 		}
+		let merged = [].concat.apply([], allTogether);
+		return merged;
+	} catch (err) {
+		console.log(err);
 	}
 }
 
@@ -129,78 +141,20 @@ class Search {
 		searchBarContainer.appendChild(formElement);
 		searchBarContainer.appendChild(loader);
 		searchBarContainer.appendChild(clearBtn);
-		element.appendChild(searchBarContainer);
+		element.insertAdjacentElement("afterbegin", searchBarContainer);
 
-		inputBox.addEventListener("input", event => {
-			event.preventDefault();
-			console.log("working");
-			runSearch(inputBox.value).then(companies => {
-				this.callback(companies);
-			});
-		});
+		inputBox.addEventListener(
+			"input",
+			/*this needs to be debounced*/ event => {
+				event.preventDefault();
+				runSearch(inputBox.value).then(companies => {
+					this.callback(companies);
+				});
+			}
+		);
 	}
 
 	dataForResults(callback) {
 		this.callback = callback;
 	}
 }
-
-// async runSearch() {
-// 	let response = await fetch(
-// 		`https://financialmodelingprep.com/api/v3/search?query=${this.userInput}&limit=10&exchange=NASDAQ`
-// 	);
-// 	let data = await response.json();
-// 	console.log(data);
-// 	if (data.length === 0) {
-// 		this.noMatches();
-// 	} else {
-// 		let j = 0;
-// 		let triplets = [];
-// 		triplets.push([]);
-// 		for (let i = 1; i <= data.length; i++) {
-// 			triplets[j].push(data[i - 1].symbol);
-
-// 			if (i % 3 == 0) {
-// 				triplets.push([]);
-// 				j++;
-// 			}
-// 		}
-// 		const tripletStrings = triplets.map(triple => {
-// 			return triple.join();
-// 		});
-// 		console.log(tripletStrings);
-
-// 		try {
-// 			let profileData = await Promise.all(
-// 				tripletStrings.map(item =>
-// 					fetch(
-// 						`https://financialmodelingprep.com/api/v3/company/profile/${item}`
-// 					)
-// 						.then(r => r.json())
-// 						.catch(error => ({ error, url }))
-// 				)
-// 			);
-// 			/*account for differences in API index names*/
-// 			let allTogether = [];
-// 			for (let i = 0; i < profileData.length; i++) {
-// 				/*mult. req at once vs. single req*/
-// 				if (i < profileData.length - 1) {
-// 					allTogether.push(profileData[i].companyProfiles);
-// 				} else {
-// 					allTogether.push(profileData[i]);
-// 				}
-// 			}
-// 			let merged = [].concat.apply([], allTogether);
-// 			console.log(merged);
-// 			return merged;
-// 		} catch (err) {
-// 			console.log(err);
-// 		}
-// 	}
-// }
-
-// class Search extends resultList {
-// 	constructor(element, userInput) {
-// 		super(element);
-//
-//

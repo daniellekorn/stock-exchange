@@ -1,7 +1,7 @@
 function highlight(profileName, symbol) {
 	const name = document.createElement("span");
 	name.classList.add("result-name");
-	let text = document.getElementById("searchText").value;
+	let text = searchText.value;
 	text = text.toLowerCase();
 	let nameIndex;
 	let symbolIndex;
@@ -71,7 +71,7 @@ class ResultsList {
 		const error = document.createElement("div");
 		error.insertAdjacentHTML(
 			"afterbegin",
-			`We did not find any results that match <strong>"${this.userInput}"</strong>`
+			`We did not find any results that match <strong>"${searchText.value}"</strong>`
 		);
 		error.classList.add("error-style");
 		resultChart.append(error);
@@ -112,6 +112,8 @@ class ResultsList {
 			/*append complete result to DOM*/
 			this.element.appendChild(contianer);
 			this.element.appendChild(lineBreak);
+			let compareBtn = compare;
+			accessCompare(compareBtn);
 			return compare;
 		});
 	}

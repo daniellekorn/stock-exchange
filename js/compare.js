@@ -46,3 +46,38 @@ class CompanyCompare {
 		this.newBtn.remove();
 	}
 }
+
+let displayError;
+let symbolArray = [];
+function accessCompare(compareBtn) {
+	let counter = 0;
+	compareBtn.addEventListener("click", () => {
+		/*query selector to check for buttons*/
+		let numOfButtons = document.querySelectorAll(".company-compare-btn").length;
+		if (numOfButtons > 2) {
+			if (compareBar.contains(displayError)) {
+				console.log("Max 3");
+			} else {
+				companyCompareBtn.showError();
+				displayError = document.querySelector(".warning");
+			}
+		} else {
+			if (counter < 1) {
+				counter += 1;
+				symbolArray.push(compareBtn);
+				const compBtn = new CompanyCompare(compareBtn, compareBar);
+				const quitBtn = compBtn.addButton(compareBtn);
+				quitBtn.addEventListener("click", () => {
+					if (symbolArray.includes(compareBtn)) {
+						let index = symbolArray.indexOf(compareBtn);
+						symbolArray.splice(index, 1);
+						console.log(symbolArray);
+					}
+					compBtn.removeButton();
+					numOfButtons -= 1;
+					counter = 0;
+				});
+			}
+		}
+	});
+}
