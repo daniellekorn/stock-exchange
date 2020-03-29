@@ -112,9 +112,9 @@ class ResultsList {
 			/*append complete result to DOM*/
 			this.element.appendChild(contianer);
 			this.element.appendChild(lineBreak);
-			let compareBtn = compare;
-			accessCompare(compareBtn);
-			return compare;
+
+			/*compare button functionality*/
+			accessCompare(company, compare);
 		});
 	}
 }

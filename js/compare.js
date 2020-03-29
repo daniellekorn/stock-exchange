@@ -49,9 +49,10 @@ class CompanyCompare {
 
 let displayError;
 let symbolArray = [];
-function accessCompare(compareBtn) {
+function accessCompare(company, compareBtn) {
 	let counter = 0;
 	compareBtn.addEventListener("click", () => {
+		console.log(company);
 		/*query selector to check for buttons*/
 		let numOfButtons = document.querySelectorAll(".company-compare-btn").length;
 		if (numOfButtons > 2) {
@@ -64,12 +65,12 @@ function accessCompare(compareBtn) {
 		} else {
 			if (counter < 1) {
 				counter += 1;
-				symbolArray.push(compareBtn);
-				const compBtn = new CompanyCompare(compareBtn, compareBar);
-				const quitBtn = compBtn.addButton(compareBtn);
+				symbolArray.push(company);
+				const compBtn = new CompanyCompare(company, compareBar);
+				const quitBtn = compBtn.addButton(company);
 				quitBtn.addEventListener("click", () => {
-					if (symbolArray.includes(compareBtn)) {
-						let index = symbolArray.indexOf(compareBtn);
+					if (symbolArray.includes(company)) {
+						let index = symbolArray.indexOf(company);
 						symbolArray.splice(index, 1);
 						console.log(symbolArray);
 					}

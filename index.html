@@ -58,12 +58,18 @@
 					results.createListItems(data);
 				}
 			});
-
-			// const results = new Result(document.getElementById("results"));
-			// form.addResultEventListener(data => {
-			// 	console.log(data);
-			// 	results.showResults(data);
-			// });
+			activeButton.addEventListener("click", () => {
+				let searchString = "";
+					for (let i = 0; i < symbolArray.length; i++) {
+						if (i == symbolArray.length - 1) {
+							searchString += `${symbolArray[i].symbol}`;
+						} else {
+							searchString += `${symbolArray[i].symbol},`;
+						}
+					}
+					console.log(searchString);
+					activeButton.href = `company.html?symbol=${searchString}`;
+			});
 		</script>
 	</body>
 </html>
