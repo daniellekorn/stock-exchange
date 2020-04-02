@@ -117,7 +117,7 @@ class Search {
 
 		searchBtn.addEventListener("click", event => {
 			searchLoader.classList.remove("hide");
-			this.runSearch();
+			this.runSearch(inputBox.value);
 			searchLoader.classList.add("hide");
 		});
 
