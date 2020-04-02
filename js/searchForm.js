@@ -1,24 +1,13 @@
-function debounce(func, wait, immediate) {
-	let timeout;
-	return function() {
-		let context = this,
-			args = arguments;
-		let later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		let callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
-}
-
-async function runSearch(query) {
+async function searchNasdaq(query) {
 	let response = await fetch(
 		`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`
 	);
 	let data = await response.json();
+	return data;
+}
+
+async function optimizedSearch(query) {
+	const data = await searchNasdaq(query);
 	let j = 0;
 	let triplets = [];
 	triplets.push([]);
@@ -59,22 +48,6 @@ async function runSearch(query) {
 	} catch (err) {
 		console.log(err);
 	}
-}
-
-function debounce(func, wait, immediate) {
-	let timeout;
-	return function() {
-		let context = this,
-			args = arguments;
-		let later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		let callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
 }
 
 function createLoader() {
@@ -127,27 +100,38 @@ class Search {
 		/*loader*/
 		const loader = createLoader();
 
-		/*clear button*/
-		const clearBtn = document.createElement("input");
-		clearBtn.setAttribute("id", "clearButton");
-		clearBtn.type = "submit";
-		clearBtn.classList.add("search-button", "btn");
-		clearBtn.value = "Clear";
-		autocompleteField.appendChild(clearBtn);
+		/*search button*/
+		const searchBtn = document.createElement("button");
+		searchBtn.setAttribute("id", "searchButton");
+		searchBtn.type = "submit";
+		searchBtn.classList.add("search-button", "btn");
+		searchBtn.textContent = "Search";
+		autocompleteField.appendChild(searchBtn);
 
 		/*append to parent*/
 		searchBarContainer.appendChild(formElement);
 		searchBarContainer.appendChild(loader);
-		searchBarContainer.appendChild(clearBtn);
+		searchBarContainer.appendChild(searchBtn);
 		element.insertAdjacentElement("afterbegin", searchBarContainer);
-
 		const searchLoader = document.getElementById("loader");
+
+		searchBtn.addEventListener("click", event => {
+			searchLoader.classList.remove("hide");
+			this.runSearch();
+			searchLoader.classList.add("hide");
+		});
+
+		let debounceTimeout;
 		inputBox.addEventListener("input", event => {
 			searchLoader.classList.remove("hide");
 			event.preventDefault();
-			runSearch(inputBox.value).then(companies => {
-				debounce(this.callback(companies), 5000);
-			});
+			if (debounceTimeout) {
+				clearTimeout(debounceTimeout);
+			}
+			debounceTimeout = setTimeout(() => {
+				this.runSearch(inputBox.value);
+				searchLoader.classList.add("hide");
+			}, 500);
 			if (history.pushState) {
 				let newurl =
 					window.location.protocol +
@@ -166,6 +150,12 @@ class Search {
 			},
 			false
 		);
+	}
+
+	runSearch(query) {
+		optimizedSearch(query).then(companies => {
+			this.callback(companies);
+		});
 	}
 
 	dataForResults(callback) {

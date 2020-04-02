@@ -71,6 +71,12 @@ class ResultsList {
 
 	createListItems(companies) {
 		companies.map(company => {
+			//account for null values in API
+			for (let item in company.profile) {
+				if (company.profile[item] === null) {
+					company.profile[item] = "";
+				}
+			}
 			const symbol = company.symbol;
 			const profile = company.profile;
 			/*creation of elements w/style*/
@@ -82,7 +88,10 @@ class ResultsList {
 			logo.classList.add("uniform-size");
 			logo.src = `${profile.image}`;
 			const percentChange = document.createElement("span");
-			getColor(profile.changesPercentage.includes("+"), percentChange);
+			getColor(
+				profile.changesPercentage.toString().includes("+"),
+				percentChange
+			);
 			percentChange.textContent = `${profile.changesPercentage}`;
 			const lineBreak = document.createElement("hr");
 			lineBreak.classList.add("line-break");
