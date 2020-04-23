@@ -19,18 +19,18 @@ async function optimizedSearch(query) {
 			j++;
 		}
 	}
-	const tripletStrings = triplets.map(triple => {
+	const tripletStrings = triplets.map((triple) => {
 		return triple.join();
 	});
 
 	try {
 		let profileData = await Promise.all(
-			tripletStrings.map(item =>
+			tripletStrings.map((item) =>
 				fetch(
 					`https://financialmodelingprep.com/api/v3/company/profile/${item}`
 				)
-					.then(r => r.json())
-					.catch(error => ({ error, url }))
+					.then((r) => r.json())
+					.catch((error) => ({ error, url }))
 			)
 		);
 		/*account for differences in API index names*/
@@ -113,16 +113,20 @@ class Search {
 		searchBarContainer.appendChild(loader);
 		searchBarContainer.appendChild(searchBtn);
 		element.insertAdjacentElement("afterbegin", searchBarContainer);
+		element.insertAdjacentHTML(
+			"afterbegin",
+			`<h2 class="center main-title">Search Nasdaq Stocks</h2>`
+		);
 		const searchLoader = document.getElementById("loader");
 
-		searchBtn.addEventListener("click", event => {
+		searchBtn.addEventListener("click", (event) => {
 			searchLoader.classList.remove("hide");
 			this.runSearch(inputBox.value);
 			searchLoader.classList.add("hide");
 		});
 
 		let debounceTimeout;
-		inputBox.addEventListener("input", event => {
+		inputBox.addEventListener("input", (event) => {
 			searchLoader.classList.remove("hide");
 			event.preventDefault();
 			if (debounceTimeout) {
@@ -145,7 +149,7 @@ class Search {
 
 		formElement.addEventListener(
 			"submit",
-			function(e) {
+			function (e) {
 				e.preventDefault();
 			},
 			false
@@ -153,7 +157,7 @@ class Search {
 	}
 
 	runSearch(query) {
-		optimizedSearch(query).then(companies => {
+		optimizedSearch(query).then((companies) => {
 			this.callback(companies);
 		});
 	}

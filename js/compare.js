@@ -15,7 +15,6 @@ class CompanyCompare {
 
 	clearPage() {
 		const elements = compareBar.getElementsByClassName("deleteme");
-
 		while (elements[0]) {
 			elements[0].parentNode.removeChild(elements[0]);
 		}
