@@ -40,14 +40,15 @@
 		<script src="js/searchForm.js"></script>
 		<script src="js/searchResults.js"></script>
 		<script>
-			const topMarquee = new Marquee(document.getElementById("fullSite"));
-			topMarquee.createMarquee();
-			const form = new Search(document.getElementById("searchContainer"));
+			new Marquee(document.getElementById("fullSite"));
+			const form = new SearchForm(document.getElementById("searchContainer"));
 			const results = new ResultsList(document.getElementById("resultChart"));
-			const searchText = document.getElementById("searchText");
-			const compareBar = document.getElementById("compareBar");
-			let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
+			let companyCompareBtn = new CompanyCompare(
+				null,
+				document.getElementById("compareBar")
+			);
 			let activeButton = companyCompareBtn.createCompareButton();
+			const searchText = document.getElementById("searchText");
 			form.dataForResults((data) => {
 				if (searchText.value === "") {
 					results.clearHistory();

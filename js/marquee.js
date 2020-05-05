@@ -1,6 +1,7 @@
 class Marquee {
 	constructor(parent) {
 		this.parent = parent;
+		this.createMarquee();
 	}
 
 	async getData() {
