@@ -19,13 +19,15 @@
 			href="https://fonts.googleapis.com/css?family=Lato&display=swap"
 			rel="stylesheet"
 		/>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
-		<div id="fullSite" class="site-container flexible col">
+		<div id="fullSite" class="container-fluid vh-100">
+			<div class="row h-100">
 				<div
 					id="searchContainer"
-					class="flexible col search-container"
+					class="col-md-8 offset-md-2 flex-direction-column"
 				>
 					<div id="compareBar" class="compare-bar flexible"></div>
 					<div id="matches" class="autocomplete-container"></div>
@@ -34,7 +36,7 @@
 			</div>
 		</div>
 		<script src="js/marquee.js"></script>
-		<script src="js/compare.js"></script> -
+		<script src="js/compare.js"></script>
 		<script src="js/searchForm.js"></script>
 		<script src="js/searchResults.js"></script>
 		<script>
@@ -46,25 +48,25 @@
 			const compareBar = document.getElementById("compareBar");
 			let companyCompareBtn = new CompanyCompare("placing bar", compareBar);
 			let activeButton = companyCompareBtn.createCompareButton();
-			form.dataForResults(data => {
+			form.dataForResults((data) => {
 				if (searchText.value === "") {
 					results.clearHistory();
 				} else if (data === undefined) {
 					results.noMatches();
-				} else {				
+				} else {
 					results.clearHistory();
 					results.createListItems(data);
 				}
 			});
 			activeButton.addEventListener("click", () => {
 				let searchString = "";
-					for (let i = 0; i < symbolArray.length; i++) {
-						if (i == symbolArray.length - 1) {
-							searchString += `${symbolArray[i].symbol}`;
-						} else {
-							searchString += `${symbolArray[i].symbol},`;
-						}
+				for (let i = 0; i < symbolArray.length; i++) {
+					if (i == symbolArray.length - 1) {
+						searchString += `${symbolArray[i].symbol}`;
+					} else {
+						searchString += `${symbolArray[i].symbol},`;
 					}
+				}
 				activeButton.href = `company.html?symbol=${searchString}`;
 			});
 		</script>

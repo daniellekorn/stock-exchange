@@ -1,101 +1,36 @@
-async function searchNasdaq(query) {
-	let response = await fetch(
-		`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`
-	);
-	let data = await response.json();
-	return data;
-}
-
-async function optimizedSearch(query) {
-	const data = await searchNasdaq(query);
-	let j = 0;
-	let triplets = [];
-	triplets.push([]);
-	for (let i = 1; i <= data.length; i++) {
-		triplets[j].push(data[i - 1].symbol);
-
-		if (i % 3 == 0) {
-			triplets.push([]);
-			j++;
-		}
-	}
-	const tripletStrings = triplets.map((triple) => {
-		return triple.join();
-	});
-
-	try {
-		let profileData = await Promise.all(
-			tripletStrings.map((item) =>
-				fetch(
-					`https://financialmodelingprep.com/api/v3/company/profile/${item}`
-				)
-					.then((r) => r.json())
-					.catch((error) => ({ error, url }))
-			)
-		);
-		/*account for differences in API index names*/
-		let allTogether = [];
-		for (let i = 0; i < profileData.length; i++) {
-			/*mult. req at once vs. single req*/
-			if (i < profileData.length - 1) {
-				allTogether.push(profileData[i].companyProfiles);
-			} else {
-				allTogether.push(profileData[i]);
-			}
-		}
-		let merged = [].concat.apply([], allTogether);
-		return merged;
-	} catch (err) {
-		console.log(err);
-	}
-}
-
-function createLoader() {
-	const loader = document.createElement("div");
-	loader.setAttribute("id", "loader");
-	loader.classList.add("loader", "hide");
-	const loaderBar = document.createElement("span");
-	loaderBar.className = "loader-bar";
-	const loaderBar2 = document.createElement("span");
-	loaderBar2.className = "loader-bar";
-	const loaderBar3 = document.createElement("span");
-	loaderBar3.className = "loader-bar";
-	loader.appendChild(loaderBar);
-	loader.appendChild(loaderBar2);
-	loader.appendChild(loaderBar3);
-	return loader;
-}
-
 class Search {
-	constructor(element, userInput) {
-		this.element = element;
-		this.userInput = userInput;
+	constructor(parent) {
+		this.parent = parent;
 
 		const searchBarContainer = document.createElement("div");
-		searchBarContainer.classList.add("form-container", "flexible");
+		searchBarContainer.classList.add("row", "align-items-center");
+		//"form-container", "flexible"
 		const formElement = document.createElement("form");
 		formElement.setAttribute("id", "searchForm");
 		formElement.autocomplete = "off";
-		formElement.classList.add("flexible", "search-box");
+		formElement.classList.add("col-sm-10", "form-group", "m-0");
+		// ("search-box");
 
 		/*icon*/
 		const iconContainer = document.createElement("div");
+		iconContainer.className = "col-sm-1";
 		const icon = `<i class="search-icon vertical-align fa fa-search fa-lg"></i>`;
 		iconContainer.insertAdjacentHTML("afterbegin", icon);
 
 		/*input area*/
-		const autocompleteField = document.createElement("div");
-		autocompleteField.className = "autocomplete";
+		// const autocompleteField = document.createElement("div");
+		// autocompleteField.classList.add("autocomplete", "col-sm-10");
 		const inputBox = document.createElement("input");
 		inputBox.setAttribute("id", "searchText");
 		inputBox.type = "text";
-		inputBox.classList.add("autocomplete", "search-text");
+		inputBox.classList.add("col-sm-12", "form-control");
+		// "autocomplete", "search-text"
 		inputBox.placeholder = "Search...";
-		autocompleteField.appendChild(inputBox);
+		// autocompleteField.appendChild(inputBox);
 
 		/*form container*/
-		formElement.appendChild(iconContainer);
-		formElement.appendChild(autocompleteField);
+		searchBarContainer.appendChild(iconContainer);
+		formElement.appendChild(inputBox);
 
 		/*loader*/
 		const loader = createLoader();
@@ -104,16 +39,16 @@ class Search {
 		const searchBtn = document.createElement("button");
 		searchBtn.setAttribute("id", "searchButton");
 		searchBtn.type = "submit";
-		searchBtn.classList.add("search-button", "btn");
+		searchBtn.classList.add("btn", "btn-primary", "col-sm-1");
 		searchBtn.textContent = "Search";
-		autocompleteField.appendChild(searchBtn);
+		// autocompleteField.appendChild(searchBtn);
 
 		/*append to parent*/
 		searchBarContainer.appendChild(formElement);
-		searchBarContainer.appendChild(loader);
+		// searchBarContainer.appendChild(loader);
 		searchBarContainer.appendChild(searchBtn);
-		element.insertAdjacentElement("afterbegin", searchBarContainer);
-		element.insertAdjacentHTML(
+		this.parent.insertAdjacentElement("afterbegin", searchBarContainer);
+		this.parent.insertAdjacentHTML(
 			"afterbegin",
 			`<h2 class="center main-title">Search Nasdaq Stocks</h2>`
 		);
@@ -164,5 +99,74 @@ class Search {
 
 	dataForResults(callback) {
 		this.callback = callback;
+	}
+}
+
+function createLoader() {
+	const loader = document.createElement("div");
+	loader.setAttribute("id", "loader");
+	loader.classList.add("loader", "hide");
+	const loaderBar = document.createElement("span");
+	loaderBar.className = "loader-bar";
+	const loaderBar2 = document.createElement("span");
+	loaderBar2.className = "loader-bar";
+	const loaderBar3 = document.createElement("span");
+	loaderBar3.className = "loader-bar";
+	loader.appendChild(loaderBar);
+	loader.appendChild(loaderBar2);
+	loader.appendChild(loaderBar3);
+	return loader;
+}
+
+//delete these?
+async function searchNasdaq(query) {
+	let response = await fetch(
+		`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`
+	);
+	let data = await response.json();
+	return data;
+}
+
+async function optimizedSearch(query) {
+	const data = await searchNasdaq(query);
+	let j = 0;
+	let triplets = [];
+	triplets.push([]);
+	for (let i = 1; i <= data.length; i++) {
+		triplets[j].push(data[i - 1].symbol);
+
+		if (i % 3 == 0) {
+			triplets.push([]);
+			j++;
+		}
+	}
+	const tripletStrings = triplets.map((triple) => {
+		return triple.join();
+	});
+
+	try {
+		let profileData = await Promise.all(
+			tripletStrings.map((item) =>
+				fetch(
+					`https://financialmodelingprep.com/api/v3/company/profile/${item}`
+				)
+					.then((r) => r.json())
+					.catch((error) => ({ error, url }))
+			)
+		);
+		/*account for differences in API index names*/
+		let allTogether = [];
+		for (let i = 0; i < profileData.length; i++) {
+			/*mult. req at once vs. single req*/
+			if (i < profileData.length - 1) {
+				allTogether.push(profileData[i].companyProfiles);
+			} else {
+				allTogether.push(profileData[i]);
+			}
+		}
+		let merged = [].concat.apply([], allTogether);
+		return merged;
+	} catch (err) {
+		console.log(err);
 	}
 }

@@ -51,12 +51,9 @@ let symbolArray = [];
 function accessCompare(company, compareBtn) {
 	let counter = 0;
 	compareBtn.addEventListener("click", () => {
-		/*query selector to check for buttons*/
 		let numOfButtons = document.querySelectorAll(".company-compare-btn").length;
 		if (numOfButtons > 2) {
-			if (compareBar.contains(displayError)) {
-				console.log("Max 3");
-			} else {
+			if (!compareBar.contains(displayError)) {
 				companyCompareBtn.showError();
 				displayError = document.querySelector(".warning");
 			}
