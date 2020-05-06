@@ -42,20 +42,20 @@ function highlight(profileName, symbol) {
 
 function getColor(isPositive, element) {
 	return isPositive
-		? element.classList.add("positive")
-		: element.classList.add("negative");
+		? element.classList.add("text-danger")
+		: element.classList.add("text-success");
 }
 
 class ResultsList {
-	constructor(element) {
-		this.element = element;
+	constructor(parent) {
+		this.parent = parent;
 	}
 
 	clearHistory() {
-		let child = this.element.lastElementChild;
+		let child = this.parent.lastElementChild;
 		while (child) {
-			this.element.removeChild(child);
-			child = this.element.lastElementChild;
+			this.parent.removeChild(child);
+			child = this.parent.lastElementChild;
 		}
 	}
 
@@ -65,57 +65,63 @@ class ResultsList {
 			"afterbegin",
 			`We did not find any results that match <strong>"${searchText.value}"</strong>`
 		);
-		error.classList.add("error-style");
+		error.classList.add("text-danger", "mt-2");
 		resultChart.append(error);
 	}
 
 	createListItems(companies) {
-		companies.map(company => {
+		companies.map((company) => {
+			const symbol = company.symbol;
+			const profile = company.profile;
 			//account for null values in API
-			for (let item in company.profile) {
+			for (let item in profile) {
 				if (company.profile[item] === null) {
 					company.profile[item] = "";
 				}
 			}
-			const symbol = company.symbol;
-			const profile = company.profile;
 			/*creation of elements w/style*/
 			const contianer = document.createElement("div");
-			contianer.classList.add("flexible", "result-container");
+			contianer.classList.add(
+				"row",
+				"align-items-center",
+				"justify-content-between",
+				"overflow-hidden"
+			);
 			const newResult = document.createElement("a");
-			newResult.classList.add("result");
+			newResult.classList.add("text-decoration-none", "text-dark");
+			newResult.href = `company.html?symbol=${symbol}`;
+
 			const logo = document.createElement("img");
-			logo.classList.add("uniform-size");
+			logo.classList.add("img-fluid", "logo");
 			logo.src = `${profile.image}`;
+			newResult.appendChild(logo);
+
+			const name = highlight(profile.companyName, symbol);
+			newResult.appendChild(name);
+
 			const percentChange = document.createElement("span");
+			percentChange.textContent = `${profile.changesPercentage}`;
 			getColor(
 				profile.changesPercentage.toString().includes("+"),
 				percentChange
 			);
-			percentChange.textContent = `${profile.changesPercentage}`;
+			newResult.appendChild(percentChange);
+
 			const lineBreak = document.createElement("hr");
 			lineBreak.classList.add("line-break");
-			const compare = document.createElement("div");
 
-			const name = highlight(profile.companyName, symbol);
+			const compBtn = document.createElement("button");
+			compBtn.classList.add("btn", "btn-outline-primary", "btn-sm");
+			compBtn.textContent = "Compare";
 
-			/*append all elements to result div*/
-			newResult.appendChild(logo);
-			newResult.appendChild(name);
-			newResult.appendChild(percentChange);
-			newResult.href = `company.html?symbol=${symbol}`;
-			compare.insertAdjacentHTML(
-				"beforeend",
-				'<button class="compare-btn btn">Compare</button>'
-			);
+			/*append complete result to cont. then to DOM*/
 			contianer.appendChild(newResult);
-			contianer.appendChild(compare);
-			/*append complete result to DOM*/
-			this.element.appendChild(contianer);
-			this.element.appendChild(lineBreak);
+			contianer.appendChild(compBtn);
+			this.parent.appendChild(contianer);
+			this.parent.appendChild(lineBreak);
 
 			/*compare button functionality*/
-			accessCompare(company, compare);
+			accessCompare(company, compBtn);
 		});
 		const searchLoader = document.getElementById("loader");
 		searchLoader.classList.add("hide");

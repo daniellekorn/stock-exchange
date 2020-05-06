@@ -7,7 +7,7 @@ class CompanyCompare {
 	createCompareButton() {
 		const compBtn = document.createElement("a");
 		compBtn.textContent = "Compare companies";
-		compBtn.classList.add("run-compare", "btn");
+		compBtn.classList.add("float-right", "btn");
 		this.element.insertAdjacentElement("beforeend", compBtn);
 		this.compBtn = compBtn;
 		return compBtn;

@@ -1,57 +1,6 @@
-async function searchNasdaq(query) {
-	let response = await fetch(
-		`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`
-	);
-	let data = await response.json();
-	return data;
-}
-
-async function optimizedSearch(query) {
-	const data = await searchNasdaq(query);
-	let j = 0;
-	let triplets = [];
-	triplets.push([]);
-	for (let i = 1; i <= data.length; i++) {
-		triplets[j].push(data[i - 1].symbol);
-
-		if (i % 3 == 0) {
-			triplets.push([]);
-			j++;
-		}
-	}
-	const tripletStrings = triplets.map((triple) => {
-		return triple.join();
-	});
-
-	try {
-		let profileData = await Promise.all(
-			tripletStrings.map((item) =>
-				fetch(
-					`https://financialmodelingprep.com/api/v3/company/profile/${item}`
-				)
-					.then((r) => r.json())
-					.catch((error) => ({ error, url }))
-			)
-		);
-		/*account for differences in API index names*/
-		let allTogether = [];
-		for (let i = 0; i < profileData.length; i++) {
-			/*mult. req at once vs. single req*/
-			if (i < profileData.length - 1) {
-				allTogether.push(profileData[i].companyProfiles);
-			} else {
-				allTogether.push(profileData[i]);
-			}
-		}
-		let merged = [].concat.apply([], allTogether);
-		return merged;
-	} catch (err) {
-		console.log(err);
-	}
-}
-
-class SearchForm {
+class SearchForm extends SearchFunctions {
 	constructor(parent) {
+		super();
 		this.parent = parent;
 		this.createForm();
 		this.formDebounce();
@@ -62,7 +11,7 @@ class SearchForm {
 	}
 
 	runSearch(query) {
-		optimizedSearch(query).then((companies) => {
+		this.optimizedSearch(query).then((companies) => {
 			this.callback(companies);
 		});
 	}
@@ -70,7 +19,6 @@ class SearchForm {
 	createForm() {
 		const formElement = document.createElement("form");
 		formElement.setAttribute("id", "searchForm");
-		formElement.autocomplete = "off";
 		formElement.classList.add(
 			"col-sm-12",
 			"form-group",
@@ -79,41 +27,43 @@ class SearchForm {
 			"align-items-center"
 		);
 
-		/*icon*/
-		const icon = `<i class="search-icon col-xs-1 vertical-align fa fa-search fa-lg"></i>`;
-		formElement.insertAdjacentHTML("afterbegin", icon);
-
-		/*input area*/
+		/*text input area*/
+		const inputWrapper = document.createElement("div");
+		inputWrapper.classList.add("input-group", "col-md-12", "p-0");
 		const inputBox = document.createElement("input");
 		inputBox.setAttribute("id", "searchText");
 		inputBox.type = "text";
-		inputBox.classList.add("col-sm-10", "form-control");
+		inputBox.classList.add("col-sm-11", "form-control");
 		inputBox.placeholder = "Search...";
-		formElement.appendChild(inputBox);
-
-		// /*loader*/
-		// const loader = createLoader();
+		inputWrapper.appendChild(inputBox);
 
 		/*search button*/
+		const btnWrapper = document.createElement("div");
+		btnWrapper.className = "input-group-append";
 		const searchBtn = document.createElement("button");
 		searchBtn.setAttribute("id", "searchButton");
 		searchBtn.type = "submit";
 		searchBtn.classList.add("btn", "btn-primary", "col-xs-1");
 		searchBtn.textContent = "Search";
-		formElement.appendChild(searchBtn);
+		btnWrapper.appendChild(searchBtn);
+		inputWrapper.appendChild(btnWrapper);
+		formElement.appendChild(inputWrapper);
 
-		/*append to parent*/
+		// /*loader*/
+		// const loader = createLoader();
+
+		/*append title and form to parent element*/
 		this.parent.insertAdjacentElement("afterbegin", formElement);
 		this.parent.insertAdjacentHTML(
 			"afterbegin",
-			`<h2 class="center main-title">Search Nasdaq Stocks</h2>`
+			`<h2 class="text-center main-title">Search Nasdaq Stocks</h2>`
 		);
-		const searchLoader = document.getElementById("loader");
 
+		// const searchLoader = document.getElementById("loader");
 		searchBtn.addEventListener("click", (event) => {
-			searchLoader.classList.remove("hide");
+			// searchLoader.classList.remove("hide");
 			this.runSearch(inputBox.value);
-			searchLoader.classList.add("hide");
+			// searchLoader.classList.add("hide");
 		});
 
 		formElement.addEventListener(
@@ -129,14 +79,14 @@ class SearchForm {
 		let debounceTimeout;
 		const inputBox = document.getElementById("searchText");
 		inputBox.addEventListener("input", (event) => {
-			searchLoader.classList.remove("hide");
+			// searchLoader.classList.remove("hide");
 			event.preventDefault();
 			if (debounceTimeout) {
 				clearTimeout(debounceTimeout);
 			}
 			debounceTimeout = setTimeout(() => {
 				this.runSearch(inputBox.value);
-				searchLoader.classList.add("hide");
+				// searchLoader.classList.add("hide");
 			}, 500);
 			if (history.pushState) {
 				let newurl =
