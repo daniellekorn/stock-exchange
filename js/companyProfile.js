@@ -1,4 +1,4 @@
-class Profile {
+class CompanyProfile {
 	constructor(parent, symbol) {
 		this.parent = parent;
 		this.symbol = symbol;
@@ -9,7 +9,6 @@ class Profile {
 		if (typeof this.symbol === "string") {
 			this.symbol = [this.symbol];
 		}
-
 		this.symbol.forEach(async (symbol) => {
 			let profile = await fetch(
 				`https://financialmodelingprep.com/api/v3/company/profile/${symbol}`
@@ -25,8 +24,8 @@ class Profile {
 	//use from other input (used 3 times in code! DRY)
 	getColor(isPositive, element) {
 		return isPositive
-			? element.classList.add("positive")
-			: element.classList.add("negative");
+			? element.classList.add("text-success")
+			: element.classList.add("text-danger");
 	}
 
 	createPage(symbol, obj) {
@@ -41,26 +40,26 @@ class Profile {
 		newCompany.appendChild(price);
 		newCompany.appendChild(description);
 		newCompany.appendChild(chartContainer);
+		newCompany.classList.add("shadow-sm", "p-3", "mb-5", "bg-white", "rounded");
 		// /*account for comparison card style*/
 		if (this.symbol.length === 1) {
 			newCompany.classList.add("col-md-8", "offset-md-2");
 		} else if (this.symbol.length === 2) {
 			newCompany.classList.add("col-md-4", "offset-md-1");
 		} else {
-			newCompany.classList.add("col-md-4");
+			newCompany.classList.add("col-md-4", "pl-5");
 		}
 		this.parent.appendChild(newCompany);
 	}
 
 	heading(symbol, company) {
 		const heading = document.createElement("div");
-		heading.setAttribute("id", "heading");
-		heading.classList.add("row");
+		heading.classList.add("row", "mb-3");
 		const logo = document.createElement("img");
-		const name = document.createElement("div");
-		logo.classList.add("responsive-img", "logo");
+		logo.classList.add("img-fluid", "logo-profile");
 		logo.src = company.image;
-		name.classList.add("responsive-header");
+		const name = document.createElement("div");
+		name.classList.add("h2");
 		name.textContent = `${symbol} (${company.companyName})`;
 		heading.appendChild(logo);
 		heading.appendChild(name);
@@ -69,12 +68,11 @@ class Profile {
 
 	price(company) {
 		const price = document.createElement("div");
-		price.setAttribute("id", "price");
-		price.classList.add("row");
+		price.classList.add("row", "mb-3", "h5");
 		const sharePrice = document.createElement("div");
 		sharePrice.textContent = `Stock price: $${company.price}`;
 		const percentChange = document.createElement("div");
-		percentChange.classList.add("percent");
+		percentChange.classList.add("ml-1");
 		percentChange.textContent = company.changesPercentage;
 		this.getColor(company.changesPercentage.includes("+"), percentChange);
 		price.appendChild(sharePrice);
@@ -83,18 +81,14 @@ class Profile {
 	}
 
 	description(company) {
-		const description = document.createElement("div");
-		description.setAttribute("id", "description");
-		description.classList.add("description", "flex-child");
 		const coDescription = document.createElement("div");
 		coDescription.textContent = company.description;
-		description.appendChild(coDescription);
-		return description;
+		return coDescription;
 	}
 
 	chartContainer(symbol) {
 		const chartContainer = document.createElement("div");
-		chartContainer.classList.add("flex-child", "chart-container");
+		chartContainer.classList.add("w-75", "justify-self-center");
 		chartContainer.insertAdjacentHTML(
 			"beforeend",
 			`<canvas id="coChart${symbol}" class="chart" width="80%" height="80%"></canvas>`

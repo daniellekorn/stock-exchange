@@ -61,7 +61,7 @@ class SearchForm extends SearchFunctions {
 		const inputBox = document.createElement("input");
 		inputBox.setAttribute("id", "searchText");
 		inputBox.type = "text";
-		inputBox.classList.add("col-sm-10", "form-control");
+		inputBox.classList.add("col-sm-10", "form-control", "shadow-none");
 		inputBox.placeholder = "Search...";
 		inputWrapper.appendChild(inputBox);
 

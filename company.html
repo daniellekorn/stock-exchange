@@ -11,12 +11,11 @@
 		<link rel="stylesheet" href="./css/bootstrap.min.css" />
 	</head>
 	<body>
-		<h1 id="mainHeading" class="main-heading hide">Compare Stocks:</h1>
 		<div class="row">
 			<div id="profilePage" class="row"></div>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-		<script src="js/companyInfo.js"></script>
+		<script src="js/companyProfile.js"></script>
 		<script>
 			(async function () {
 				const urlParams = new URLSearchParams(window.location.search);
@@ -26,7 +25,7 @@
 				} else {
 					compareSymbols = symbol;
 				}
-				const compInfo = new Profile(
+				const compInfo = new CompanyProfile(
 					document.getElementById("profilePage"),
 					compareSymbols
 				);
