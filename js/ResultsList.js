@@ -75,7 +75,7 @@ class ResultsList {
 			/*compare button functionality*/
 			accessCompare(company, compBtn);
 		});
-		const searchLoader = document.getElementById("loader");
-		searchLoader.classList.add("hide");
+		// const searchLoader = document.getElementById("loader");
+		// searchLoader.classList.add("hide");
 	}
 }

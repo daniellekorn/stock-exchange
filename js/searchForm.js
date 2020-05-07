@@ -71,6 +71,7 @@ class SearchForm extends SearchFunctions {
 		/*Button functionality to run search & show loader*/
 		const searchLoader = document.getElementById("searchLoader");
 		searchBtn.addEventListener("click", (event) => {
+			event.preventDefault();
 			searchLoader.classList.remove("d-none");
 			this.runSearch(inputBox.value);
 			searchLoader.classList.add("d-none");
