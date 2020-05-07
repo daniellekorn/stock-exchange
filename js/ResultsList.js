@@ -40,7 +40,7 @@ class ResultsList {
 				"overflow-hidden"
 			);
 			const newResult = document.createElement("a");
-			newResult.classList.add("text-decoration-none", "text-dark");
+			newResult.classList.add("text-decoration-none", "text-dark", "col-sm-10");
 			newResult.href = `company.html?symbol=${symbol}`;
 
 			const logo = document.createElement("img");
@@ -63,7 +63,7 @@ class ResultsList {
 			lineBreak.classList.add("line-break");
 
 			const compBtn = document.createElement("button");
-			compBtn.classList.add("btn", "btn-outline-primary", "btn-sm");
+			compBtn.classList.add("btn", "btn-outline-primary", "btn-sm", "col-sm-2");
 			compBtn.textContent = "Compare";
 
 			/*append complete result to cont. then to DOM*/
