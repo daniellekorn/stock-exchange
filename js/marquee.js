@@ -27,11 +27,7 @@ class Marquee {
 				childName.textContent = item.indexName;
 				const childPrice = document.createElement("span");
 				childPrice.textContent = item.price;
-				if (item.changes.toString().includes("-")) {
-					childPrice.className = "text-danger";
-				} else {
-					childPrice.className = "text-success";
-				}
+				getColor(!item.changes.toString().includes("-"), childPrice);
 				listItem.appendChild(childName);
 				listItem.appendChild(childPrice);
 				ul.appendChild(listItem);

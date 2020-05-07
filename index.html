@@ -35,6 +35,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/styleFunctions.js"></script>
 		<script src="js/marquee.js"></script>
 		<script src="js/compare.js"></script>
 		<script src="js/searchFunctions.js"></script>
@@ -42,14 +43,17 @@
 		<script src="js/searchResults.js"></script>
 		<script>
 			new Marquee(document.getElementById("fullSite"));
-			const form = new SearchForm(document.getElementById("searchContainer"));
+			const searchForm = new SearchForm(
+				document.getElementById("searchContainer")
+			);
+			searchForm.formDebounce(document.getElementById("searchText"));
 			const results = new ResultsList(document.getElementById("resultChart"));
 			let companyCompareBtn = new CompanyCompare(
 				null,
 				document.getElementById("compareBar")
 			);
 			const searchText = document.getElementById("searchText");
-			form.dataForResults((data) => {
+			searchForm.dataForResults((data) => {
 				if (searchText.value === "") {
 					results.clearHistory();
 				} else if (data[0].status == "404") {

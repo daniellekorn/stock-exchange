@@ -2,10 +2,10 @@ class SearchForm extends SearchFunctions {
 	constructor(parent) {
 		super();
 		this.parent = parent;
-		const loader = this.createLoader("searchLoader");
-		this.parent.appendChild(loader);
 		this.createForm();
-		this.formDebounce();
+		//move this
+		const loader = createLoader("searchLoader");
+		this.parent.appendChild(loader);
 	}
 
 	dataForResults(callback) {
@@ -35,14 +35,6 @@ class SearchForm extends SearchFunctions {
 			"afterbegin",
 			`<h2 class="text-center main-title">Search Nasdaq Stocks</h2>`
 		);
-	}
-
-	createLoader(id) {
-		const loader = document.createElement("div");
-		loader.setAttribute("id", id);
-		loader.role = "status";
-		loader.classList.add("spinner-border", "text-primary", "loader", "d-none");
-		return loader;
 	}
 
 	createSearchBar() {
@@ -87,10 +79,9 @@ class SearchForm extends SearchFunctions {
 		return inputWrapper;
 	}
 
-	formDebounce() {
+	formDebounce(inputBox) {
 		let debounceTimeout;
 		const searchLoader = document.getElementById("searchLoader");
-		const inputBox = document.getElementById("searchText");
 		inputBox.addEventListener("input", (event) => {
 			searchLoader.classList.remove("d-none");
 			event.preventDefault();

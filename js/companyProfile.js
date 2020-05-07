@@ -21,13 +21,6 @@ class CompanyProfile {
 		profilePage.classList.remove("hide");
 	}
 
-	//use from other input (used 3 times in code! DRY)
-	getColor(isPositive, element) {
-		return isPositive
-			? element.classList.add("text-success")
-			: element.classList.add("text-danger");
-	}
-
 	createPage(symbol, obj) {
 		const company = obj.profile;
 		const newCompany = document.createElement("div");
@@ -74,7 +67,7 @@ class CompanyProfile {
 		const percentChange = document.createElement("div");
 		percentChange.classList.add("ml-1");
 		percentChange.textContent = company.changesPercentage;
-		this.getColor(company.changesPercentage.includes("+"), percentChange);
+		getColor(company.changesPercentage.includes("+"), percentChange);
 		price.appendChild(sharePrice);
 		price.appendChild(percentChange);
 		return price;
