@@ -29,9 +29,9 @@
 					id="searchContainer"
 					class="col-md-8 offset-md-2 flex-direction-column mt-5"
 				>
-					<div id="compareBar" class="compare-bar flexible"></div>
+					<div id="compareBar" class="col-sm-12"></div>
 					<div id="matches" class="autocomplete-container"></div>
-					<div id="resultChart" class="result-chart flexible col"></div>
+					<div id="resultChart" class="result-chart flexible col mt-5"></div>
 				</div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 					results.createListItems(data);
 				}
 			});
-			let activeButton = companyCompareBtn.createCompareButton();
+			let activeButton = companyCompareBtn.createCompareBtn();
 			activeButton.addEventListener("click", () => {
 				let searchString = "";
 				for (let i = 0; i < symbolArray.length; i++) {

@@ -1,25 +1,26 @@
-html {
-	height: 100%;
-}
-body {
+/* body {
 	height: 100%;
 	display: flex;
-}
-
-.logo {
-	height: 35px;
-	margin-right: 15px;
-}
-/* 
-body {
-	height: 100vh;
 	font-family: "lato", sans-serif;
 	background-image: url("../media/nyc.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
 	opacity: 0.95;
+	margin-bottom: 100px;
+} */
+
+.logo {
+	height: 35px;
+	margin-right: 15px;
 }
+
+.loader {
+	position: absolute !important;
+	top: 20%;
+	left: 48%;
+}
+/*
 
 * {
 	box-sizing: border-box;

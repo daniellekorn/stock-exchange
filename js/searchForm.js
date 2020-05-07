@@ -2,6 +2,8 @@ class SearchForm extends SearchFunctions {
 	constructor(parent) {
 		super();
 		this.parent = parent;
+		const loader = this.createLoader("searchLoader");
+		this.parent.appendChild(loader);
 		this.createForm();
 		this.formDebounce();
 	}
@@ -26,14 +28,40 @@ class SearchForm extends SearchFunctions {
 			"row",
 			"align-items-center"
 		);
+		const searchBar = this.createSearchBar();
+		formElement.appendChild(searchBar);
+		this.parent.insertAdjacentElement("afterbegin", formElement);
+		this.parent.insertAdjacentHTML(
+			"afterbegin",
+			`<h2 class="text-center main-title">Search Nasdaq Stocks</h2>`
+		);
+	}
 
+	createLoader(id) {
+		const loader = document.createElement("div");
+		loader.setAttribute("id", id);
+		loader.role = "status";
+		loader.classList.add("spinner-border", "text-primary", "loader", "d-none");
+		return loader;
+	}
+
+	createSearchBar() {
 		/*text input area*/
 		const inputWrapper = document.createElement("div");
+		const iconWrapper = document.createElement("div");
+		iconWrapper.classList.add("input-group-prepend");
+		const iconParent = document.createElement("span");
+		iconParent.classList.add("input-group-text", "bg-white", "col-xs-1");
+		const icon = document.createElement("i");
+		icon.classList.add("fa", "fa-search");
+		iconParent.appendChild(icon);
+		iconWrapper.appendChild(iconParent);
+		inputWrapper.appendChild(iconWrapper);
 		inputWrapper.classList.add("input-group", "col-md-12", "p-0");
 		const inputBox = document.createElement("input");
 		inputBox.setAttribute("id", "searchText");
 		inputBox.type = "text";
-		inputBox.classList.add("col-sm-11", "form-control");
+		inputBox.classList.add("col-sm-10", "form-control");
 		inputBox.placeholder = "Search...";
 		inputWrapper.appendChild(inputBox);
 
@@ -47,46 +75,31 @@ class SearchForm extends SearchFunctions {
 		searchBtn.textContent = "Search";
 		btnWrapper.appendChild(searchBtn);
 		inputWrapper.appendChild(btnWrapper);
-		formElement.appendChild(inputWrapper);
 
-		// /*loader*/
-		// const loader = createLoader();
-
-		/*append title and form to parent element*/
-		this.parent.insertAdjacentElement("afterbegin", formElement);
-		this.parent.insertAdjacentHTML(
-			"afterbegin",
-			`<h2 class="text-center main-title">Search Nasdaq Stocks</h2>`
-		);
-
-		// const searchLoader = document.getElementById("loader");
+		/*Button functionality to run search & show loader*/
+		const searchLoader = document.getElementById("searchLoader");
 		searchBtn.addEventListener("click", (event) => {
-			// searchLoader.classList.remove("hide");
+			searchLoader.classList.remove("d-none");
 			this.runSearch(inputBox.value);
-			// searchLoader.classList.add("hide");
+			searchLoader.classList.add("d-none");
 		});
 
-		formElement.addEventListener(
-			"submit",
-			function (e) {
-				e.preventDefault();
-			},
-			false
-		);
+		return inputWrapper;
 	}
 
 	formDebounce() {
 		let debounceTimeout;
+		const searchLoader = document.getElementById("searchLoader");
 		const inputBox = document.getElementById("searchText");
 		inputBox.addEventListener("input", (event) => {
-			// searchLoader.classList.remove("hide");
+			searchLoader.classList.remove("d-none");
 			event.preventDefault();
 			if (debounceTimeout) {
 				clearTimeout(debounceTimeout);
 			}
 			debounceTimeout = setTimeout(() => {
 				this.runSearch(inputBox.value);
-				// searchLoader.classList.add("hide");
+				searchLoader.classList.add("d-none");
 			}, 500);
 			if (history.pushState) {
 				let newurl =

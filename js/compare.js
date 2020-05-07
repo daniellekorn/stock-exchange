@@ -4,12 +4,11 @@ class CompanyCompare {
 		this.element = element;
 	}
 
-	createCompareButton() {
+	createCompareBtn() {
 		const compBtn = document.createElement("a");
 		compBtn.textContent = "Compare companies";
-		compBtn.classList.add("float-right", "btn");
-		this.element.insertAdjacentElement("beforeend", compBtn);
-		this.compBtn = compBtn;
+		compBtn.classList.add("btn");
+		this.element.insertAdjacentElement("afterbegin", compBtn);
 		return compBtn;
 	}
 
