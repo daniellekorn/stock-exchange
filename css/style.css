@@ -24,6 +24,41 @@
 	margin-left: 25px;
 }
 
+/* .compare-bar {
+	display: flex;
+	padding: 0px 10px;
+	height: 5%;
+	width: 100%;
+	background-color: white;
+}
+
+.run-compare 
+	margin-left: auto;
+	text-decoration: none;
+	color: #2775ad;
+	position: relative;
+	top: 10px;
+	right: 5px;
+	font-size: 12px;
+}
+
+.company-compare-btn,
+.quit-btn {
+	display: inline-block;
+	background-color: white;
+	color: #2775ad;
+	margin: 0;
+	opacity: 1;
+}
+
+.company-compare-btn {
+	height: 80%;
+	width: 12%;
+	border: 1px solid #2775ad;
+	border-radius: 10px;
+	font-size: 12px;
+} */
+
 /*marquee style*/
 .marquee {
 	white-space: nowrap;
@@ -36,7 +71,7 @@
 	list-style: none;
 	height: 100%;
 	width: 95%;
-	font-size: 12.5px;
+	font-size: 14px;
 	justify-content: space-evenly;
 	align-items: center;
 	animation: scrolling 135s linear infinite;

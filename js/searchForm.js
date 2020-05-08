@@ -33,7 +33,7 @@ class SearchForm extends SearchFunctions {
 		this.parent.insertAdjacentElement("afterbegin", formElement);
 		this.parent.insertAdjacentHTML(
 			"afterbegin",
-			`<h2 class="text-center main-title">Search Nasdaq Stocks</h2>`
+			`<h2 class="text-center main-title display-4 mt-5">Search Nasdaq Stocks</h2>`
 		);
 	}
 

@@ -1,78 +1,86 @@
 class CompanyCompare {
-	constructor(company, element) {
-		this.company = company;
-		this.element = element;
+	constructor(compareBar) {
+		this.compareBar = compareBar;
+		this.companies = [];
 	}
 
-	createCompareBtn() {
-		const compBtn = document.createElement("a");
-		compBtn.textContent = "Compare companies";
-		compBtn.classList.add("btn");
-		this.element.insertAdjacentElement("afterbegin", compBtn);
-		return compBtn;
-	}
-
-	clearPage() {
-		const elements = compareBar.getElementsByClassName("deleteme");
-		while (elements[0]) {
-			elements[0].parentNode.removeChild(elements[0]);
-		}
-	}
-
-	showError() {
+	maxError() {
 		const error = document.createElement("div");
-		error.textContent = "MAX 3";
-		error.classList.add("warning", "deleteme");
-		this.element.insertAdjacentElement("beforeend", error);
+		error.setAttribute("id", "maxError");
+		error.textContent = "Compare a maximum of 3 companies";
+		error.classList.add(
+			"alert",
+			"alert-danger",
+			"pt-1",
+			"pb-1",
+			"w-25",
+			"d-inline"
+		);
+		this.compareBar.insertAdjacentElement("afterbegin", error);
+		this.maxError = error;
 	}
 
-	addButton() {
-		const newBtn = document.createElement("button");
-		newBtn.classList.add("company-compare-btn", "deleteme", "btn");
-		newBtn.textContent = this.company.symbol;
-		const quitBtn = document.createElement("button");
-		quitBtn.classList.add("quit-btn", "btn");
-		quitBtn.textContent = "X";
-		newBtn.appendChild(quitBtn);
-		this.element.insertAdjacentElement("afterbegin", newBtn);
-		this.quitBtn = quitBtn;
-		this.newBtn = newBtn;
-		return this.quitBtn;
-	}
-
-	removeButton() {
-		this.newBtn.remove();
-	}
-}
-
-let displayError;
-let symbolArray = [];
-function accessCompare(company, compareBtn) {
-	let counter = 0;
-	compareBtn.addEventListener("click", () => {
-		let numOfButtons = document.querySelectorAll(".company-compare-btn").length;
-		if (numOfButtons > 2) {
-			if (!compareBar.contains(displayError)) {
-				companyCompareBtn.showError();
-				displayError = document.querySelector(".warning");
-			}
-		} else {
-			if (counter < 1) {
-				counter += 1;
-				symbolArray.push(company);
-				const compBtn = new CompanyCompare(company, compareBar);
-				const quitBtn = compBtn.addButton(company);
-				quitBtn.addEventListener("click", () => {
-					if (symbolArray.includes(company)) {
-						let index = symbolArray.indexOf(company);
-						symbolArray.splice(index, 1);
-						console.log(symbolArray);
-					}
-					compBtn.removeButton();
-					numOfButtons -= 1;
-					counter = 0;
-				});
-			}
+	addCompany(company) {
+		//present error on 4th click attempt
+		if (
+			this.companies.length === 3 &&
+			!this.compareBar.contains(document.getElementById("maxError"))
+		) {
+			this.maxError();
 		}
-	});
+		//push company to this.companies array
+		if (
+			!this.companies.includes(company.symbol) &&
+			this.companies.length <= 2
+		) {
+			this.companies.push(company.symbol);
+			const newBtn = this.addButton(company);
+			newBtn.addEventListener(`click`, () => {
+				this.removeCompany(company);
+			});
+		}
+		//show main compare btn
+		if (this.companies.length > 1) {
+			const compareBtn = document.getElementById(`compareBtn`);
+			compareBtn.classList.remove("d-none");
+			compareBtn.innerText = `Compare ${this.companies.length} companies`;
+			compareBtn.classList.remove(`invisible`);
+			this.compareBtn = compareBtn;
+			this.setSearchParams(this.compareBtn);
+		}
+	}
+
+	addButton(company) {
+		const newBtn = document.createElement("button");
+		newBtn.classList.add("btn", "btn-light", "mr-2");
+		newBtn.setAttribute("id", `${company.symbol}Btn`);
+		newBtn.textContent = `${company.symbol} x`;
+		this.compareBar.insertAdjacentElement("afterbegin", newBtn);
+		return newBtn;
+	}
+
+	removeCompany(company) {
+		if (this.maxError) {
+			this.maxError.remove();
+		}
+		this.companies = this.companies.filter(
+			(symbol) => symbol !== company.symbol
+		);
+		const relevantBtn = document.getElementById(`${company.symbol}Btn`);
+		relevantBtn.remove();
+
+		if (this.compareBtn && this.companies.length <= 1) {
+			this.compareBtn.classList.add("d-none");
+		} else if (this.compareBtn && this.companies.length > 1) {
+			this.setSearchParams(this.compareBtn);
+		}
+	}
+
+	setSearchParams(mainCompBtn) {
+		let searchString = "";
+		for (let i = 0; i < this.companies.length; i++) {
+			searchString += `${this.companies[i].symbol}`;
+		}
+		mainCompBtn.href = `company.html?symbol=${searchString}`;
+	}
 }

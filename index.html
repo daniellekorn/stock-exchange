@@ -27,9 +27,11 @@
 			<div class="row h-100">
 				<div
 					id="searchContainer"
-					class="col-md-8 offset-md-2 flex-direction-column mt-5"
+					class="col-md-8 offset-md-2 flex-direction-column mt-1"
 				>
-					<div id="compareBar" class="col-sm-12"></div>
+					<div id="compareBar" class="col-sm-12">
+						<a id="compareBtn" class="btn btn-link float-right d-none"></a>
+					</div>
 					<div id="matches" class="autocomplete-container"></div>
 					<div id="resultChart" class="result-chart flexible col mt-5"></div>
 				</div>
@@ -47,11 +49,14 @@
 				document.getElementById("searchContainer")
 			);
 			searchForm.formDebounce(document.getElementById("searchText"));
-			const results = new ResultsList(document.getElementById("resultChart"));
-			let companyCompareBtn = new CompanyCompare(
-				null,
+			const results = new ResultsList(
+				document.getElementById("resultChart"),
 				document.getElementById("compareBar")
 			);
+			// let companyCompareBtn = new CompanyCompare(
+			// 	null,
+			// 	document.getElementById("compareBar")
+			// );
 			const searchText = document.getElementById("searchText");
 			searchForm.dataForResults((data) => {
 				if (searchText.value === "") {
@@ -62,18 +67,6 @@
 					results.clearHistory();
 					results.createListItems(data);
 				}
-			});
-			let activeButton = companyCompareBtn.createCompareBtn();
-			activeButton.addEventListener("click", () => {
-				let searchString = "";
-				for (let i = 0; i < symbolArray.length; i++) {
-					if (i == symbolArray.length - 1) {
-						searchString += `${symbolArray[i].symbol}`;
-					} else {
-						searchString += `${symbolArray[i].symbol},`;
-					}
-				}
-				activeButton.href = `company.html?symbol=${searchString}`;
 			});
 		</script>
 	</body>

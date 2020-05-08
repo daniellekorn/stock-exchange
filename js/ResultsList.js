@@ -1,6 +1,7 @@
 class ResultsList {
 	constructor(parent) {
 		this.parent = parent;
+		this.compareBar = compareBar;
 	}
 
 	clearHistory() {
@@ -22,6 +23,9 @@ class ResultsList {
 	}
 
 	createListItems(companies) {
+		//Dependency Injection to give each list item access to comp compare functionality
+		const compareResults = new CompanyCompare(this.compareBar);
+		//Mapping for results list physical display
 		companies.map((company) => {
 			const symbol = company.symbol;
 			const profile = company.profile;
@@ -40,7 +44,7 @@ class ResultsList {
 				"overflow-hidden"
 			);
 			const newResult = document.createElement("a");
-			newResult.classList.add("text-decoration-none", "text-dark", "col-sm-10");
+			newResult.classList.add("col-sm-10");
 			newResult.href = `company.html?symbol=${symbol}`;
 
 			const logo = document.createElement("img");
@@ -65,15 +69,17 @@ class ResultsList {
 			const compBtn = document.createElement("button");
 			compBtn.classList.add("btn", "btn-outline-primary", "btn-sm", "col-sm-2");
 			compBtn.textContent = "Compare";
+			//on click instantiate funct. from CompareCompany class
+			compBtn.addEventListener("click", () => {
+				compareResults.addCompany(company);
+				console.log(company);
+			});
 
 			/*append complete result to cont. then to DOM*/
 			contianer.appendChild(newResult);
 			contianer.appendChild(compBtn);
 			this.parent.appendChild(contianer);
 			this.parent.appendChild(lineBreak);
-
-			/*compare button functionality*/
-			accessCompare(company, compBtn);
 		});
 		// const searchLoader = document.getElementById("loader");
 		// searchLoader.classList.add("hide");
