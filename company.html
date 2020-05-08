@@ -19,16 +19,21 @@
 		<script src="js/companyProfile.js"></script>
 		<script>
 			(async function () {
+				let symbolsArray = [];
 				const urlParams = new URLSearchParams(window.location.search);
 				const symbol = urlParams.get("symbol");
 				if (symbol.toString().length > 5) {
 					compareSymbols = symbol.split(",");
+					symbolsArray = compareSymbols.filter(
+						(symbol) => symbol != "" || null || undefined
+					);
 				} else {
-					compareSymbols = symbol;
+					symbolsArray.push(symbol);
 				}
 				const compInfo = new CompanyProfile(
 					document.getElementById("profilePage"),
-					compareSymbols
+					symbolsArray,
+					"profileLoader"
 				);
 				await compInfo.load();
 			})();

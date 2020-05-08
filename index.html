@@ -25,15 +25,15 @@
 	<body>
 		<div id="fullSite" class="container-fluid vh-100">
 			<div class="row h-100">
-				<div
-					id="searchContainer"
-					class="col-md-8 offset-md-2 flex-direction-column mt-1"
-				>
-					<div id="compareBar" class="col-sm-12">
-						<a id="compareBtn" class="btn btn-link float-right d-none"></a>
+				<div id="searchContainer" class="col-md-8 offset-md-2 mt-1">
+					<div class="row">
+						<div id="compareBar" class="col-sm-12">
+							<a id="compareBtn" class="btn btn-link float-right d-none"></a>
+						</div>
 					</div>
-					<div id="matches" class="autocomplete-container"></div>
-					<div id="resultChart" class="result-chart flexible col mt-5"></div>
+					<div class="row">
+						<div id="resultChart" class="col-sm-12 mt-5"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -46,7 +46,8 @@
 		<script>
 			new Marquee(document.getElementById("fullSite"));
 			const searchForm = new SearchForm(
-				document.getElementById("searchContainer")
+				document.getElementById("searchContainer"),
+				"searchLoader"
 			);
 			searchForm.formDebounce(document.getElementById("searchText"));
 			const results = new ResultsList(

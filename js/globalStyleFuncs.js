@@ -1,20 +1,19 @@
 function getColor(isPositive, element) {
 	return isPositive
-		? element.classList.add("text-danger")
-		: element.classList.add("text-success");
+		? element.classList.add("text-success")
+		: element.classList.add("text-danger");
 }
 
 function createLoader(id) {
 	const loader = document.createElement("div");
 	loader.setAttribute("id", id);
 	loader.role = "status";
-	loader.classList.add("spinner-border", "text-primary", "loader", "d-none");
+	loader.classList.add("spinner-grow", "text-primary", "loader");
 	return loader;
 }
 
 function highlight(profileName, symbol) {
 	const name = document.createElement("span");
-	name.classList.add("result-name");
 	let text = searchText.value;
 	text = text.toLowerCase();
 	let nameIndex;

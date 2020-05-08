@@ -1,24 +1,24 @@
 class CompanyProfile {
-	constructor(parent, symbol) {
+	constructor(parent, symbol, loaderId) {
 		this.parent = parent;
 		this.symbol = symbol;
+		this.loaderId = loaderId;
+		this.uniqueLoader();
 	}
 
 	load() {
-		/*this conditional allows for the next forEach fetch (neeeded incase of comparison)*/
-		if (typeof this.symbol === "string") {
-			this.symbol = [this.symbol];
-		}
 		this.symbol.forEach(async (symbol) => {
+			const companyLoader = document.getElementById(
+				`${this.loaderId}${symbol}`
+			);
+			companyLoader.classList.remove("d-none");
 			let profile = await fetch(
 				`https://financialmodelingprep.com/api/v3/company/profile/${symbol}`
 			);
 			let detailsArray = await profile.json();
-			console.log(detailsArray);
 			this.createPage(symbol, detailsArray);
 			this.addChart(symbol);
 		});
-		profilePage.classList.remove("hide");
 	}
 
 	createPage(symbol, obj) {
@@ -43,6 +43,8 @@ class CompanyProfile {
 			newCompany.classList.add("col-md-4", "pl-5");
 		}
 		this.parent.appendChild(newCompany);
+		const companyLoader = document.getElementById(`${this.loaderId}${symbol}`);
+		companyLoader.classList.add("d-none");
 	}
 
 	heading(symbol, company) {
@@ -87,6 +89,16 @@ class CompanyProfile {
 			`<canvas id="coChart${symbol}" class="chart" width="80%" height="80%"></canvas>`
 		);
 		return chartContainer;
+	}
+
+	uniqueLoader() {
+		const loaders = this.symbol.map((symbol) =>
+			createLoader(`${this.loaderId}${symbol}`)
+		);
+		loaders.forEach((loader) => {
+			loader.classList.add("comp-loaders");
+			this.parent.insertAdjacentElement("beforeend", loader);
+		});
 	}
 
 	async addChart(symbol) {

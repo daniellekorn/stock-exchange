@@ -1,6 +1,4 @@
 class SearchFunctions {
-	constructor() {}
-
 	async searchNasdaq(query) {
 		let response = await fetch(
 			`https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ`

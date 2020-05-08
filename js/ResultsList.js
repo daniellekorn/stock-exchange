@@ -25,6 +25,7 @@ class ResultsList {
 	createListItems(companies) {
 		//Dependency Injection to give each list item access to comp compare functionality
 		const compareResults = new CompanyCompare(this.compareBar);
+
 		//Mapping for results list physical display
 		companies.map((company) => {
 			const symbol = company.symbol;
@@ -36,24 +37,21 @@ class ResultsList {
 				}
 			}
 			/*creation of elements w/style*/
-			const contianer = document.createElement("div");
-			contianer.classList.add(
-				"row",
-				"align-items-center",
-				"justify-content-between",
-				"overflow-hidden"
-			);
-			const newResult = document.createElement("a");
-			newResult.classList.add("col-sm-10");
-			newResult.href = `company.html?symbol=${symbol}`;
+			const ul = document.createElement("ul");
+			ul.classList.add("list-group", "list-group-flush");
+			const newResult = document.createElement("li");
+			newResult.classList.add("list-group-item");
+
+			const linkWrapper = document.createElement("a");
+			linkWrapper.href = `company.html?symbol=${symbol}`;
 
 			const logo = document.createElement("img");
 			logo.classList.add("img-fluid", "logo");
 			logo.src = `${profile.image}`;
-			newResult.appendChild(logo);
+			linkWrapper.appendChild(logo);
 
 			const name = highlight(profile.companyName, symbol);
-			newResult.appendChild(name);
+			linkWrapper.appendChild(name);
 
 			const percentChange = document.createElement("span");
 			percentChange.textContent = `${profile.changesPercentage}`;
@@ -61,27 +59,26 @@ class ResultsList {
 				profile.changesPercentage.toString().includes("+"),
 				percentChange
 			);
-			newResult.appendChild(percentChange);
-
-			const lineBreak = document.createElement("hr");
-			lineBreak.classList.add("line-break");
+			linkWrapper.appendChild(percentChange);
 
 			const compBtn = document.createElement("button");
-			compBtn.classList.add("btn", "btn-outline-primary", "btn-sm", "col-sm-2");
+			compBtn.classList.add(
+				"btn",
+				"btn-outline-primary",
+				"btn-sm",
+				"float-right"
+			);
 			compBtn.textContent = "Compare";
+			newResult.appendChild(linkWrapper);
+			newResult.appendChild(compBtn);
 			//on click instantiate funct. from CompareCompany class
 			compBtn.addEventListener("click", () => {
 				compareResults.addCompany(company);
-				console.log(company);
 			});
 
 			/*append complete result to cont. then to DOM*/
-			contianer.appendChild(newResult);
-			contianer.appendChild(compBtn);
-			this.parent.appendChild(contianer);
-			this.parent.appendChild(lineBreak);
+			ul.appendChild(newResult);
+			this.parent.appendChild(ul);
 		});
-		// const searchLoader = document.getElementById("loader");
-		// searchLoader.classList.add("hide");
 	}
 }
