@@ -38,12 +38,18 @@ class CompanyProfile {
 		newCompany.appendChild(price);
 		newCompany.appendChild(description);
 		newCompany.appendChild(chartContainer);
-		newCompany.classList.add("shadow-sm", "p-3", "mb-5", "bg-white", "rounded");
-		// /*account for comparison card style*/
+		newCompany.classList.add(
+			"shadow-sm",
+			"p-5",
+			"bg-white",
+			"rounded",
+			"vh-100"
+		);
+		/*account for comparison card style*/
 		if (this.symbol.length === 1) {
-			newCompany.classList.add("col-md-8", "offset-md-2");
+			newCompany.classList.add("col-md-8", "offset-2");
 		} else if (this.symbol.length === 2) {
-			newCompany.classList.add("col-md-4", "offset-md-1");
+			newCompany.classList.add("col-md-6");
 		} else {
 			newCompany.classList.add("col-md-4", "pl-5");
 		}
@@ -57,7 +63,7 @@ class CompanyProfile {
 		logo.classList.add("img-fluid", "logo-profile");
 		logo.src = company.image;
 		const name = document.createElement("div");
-		name.classList.add("h2");
+		name.classList.add("h4");
 		name.textContent = `${symbol} (${company.companyName})`;
 		heading.appendChild(logo);
 		heading.appendChild(name);
@@ -66,7 +72,7 @@ class CompanyProfile {
 
 	price(company) {
 		const price = document.createElement("div");
-		price.classList.add("row", "mb-3", "h5");
+		price.classList.add("row", "h5", "mb-3", "ml-4");
 		const sharePrice = document.createElement("div");
 		sharePrice.textContent = `Stock price: $${company.price}`;
 		const percentChange = document.createElement("div");
@@ -86,10 +92,14 @@ class CompanyProfile {
 
 	chartContainer(symbol) {
 		const chartContainer = document.createElement("div");
-		chartContainer.classList.add("w-75", "justify-self-center");
+		chartContainer.classList.add(
+			"w-75",
+			"justify-self-center",
+			"overflow-hidden"
+		);
 		chartContainer.insertAdjacentHTML(
 			"beforeend",
-			`<canvas id="coChart${symbol}" class="chart" width="80%" height="80%"></canvas>`
+			`<canvas id="coChart${symbol}" class="chart" width="50%" height="50%"></canvas>`
 		);
 		return chartContainer;
 	}
