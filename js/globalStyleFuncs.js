@@ -8,7 +8,7 @@ function createLoader(id) {
 	const loader = document.createElement("div");
 	loader.setAttribute("id", id);
 	loader.role = "status";
-	loader.classList.add("spinner-grow", "text-primary", "loader");
+	loader.classList.add("spinner-grow", "text-primary", "loader", "d-none");
 	return loader;
 }
 
