@@ -4,7 +4,7 @@ class CompanyCompare {
 		this.companies = [];
 	}
 
-	maxError() {
+	createMaxError() {
 		const error = document.createElement("div");
 		error.setAttribute("id", "maxError");
 		error.textContent = "Compare a maximum of 3 companies";
@@ -26,7 +26,7 @@ class CompanyCompare {
 			this.companies.length === 3 &&
 			!this.compareBar.contains(document.getElementById("maxError"))
 		) {
-			this.maxError();
+			this.createMaxError();
 		}
 		//push company to this.companies array
 		if (
@@ -44,7 +44,6 @@ class CompanyCompare {
 			const compareBtn = document.getElementById(`compareBtn`);
 			compareBtn.classList.remove("d-none");
 			compareBtn.innerText = `Compare ${this.companies.length} companies`;
-			compareBtn.classList.remove(`invisible`);
 			this.compareBtn = compareBtn;
 			this.setSearchParams(this.compareBtn);
 		}
