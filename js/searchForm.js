@@ -24,7 +24,7 @@ class SearchForm extends SearchFunctions {
 		formElement.classList.add(
 			"col-sm-12",
 			"form-group",
-			"m-0",
+			"mb-2",
 			"row",
 			"align-items-center"
 		);

@@ -7,12 +7,12 @@ class CompanyCompare {
 	createMaxError() {
 		const error = document.createElement("div");
 		error.setAttribute("id", "maxError");
-		error.textContent = "Compare a maximum of 3 companies";
+		error.textContent = "Compare up to 3 companies";
 		error.classList.add(
 			"alert",
 			"alert-danger",
-			"pt-1",
-			"pb-1",
+			"pt-2",
+			"pb-2",
 			"w-25",
 			"d-inline"
 		);
@@ -43,7 +43,7 @@ class CompanyCompare {
 		if (this.companies.length > 1) {
 			const compareBtn = document.getElementById(`compareBtn`);
 			compareBtn.classList.remove("d-none");
-			compareBtn.innerText = `Compare ${this.companies.length} companies`;
+			compareBtn.innerText = "Compare companies";
 			this.compareBtn = compareBtn;
 			this.setSearchParams(this.compareBtn);
 		}
@@ -78,8 +78,9 @@ class CompanyCompare {
 	setSearchParams(mainCompBtn) {
 		let searchString = "";
 		for (let i = 0; i < this.companies.length; i++) {
-			searchString += `${this.companies[i].symbol}`;
+			searchString += `${this.companies[i]},`;
 		}
 		mainCompBtn.href = `company.html?symbol=${searchString}`;
+		console.log(mainCompBtn.href);
 	}
 }
