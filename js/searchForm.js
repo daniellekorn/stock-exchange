@@ -1,8 +1,7 @@
-class SearchForm extends SearchFunctions {
-	constructor(parent, loaderId) {
-		super();
+class SearchForm {
+	constructor(parent, searchFunctions) {
 		this.parent = parent;
-		this.loaderId = loaderId;
+		this.searchFunctions = searchFunctions;
 		this.createForm();
 	}
 
@@ -11,7 +10,7 @@ class SearchForm extends SearchFunctions {
 	}
 
 	runSearch(query) {
-		this.optimizedSearch(query).then((companies) => {
+		this.searchFunctions.optimizedSearch(query).then((companies) => {
 			this.callback(companies);
 		});
 	}
@@ -67,11 +66,13 @@ class SearchForm extends SearchFunctions {
 		inputWrapper.appendChild(btnWrapper);
 
 		/*loader after search bar*/
-		const loader = createLoader(this.loaderId);
+		const loader = document.createElement("div");
+		loader.setAttribute("id", "searchLoader");
+		loader.classList.add("spinner-grow", "text-primary", "loader", "d-none");
 		this.parent.insertAdjacentElement("beforeend", loader);
 
 		/*Button functionality to run search & show loader*/
-		const searchLoader = document.getElementById(this.loaderId);
+		const searchLoader = document.getElementById("searchLoader");
 		searchBtn.addEventListener("click", (event) => {
 			event.preventDefault();
 			searchLoader.classList.remove("d-none");
@@ -84,7 +85,7 @@ class SearchForm extends SearchFunctions {
 
 	formDebounce(inputBox) {
 		let debounceTimeout;
-		const searchLoader = document.getElementById(this.loaderId);
+		const searchLoader = document.getElementById("searchLoader");
 		inputBox.addEventListener("input", (event) => {
 			searchLoader.classList.remove("d-none");
 			event.preventDefault();

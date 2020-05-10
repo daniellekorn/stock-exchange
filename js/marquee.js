@@ -1,6 +1,7 @@
 class Marquee {
-	constructor(parent) {
+	constructor(parent, style) {
 		this.parent = parent;
+		this.style = style;
 		this.createMarquee();
 	}
 
@@ -27,7 +28,7 @@ class Marquee {
 				childName.textContent = item.indexName;
 				const childPrice = document.createElement("span");
 				childPrice.textContent = ` $${item.price}`;
-				getColor(!item.changes.toString().includes("-"), childPrice);
+				this.style.getColor(!item.changes.toString().includes("-"), childPrice);
 				listItem.appendChild(childName);
 				listItem.appendChild(childPrice);
 				ul.appendChild(listItem);

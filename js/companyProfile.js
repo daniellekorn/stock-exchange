@@ -1,14 +1,20 @@
 class CompanyProfile {
-	constructor(parent, symbol, loaderId) {
+	constructor(parent, symbol, style) {
 		this.parent = parent;
 		this.symbol = symbol;
-		this.loaderId = loaderId;
+		this.style = style;
 		this.loader = this.pageLoader();
 	}
 
 	pageLoader() {
-		const loader = createLoader(this.loaderId);
-		loader.classList.add("profileLoader");
+		const loader = document.createElement("div");
+		loader.classList.add(
+			"spinner-grow",
+			"text-primary",
+			"loader",
+			"d-none",
+			"profileLoader"
+		);
 		loader.classList.remove("d-none");
 		this.parent.insertAdjacentElement("beforeend", loader);
 		return loader;
@@ -78,7 +84,7 @@ class CompanyProfile {
 		const percentChange = document.createElement("div");
 		percentChange.classList.add("ml-1");
 		percentChange.textContent = company.changesPercentage;
-		getColor(company.changesPercentage.includes("+"), percentChange);
+		this.style.getColor(company.changesPercentage.includes("+"), percentChange);
 		price.appendChild(sharePrice);
 		price.appendChild(percentChange);
 		return price;

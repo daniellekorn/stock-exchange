@@ -22,28 +22,8 @@
 			<div id="profilePage" class="row align-items-center"></div>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-		<script src="js/globalStyleFuncs.js"></script>
+		<script src="js/Style.js"></script>
 		<script src="js/companyProfile.js"></script>
-		<script>
-			(async function () {
-				let symbolsArray = [];
-				const urlParams = new URLSearchParams(window.location.search);
-				const symbol = urlParams.get("symbol");
-				if (symbol.toString().length > 5) {
-					compareSymbols = symbol.split(",");
-					symbolsArray = compareSymbols.filter(
-						(symbol) => symbol != "" || null || undefined
-					);
-				} else {
-					symbolsArray.push(symbol);
-				}
-				const compInfo = new CompanyProfile(
-					document.getElementById("profilePage"),
-					symbolsArray,
-					"profileLoader"
-				);
-				await compInfo.load();
-			})();
-		</script>
+		<script src="js/companyMain.js"></script>
 	</body>
 </html>

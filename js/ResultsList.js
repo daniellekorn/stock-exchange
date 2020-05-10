@@ -1,7 +1,8 @@
 class ResultsList {
-	constructor(parent) {
+	constructor(parent, compareBar, style) {
 		this.parent = parent;
 		this.compareBar = compareBar;
+		this.style = style;
 	}
 
 	clearHistory() {
@@ -50,12 +51,12 @@ class ResultsList {
 			logo.src = `${profile.image}`;
 			linkWrapper.appendChild(logo);
 
-			const name = highlight(profile.companyName, symbol);
+			const name = this.style.highlight(profile.companyName, symbol);
 			linkWrapper.appendChild(name);
 
 			const percentChange = document.createElement("span");
 			percentChange.textContent = `${profile.changesPercentage}`;
-			getColor(
+			this.style.getColor(
 				profile.changesPercentage.toString().includes("+"),
 				percentChange
 			);
