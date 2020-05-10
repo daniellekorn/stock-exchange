@@ -21,7 +21,7 @@ class CompanyCompare {
 	}
 
 	addCompany(company) {
-		//present error on 4th click attempt
+		//present max compare error on 4th click attempt
 		if (
 			this.companies.length === 3 &&
 			!this.compareBar.contains(document.getElementById("maxError"))
