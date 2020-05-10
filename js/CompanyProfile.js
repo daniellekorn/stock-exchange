@@ -63,7 +63,7 @@ class CompanyProfile {
 		logo.classList.add("img-fluid", "logo-profile");
 		logo.src = company.image;
 		const name = document.createElement("div");
-		name.classList.add("h4");
+		name.classList.add("h4", "ml-1");
 		name.textContent = `${symbol} (${company.companyName})`;
 		heading.appendChild(logo);
 		heading.appendChild(name);
