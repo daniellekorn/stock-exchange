@@ -1,7 +1,7 @@
 class ResultsList {
-	constructor(parent, compareBar, style) {
+	constructor(parent, compareResults, style) {
 		this.parent = parent;
-		this.compareBar = compareBar;
+		this.compareResults = compareResults;
 		this.style = style;
 	}
 
@@ -24,14 +24,11 @@ class ResultsList {
 	}
 
 	createListItems(companies) {
-		//Dependency Injection to give each list item access to comp compare functionality
-		const compareResults = new CompanyCompare(this.compareBar);
-
 		//Mapping for results list physical display
 		companies.map((company) => {
 			const symbol = company.symbol;
 			const profile = company.profile;
-			//account for null values in API
+			//account for null text values in API
 			for (let item in profile) {
 				if (company.profile[item] === null) {
 					company.profile[item] = "";
@@ -74,7 +71,7 @@ class ResultsList {
 			newResult.appendChild(compBtn);
 			//on click instantiate funct. from CompareCompany class
 			compBtn.addEventListener("click", () => {
-				compareResults.addCompany(company);
+				this.compareResults.addCompany(company);
 			});
 
 			/*append complete result to cont. then to DOM*/

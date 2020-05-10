@@ -1,7 +1,10 @@
 window.onload = (() => {
-	//two class instantiations that will be passed to other classes for functional reusability
+	//instantiate reusable functionality classes for Dependency Injection
 	const style = new Style();
 	const searchFunctions = new SearchFunctions();
+	const compareResults = new CompanyCompare(
+		document.getElementById("compareBar")
+	);
 
 	//creation of page elements
 	new Marquee(document.getElementById("fullSite"), style);
@@ -14,21 +17,21 @@ window.onload = (() => {
 
 	const results = new ResultsList(
 		document.getElementById("resultChart"),
-		document.getElementById("compareBar"),
+		compareResults,
 		style
 	);
 
-	//callback function sent to SearchForm: determines functionality of search and del
-	// allows information to be passed from resultsList to the Search class
+	// dataForResults sets callback function in SearchForm
+	// allows information to be passed from the search to ResultsList
 	const searchText = document.getElementById("searchText");
-	searchForm.dataForResults((data) => {
+	searchForm.dataForResults((companies) => {
 		if (searchText.value === "") {
 			results.clearHistory();
-		} else if (data[0].status == "404") {
+		} else if (companies[0].status == "404") {
 			results.noMatches();
 		} else {
 			results.clearHistory();
-			results.createListItems(data);
+			results.createListItems(companies);
 		}
 	});
 })();

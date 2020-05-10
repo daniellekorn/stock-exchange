@@ -9,12 +9,13 @@ class SearchFunctions {
 
 	async optimizedSearch(query) {
 		const data = await this.searchNasdaq(query);
-		let j = 0;
 		let triplets = [];
 		triplets.push([]);
-		for (let i = 1; i <= data.length; i++) {
+		let j = 0;
+		for (let i = 1; i < data.length; i++) {
 			triplets[j].push(data[i - 1].symbol);
-
+			// as soon as there are 3 symbols in an array,
+			// push new empty array and increment j to begin pushing to new "triplet"
 			if (i % 3 == 0) {
 				triplets.push([]);
 				j++;
