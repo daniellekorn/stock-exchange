@@ -32,8 +32,8 @@ class CompanyProfile {
     this.loader.classList.add("d-none");
   }
 
-  createPage(symbol, obj) {
-    console.log(obj);
+  createPage(symbol, co) {
+    const company = co[0];
     const newCompany = document.createElement("div");
     const heading = this.heading(symbol, company);
     const price = this.price(company);
@@ -130,13 +130,14 @@ class CompanyProfile {
     });
 
     let history = await fetch(
-      `https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?serietype=line`
+      `https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?serietype=line&apikey=28cbf7a3e170c33fbb032df9b9e13434`
     );
     let data = await history.json();
     let yearLength = data.historical.length / 365;
     let yearDecimal = 2020 - yearLength;
     let year = Math.round(yearDecimal);
-    for (let i = 0; i < data.historical.length; i++) {
+    for (let i = data.historical.length - 1; i > 0; i--) {
+      // console.log(year);
       if (data.historical[i].date.slice(0, 4) === year.toString()) {
         companyChart.data.labels.push(year);
         companyChart.data.datasets[0].data.push(data.historical[i].close);
