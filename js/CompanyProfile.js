@@ -53,7 +53,7 @@ class CompanyProfile {
     );
     /*account for comparison card style*/
     if (this.symbol.length === 1) {
-      newCompany.classList.add("col-md-8", "offset-2");
+      newCompany.classList.add("col-md-12");
     } else if (this.symbol.length === 2) {
       newCompany.classList.add("col-md-6");
     } else {
