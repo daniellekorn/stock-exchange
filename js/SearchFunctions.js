@@ -4,7 +4,6 @@ class SearchFunctions {
       `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ&apikey=28cbf7a3e170c33fbb032df9b9e13434`
     );
     let data = await response.json();
-    console.log(data);
     return data;
   }
 
@@ -38,7 +37,6 @@ class SearchFunctions {
       );
       /*account for differences in API index names*/
       let allTogether = [];
-      console.log(profileData);
       for (let i = 0; i < profileData.length; i++) {
         /*mult. req at once vs. single req*/
         if (i < profileData.length - 1) {
@@ -48,7 +46,6 @@ class SearchFunctions {
         }
       }
       let merged = [].concat.apply([], allTogether);
-      console.log(merged);
       return merged;
     } catch (err) {
       console.log(err);

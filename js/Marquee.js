@@ -10,7 +10,6 @@ class Marquee {
       "https://financialmodelingprep.com/api/v3/quotes/index?apikey=28cbf7a3e170c33fbb032df9b9e13434"
     );
     let marqueeData = await marqueeResponse.json();
-    console.log(marqueeData);
     return marqueeData;
   }
 
@@ -22,7 +21,6 @@ class Marquee {
     ul.classList.add("marquee-content", "flexible");
     this.getData().then((items) => {
       items.map((item) => {
-        console.log(item);
         const listItem = document.createElement("li");
         listItem.className = "marquee-list";
         const childName = document.createElement("span");

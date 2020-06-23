@@ -148,7 +148,6 @@ class CompanyProfile {
     let yearDecimal = 2020 - yearLength;
     let year = Math.round(yearDecimal);
     for (let i = data.historical.length - 1; i > 0; i--) {
-      // console.log(year);
       if (data.historical[i].date.slice(0, 4) === year.toString()) {
         companyChart.data.labels.push(year);
         companyChart.data.datasets[0].data.push(data.historical[i].close);

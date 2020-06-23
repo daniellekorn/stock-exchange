@@ -72,6 +72,7 @@ class CompanyCompare {
       this.compareBtn.classList.add("d-none");
     } else if (this.compareBtn && this.companies.length > 1) {
       this.setSearchParams(this.compareBtn);
+      this.compareBtn.innerText = `Compare ${this.companies.length} companies`;
     }
   }
 

@@ -26,7 +26,6 @@ class ResultsList {
   createListItems(companies) {
     //Mapping for results list physical display
     companies.map((company) => {
-      console.log(company);
       const symbol = company.symbol;
       //account for null text values in API
       for (let item in company) {
