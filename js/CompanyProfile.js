@@ -35,10 +35,17 @@ class CompanyProfile {
   createPage(symbol, co) {
     const company = co[0];
     const newCompany = document.createElement("div");
+    newCompany.classList.add(
+      "d-flex",
+      "flex-column",
+      "justify-content-between",
+      "position-relative"
+    );
     const heading = this.heading(symbol, company);
     const price = this.price(company);
     const description = this.description(company);
     const chartContainer = this.chartContainer(symbol);
+
     /*append all to DOM*/
     newCompany.appendChild(heading);
     newCompany.appendChild(price);
@@ -64,12 +71,12 @@ class CompanyProfile {
 
   heading(symbol, company) {
     const heading = document.createElement("div");
-    heading.classList.add("row", "mb-3");
+    heading.classList.add("row", "mb-3", "position-relative", "heading");
     const logo = document.createElement("img");
     logo.classList.add("img-fluid", "logo-profile");
     logo.src = company.image;
     const name = document.createElement("div");
-    name.classList.add("h4", "ml-1");
+    name.classList.add("h4", "ml-3", "mt-1");
     name.textContent = `${symbol} (${company.companyName})`;
     heading.appendChild(logo);
     heading.appendChild(name);
@@ -78,13 +85,16 @@ class CompanyProfile {
 
   price(company) {
     const price = document.createElement("div");
-    price.classList.add("row", "h5", "mb-3", "ml-4");
+    price.classList.add("row", "h5", "mb-3", "ml-2", "price");
     const sharePrice = document.createElement("div");
     sharePrice.textContent = `Stock price: $${company.price}`;
     const percentChange = document.createElement("div");
-    percentChange.classList.add("ml-1");
+    percentChange.classList.add("ml-3");
     percentChange.textContent = company.changes;
-    // this.style.getColor(!company.changes.includes("-"), percentChange);
+    this.style.getColor(
+      !company.changes.toString().includes("-"),
+      percentChange
+    );
     price.appendChild(sharePrice);
     price.appendChild(percentChange);
     return price;
@@ -99,13 +109,13 @@ class CompanyProfile {
   chartContainer(symbol) {
     const chartContainer = document.createElement("div");
     chartContainer.classList.add(
-      "w-75",
-      "justify-self-center",
+      "d-flex",
+      "justify-content-center",
       "overflow-hidden"
     );
     chartContainer.insertAdjacentHTML(
       "beforeend",
-      `<canvas id="coChart${symbol}" class="chart" width="50%" height="50%"></canvas>`
+      `<canvas id="coChart${symbol}" responsive=true class="chart"></canvas>`
     );
     return chartContainer;
   }
@@ -121,6 +131,7 @@ class CompanyProfile {
         datasets: [
           {
             label: "Price on Close",
+            fontSize: 80,
             backgroundColor: "#0053ee",
             borderColor: "#0053ee",
             data: [],

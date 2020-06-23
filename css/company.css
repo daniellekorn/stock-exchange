@@ -1,11 +1,11 @@
 .profileLoader {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	z-index: 100;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
 }
 
 .logo-profile {
-	height: 80px;
-	margin-left: 25px;
+  height: 80px;
+  margin-left: 25px;
 }

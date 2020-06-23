@@ -13,10 +13,10 @@ class CompanyCompare {
       "alert-danger",
       "pt-2",
       "pb-2",
-      "w-25",
-      "d-inline"
+      "mt-2",
+      "mb-0"
     );
-    this.compareBar.insertAdjacentElement("afterbegin", error);
+    this.compareBar.insertAdjacentElement("beforeend", error);
     this.maxError = error;
   }
 
@@ -43,7 +43,7 @@ class CompanyCompare {
     if (this.companies.length > 1) {
       const compareBtn = document.getElementById(`compareBtn`);
       compareBtn.classList.remove("d-none");
-      compareBtn.innerText = "Compare companies";
+      compareBtn.innerText = `Compare ${this.companies.length} companies`;
       this.compareBtn = compareBtn;
       this.setSearchParams(this.compareBtn);
     }

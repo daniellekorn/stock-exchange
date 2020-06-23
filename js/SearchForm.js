@@ -23,7 +23,8 @@ class SearchForm {
       "col-xs-10",
       "form-group",
       "mb-2",
-      "mr-0"
+      "mr-0",
+      "p-0"
     );
     const searchBar = this.createSearchBar();
     formElement.appendChild(searchBar);
