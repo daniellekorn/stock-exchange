@@ -1,62 +1,62 @@
 .logo {
-	height: 35px;
-	margin-right: 15px;
+  height: 35px;
+  margin-right: 15px;
 }
 
 .loader {
-	position: relative;
-	left: 49%;
+  position: relative;
+  left: 49%;
 }
 
 /*marquee style*/
 .marquee {
-	white-space: nowrap;
-	overflow: hidden;
-	background-color: white;
-	color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: white;
+  color: black;
 }
 .marquee-content {
-	display: flex;
-	list-style: none;
-	height: 100%;
-	width: 95%;
-	font-size: 14px;
-	justify-content: space-evenly;
-	align-items: center;
-	animation: scrolling 120s linear infinite;
-	margin: 0;
+  display: flex;
+  list-style: none;
+  height: 100%;
+  width: 95%;
+  font-size: 14px;
+  justify-content: space-evenly;
+  align-items: center;
+  animation: scrolling 145s linear infinite;
+  margin: 0;
 }
 
 @keyframes scrolling {
-	0% {
-		transform: translateX(90vw);
-	}
-	100% {
-		transform: translateX(-190vw);
-	}
+  0% {
+    transform: translateX(90vw);
+  }
+  100% {
+    transform: translateX(-190vw);
+  }
 }
 
 .marquee-content .marquee-list {
-	align-items: center;
-	flex-shrink: 0;
-	white-space: nowrap;
-	margin: 0px 8px;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin: 0px 8px;
 }
 
 .marquee-content .marquee-list span {
-	width: fit-content;
+  width: fit-content;
 }
 
 .marquee .marquee-content:hover {
-	animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 @media (max-width: 767.98px) {
-	.logo {
-		height: 25px;
-		margin-right: 15px;
-	}
-	.marquee-content {
-		animation: scrolling 40s linear infinite;
-	}
+  .logo {
+    height: 25px;
+    margin-right: 15px;
+  }
+  .marquee-content {
+    animation: scrolling 40s linear infinite;
+  }
 }
