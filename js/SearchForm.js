@@ -47,11 +47,11 @@ class SearchForm {
     iconParent.appendChild(icon);
     iconWrapper.appendChild(iconParent);
     inputWrapper.appendChild(iconWrapper);
-    inputWrapper.classList.add("input-group", "col-md-12", "p-0");
+    inputWrapper.classList.add("input-group", "col-md-12", "p-0", "input-bar");
     const inputBox = document.createElement("input");
     inputBox.setAttribute("id", "searchText");
     inputBox.type = "text";
-    inputBox.classList.add("col-xs-10", "form-control", "shadow-none");
+    inputBox.classList.add("col-xs-10", "form-control", "shadow-none", "h-100");
     inputBox.placeholder = "Search...";
     inputWrapper.appendChild(inputBox);
 

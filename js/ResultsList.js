@@ -37,7 +37,7 @@ class ResultsList {
       const ul = document.createElement("ul");
       ul.classList.add("list-group", "list-group-flush");
       const newResult = document.createElement("li");
-      newResult.classList.add("list-group-item");
+      newResult.classList.add("result-item");
 
       const linkWrapper = document.createElement("a");
       linkWrapper.href = `company.html?symbol=${symbol}`;
