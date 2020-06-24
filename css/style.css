@@ -28,8 +28,11 @@ body {
 }
 
 .result-item {
+  min-height: 50px;
   position: relative;
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5rem 1.25rem;
   background-color: transparent;
   border-bottom: 1px solid black;
@@ -117,6 +120,7 @@ input[type="text"] {
   }
   .result-item {
     padding: 2rem 1.25rem;
+    min-height: 30px;
   }
   .logos {
     width: 25%;
