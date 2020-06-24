@@ -51,13 +51,7 @@ class CompanyProfile {
     newCompany.appendChild(price);
     newCompany.appendChild(description);
     newCompany.appendChild(chartContainer);
-    newCompany.classList.add(
-      "shadow-sm",
-      "p-5",
-      "bg-white",
-      "rounded",
-      "min-vh-100"
-    );
+    newCompany.classList.add("shadow-sm", "p-5", "bg-white", "rounded");
     /*account for comparison card style*/
     if (this.symbol.length === 1) {
       newCompany.classList.add("col-md-12");

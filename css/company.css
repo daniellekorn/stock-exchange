@@ -1,3 +1,11 @@
+body,
+html {
+  height: 100vh;
+  background-image: url("../media/background.svg");
+  background-repeat: no-repeat;
+  background-position-y: 12%;
+}
+
 .profileLoader {
   position: absolute;
   left: 50%;
@@ -5,7 +13,17 @@
   z-index: 100;
 }
 
+.wrapper {
+  padding: 50px;
+}
+
 .logo-profile {
   height: 80px;
   margin-left: 25px;
+}
+
+@media (max-width: 767.98px) {
+  .wrapper {
+    padding: 0;
+  }
 }
