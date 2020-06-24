@@ -5,19 +5,21 @@ body {
   /* background-position-x: 150%; */
 }
 
-.logo {
-  height: 35px;
-  margin-right: 15px;
-}
-
 .input-bar {
   height: 60px;
   border-radius: 100px;
+  background-color: white;
+  padding: 10px;
 }
 
-.loader {
-  position: relative;
-  left: 49%;
+.floating-input {
+  border: none;
+}
+
+.floating-input.blue {
+  border-radius: 25%;
+  margin-right: 15px;
+  background-color: rgb(180, 219, 255);
 }
 
 .result-float {
@@ -31,6 +33,30 @@ body {
   padding: 0.75rem 1.25rem;
   background-color: transparent;
   border-bottom: 1px solid black;
+}
+
+.parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logos {
+  width: 10%;
+  height: 100%;
+  display: inline-block;
+}
+
+.logo-image {
+  width: 50%;
+}
+
+.result-float ul:last-child {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: transparent;
+  border-bottom: none !important;
 }
 
 /*marquee style*/
@@ -74,6 +100,11 @@ body {
 
 .marquee .marquee-content:hover {
   animation-play-state: paused;
+}
+
+.loader {
+  position: relative;
+  left: 49%;
 }
 
 @media (max-width: 767.98px) {

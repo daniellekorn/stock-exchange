@@ -38,33 +38,29 @@ class SearchForm {
   createSearchBar() {
     /*text input area*/
     const inputWrapper = document.createElement("div");
-    const iconWrapper = document.createElement("div");
-    iconWrapper.classList.add("input-group-prepend");
-    const iconParent = document.createElement("div");
-    iconParent.classList.add("input-group-text", "bg-white", "col-xs-1");
-    const icon = document.createElement("i");
-    icon.classList.add("fa", "fa-search");
-    iconParent.appendChild(icon);
-    iconWrapper.appendChild(iconParent);
-    inputWrapper.appendChild(iconWrapper);
-    inputWrapper.classList.add("input-group", "col-md-12", "p-0", "input-bar");
+    inputWrapper.classList.add("shadow-lg", "d-flex", "col-md-12", "input-bar");
     const inputBox = document.createElement("input");
     inputBox.setAttribute("id", "searchText");
     inputBox.type = "text";
-    inputBox.classList.add("col-xs-10", "form-control", "shadow-none", "h-100");
+    inputBox.classList.add(
+      "col-xs-10",
+      "form-control",
+      "h-100",
+      "floating-input",
+      "shadow-none"
+    );
     inputBox.placeholder = "Search...";
     inputWrapper.appendChild(inputBox);
 
     /*search button*/
-    const btnWrapper = document.createElement("div");
-    btnWrapper.className = "input-group-append";
     const searchBtn = document.createElement("button");
     searchBtn.setAttribute("id", "searchButton");
     searchBtn.type = "submit";
-    searchBtn.classList.add("btn", "btn-primary", "col-xs-1");
-    searchBtn.textContent = "Search";
-    btnWrapper.appendChild(searchBtn);
-    inputWrapper.appendChild(btnWrapper);
+    searchBtn.classList.add("floating-input", "blue");
+    const icon = document.createElement("i");
+    icon.classList.add("fa", "fa-search", "fa-2x");
+    searchBtn.appendChild(icon);
+    inputWrapper.appendChild(searchBtn);
 
     /*loader after search bar*/
     const loader = document.createElement("div");

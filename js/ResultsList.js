@@ -25,7 +25,10 @@ class ResultsList {
 
   createListItems(companies) {
     //Mapping for results list physical display
-    companies.map((company) => {
+    const ul = document.createElement("ul");
+    ul.classList.add("list-group");
+
+    companies.map((company, i, arr) => {
       const symbol = company.symbol;
       //account for null text values in API
       for (let item in company) {
@@ -34,18 +37,18 @@ class ResultsList {
         }
       }
       /*creation of elements w/style*/
-      const ul = document.createElement("ul");
-      ul.classList.add("list-group", "list-group-flush");
       const newResult = document.createElement("li");
-      newResult.classList.add("result-item");
-
+      newResult.className = "result-item";
       const linkWrapper = document.createElement("a");
       linkWrapper.href = `company.html?symbol=${symbol}`;
 
+      const logoWrap = document.createElement("div");
+      logoWrap.classList.add("logos", "parent");
       const logo = document.createElement("img");
-      logo.classList.add("img-fluid", "logo");
+      logo.classList.add("logo-image");
       logo.src = `${company.image}`;
-      linkWrapper.appendChild(logo);
+      logoWrap.appendChild(logo);
+      linkWrapper.appendChild(logoWrap);
 
       const name = this.style.highlight(company.companyName, symbol);
       linkWrapper.appendChild(name);
