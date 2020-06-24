@@ -66,13 +66,16 @@ class CompanyProfile {
   heading(symbol, company) {
     const heading = document.createElement("div");
     heading.classList.add("row", "mb-3", "position-relative", "heading");
+    const logoWrapper = document.createElement("div");
+    logoWrapper.classList.add("parent", "logos");
     const logo = document.createElement("img");
-    logo.classList.add("img-fluid", "logo-profile");
+    logo.classList.add("logo-image");
     logo.src = company.image;
     const name = document.createElement("div");
     name.classList.add("h4", "ml-3", "mt-1");
     name.textContent = `${symbol} (${company.companyName})`;
-    heading.appendChild(logo);
+    logoWrapper.appendChild(logo);
+    heading.appendChild(logoWrapper);
     heading.appendChild(name);
     return heading;
   }
@@ -84,7 +87,7 @@ class CompanyProfile {
     sharePrice.textContent = `Stock price: $${company.price}`;
     const percentChange = document.createElement("div");
     percentChange.classList.add("ml-3");
-    percentChange.textContent = company.changes;
+    percentChange.textContent = `${company.changes}%`;
     this.style.getColor(
       !company.changes.toString().includes("-"),
       percentChange
