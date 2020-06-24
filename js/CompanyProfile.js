@@ -39,7 +39,8 @@ class CompanyProfile {
       "d-flex",
       "flex-column",
       "justify-content-between",
-      "position-relative"
+      "position-relative",
+      "list-content"
     );
     const heading = this.heading(symbol, company);
     const price = this.price(company);
@@ -65,7 +66,13 @@ class CompanyProfile {
 
   heading(symbol, company) {
     const heading = document.createElement("div");
-    heading.classList.add("row", "mb-3", "position-relative", "heading");
+    heading.classList.add(
+      "row",
+      "mb-3",
+      "position-relative",
+      "heading",
+      "d-flex"
+    );
     const logoWrapper = document.createElement("div");
     logoWrapper.classList.add("parent", "logos");
     const logo = document.createElement("img");
@@ -82,7 +89,7 @@ class CompanyProfile {
 
   price(company) {
     const price = document.createElement("div");
-    price.classList.add("row", "h5", "mb-3", "ml-2", "price");
+    price.classList.add("row", "h5", "mb-3", "ml-2", "price", "d-flex");
     const sharePrice = document.createElement("div");
     sharePrice.textContent = `Stock price: $${company.price}`;
     const percentChange = document.createElement("div");
@@ -99,6 +106,7 @@ class CompanyProfile {
 
   description(company) {
     const coDescription = document.createElement("div");
+    coDescription.classList.add("d-flex");
     coDescription.textContent = company.description;
     return coDescription;
   }
