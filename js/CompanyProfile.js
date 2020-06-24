@@ -66,20 +66,14 @@ class CompanyProfile {
 
   heading(symbol, company) {
     const heading = document.createElement("div");
-    heading.classList.add(
-      "row",
-      "mb-3",
-      "position-relative",
-      "heading",
-      "d-flex"
-    );
+    heading.classList.add("row", "mb-3", "d-flex");
     const logoWrapper = document.createElement("div");
     logoWrapper.classList.add("parent", "logos");
     const logo = document.createElement("img");
     logo.classList.add("logo-image");
     logo.src = company.image;
     const name = document.createElement("div");
-    name.classList.add("h4", "ml-3", "mt-1");
+    name.classList.add("display-4", "ml-3", "mt-1");
     name.textContent = `${symbol} (${company.companyName})`;
     logoWrapper.appendChild(logo);
     heading.appendChild(logoWrapper);
