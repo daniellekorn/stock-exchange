@@ -23,7 +23,7 @@ class SearchForm {
       "col-xs-10",
       "form-group",
       "mb-2",
-      "mr-0",
+      "m-0",
       "p-0"
     );
     const searchBar = this.createSearchBar();
@@ -31,7 +31,7 @@ class SearchForm {
     this.parent.insertAdjacentElement("afterbegin", formElement);
     this.parent.insertAdjacentHTML(
       "afterbegin",
-      `<h2 class="text-center main-title display-4 mt-5">Search Nasdaq Stocks</h2>`
+      `<h2 class="text-center main-title display-4 mt-4">Search Nasdaq Stocks</h2>`
     );
   }
 
